@@ -3,11 +3,15 @@ import {fileURLToPath, URL} from 'node:url'
 import {resolve} from 'node:path'
 import {defineConfig} from 'vite'
 import vue from '@vitejs/plugin-vue'
-
+import externalGlobals from 'vite-plugin-external-globals';
 // https://vitejs.dev/config/
 export default defineConfig({
     plugins: [
         vue(),
+        externalGlobals({
+            vue: 'Vue',
+            // Add other dependencies here if needed
+        })
     ],
     resolve: {
         alias: {
