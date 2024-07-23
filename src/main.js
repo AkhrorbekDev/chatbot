@@ -1,6 +1,6 @@
-import './assets/main.css'
-// Instead of: import { createApp } from 'vue';
+import './assets/scss/main.scss'
+import {createApp} from 'vue';
 import App from './App.vue'
 
-
-export { App }
+createApp(App).mount('#app')
+export {App}

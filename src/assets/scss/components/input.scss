@@ -1,0 +1,13 @@
+input {
+  border: none;
+  color: var(--body-color);
+  background-color: var(--input-bg);
+  padding: 12px;
+  border-radius: 6px;
+  font-size: 15px;
+  width: 100%;
+
+  &::placeholder {
+    color: var(--input-chat-color);
+  }
+}

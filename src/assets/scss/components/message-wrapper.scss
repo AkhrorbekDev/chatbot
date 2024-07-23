@@ -1,0 +1,133 @@
+.chat-msg {
+  display: flex;
+  padding: 0 14px 45px;
+
+  &-content {
+    margin-left: 12px;
+    max-width: 70%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  &-text {
+    background-color: var(--chat-text-bg);
+    border-radius: 16px 16px 16px 0;
+    width: 100%;
+    padding: 10px 24px 10px 8px;
+
+    &:deep(p) {
+      color: var(--chat-text-color);
+      line-height: 1.5;
+      font-size: 14px;
+      font-weight: 500;
+    }
+  }
+
+  &-profile {
+    width: 32px;
+    border-radius: 50%;
+    object-fit: cover;
+    flex-shrink: 0;
+    margin-top: auto;
+    margin-bottom: -20px;
+    position: relative;
+  }
+
+  &-img {
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+
+  &-date {
+    position: absolute;
+    left: calc(100% + 12px);
+    bottom: 0;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--msg-date);
+    white-space: nowrap;
+  }
+
+  &-actions {
+    width: 100%;
+    margin-top: 10px;
+  }
+
+
+}
+
+.owner {
+  flex-direction: row-reverse;
+
+  .chat-msg {
+    &-content {
+      margin-left: 0;
+      margin-right: 0;
+      align-items: flex-end;
+    }
+
+    &-text {
+      background-color: var(--theme-color);
+      border-radius: 16px 16px 0 16px;
+
+      &:deep(p) {
+        color: #fff;
+      }
+    }
+
+    &-date {
+      left: auto;
+      right: calc(100% + 12px);
+    }
+
+    &-profile {
+      width: 0;
+
+      .chat-msg-img {
+        display: none;
+      }
+    }
+  }
+}
+
+.chat-msg.product-template {
+
+
+  &:deep {
+    .chat-msg-content {
+      max-width: 100%;
+    }
+
+    .chat-msg-text {
+      padding: 0;
+
+      p {
+        color: var(--white);
+        line-height: 1.2;
+      }
+    }
+
+    .product-template-title {
+      font-size: 20px;
+      font-weight: 500;
+    }
+
+    .product-template-description {
+      font-size: 16px;
+      font-weight: 400;
+    }
+
+    .product-template-price {
+      font-size: 18px;
+      font-weight: normal;
+      margin-top: 16px;
+
+      &__label {
+        font-weight: 600;
+      }
+    }
+  }
+}
