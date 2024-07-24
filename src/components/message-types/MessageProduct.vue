@@ -8,7 +8,6 @@ import AddToCartActions from "@/components/AddToCartActions.vue";
 <template>
   <MessageTemplate class="product-template">
     <ProductTemplate></ProductTemplate>
-
     <template #actions>
       <AddToCartActions/>
     </template>

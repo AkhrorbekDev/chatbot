@@ -40,6 +40,13 @@ defineProps({
 
 <style scoped lang="scss">
 
+.add-to-cart-actions {
+  width: 100%;
+  display: flex;
+  gap: 16px;
+
+}
+
 .add-to-cart-actions.is-exist {
   display: flex;
   align-items: center;

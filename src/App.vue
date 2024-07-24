@@ -2,6 +2,9 @@
 
 import ChatBot from "@/components/ChatBot.vue";
 import ChatHeader from "@/components/ChatHeader.vue";
+import {ref} from "vue";
+import LoginView from "@/components/LoginView.vue";
+
 </script>
 
 <template>

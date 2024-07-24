@@ -3,7 +3,7 @@
 </script>
 
 <template>
-  <input type="text" placeholder="Type something here..."/>
+  <input class="base-input" type="text" placeholder="Type something here..."/>
 </template>
 
 <style scoped lang="scss">

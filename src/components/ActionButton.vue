@@ -26,7 +26,7 @@
   &__btn {
     position: relative;
     user-select: none;
-    padding: .5625rem 0;
+    padding: .5625rem .5625rem;
     border-radius: .375rem;
     z-index: 2;
     font-size: 14px;
@@ -39,6 +39,7 @@
     overflow: hidden;
     font-weight: 500;
     background: var(--action-bg-color);
+
     &:active {
       background: var(--action-highlighting-color);
     }

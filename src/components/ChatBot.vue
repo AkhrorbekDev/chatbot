@@ -1,10 +1,13 @@
 <script setup>
 import ChatBotFooter from "@/components/ChatBotFooter.vue";
 import ActionButton from "@/components/ActionButton.vue";
+import LoginView from "@/components/LoginView.vue";
 import {onMounted, onUnmounted, ref} from "vue";
 import AddToCartActions from "@/components/AddToCartActions.vue";
 import MessageTemplate from "@/components/templates/MessageTemplate.vue";
 import MessageProduct from "@/components/message-types/MessageProduct.vue";
+import OrdersView from "@/components/message-types/OrdersView.vue";
+import OrderDetails from "@/components/message-types/OrderDetails.vue";
 
 const canvas_context = ref(null)
 const canvas_context_gradient = ref(null)
@@ -49,6 +52,8 @@ function drawPattern() {
   ctx_canvas_context_gradient.fillRect(0, 0, canvas_gradient.width, canvas_gradient.height);
 }
 
+const loggedIn = ref(false)
+
 onMounted(() => {
 
   window.addEventListener('resize', resizeCanvas);
@@ -61,50 +66,57 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <div class="chat-area">
+  <div ref="chat_bot" class="chat-area">
     <canvas ref="canvas_context_gradient"></canvas>
     <canvas ref="canvas_context"></canvas>
-    <div ref="chat_bot" class="chat-area-main">
-      <MessageTemplate>
-        <template #default>
-          <p>Hi there! How can I help you today?</p>
-        </template>
-        <template #actions>
-          <ActionButton>
-            <template #label>
-              Add to cart
-            </template>
-          </ActionButton>
-        </template>
-      </MessageTemplate>
-      <MessageTemplate>
-        <template #default>
-          <p>Hi there! How can I help you today?</p>
-        </template>
-        <template #actions>
-          <AddToCartActions>
+    <template v-if="loggedIn">
+      <div class="chat-area-main">
+        <MessageTemplate>
+          <template #default>
+            <p>Hi there! How can I help you today?</p>
+          </template>
+          <template #actions>
+            <ActionButton>
+              <template #label>
+                Add to cart
+              </template>
+            </ActionButton>
+          </template>
+        </MessageTemplate>
+        <MessageTemplate>
+          <template #default>
+            <p>Hi there! How can I help you today?</p>
+          </template>
+          <template #actions>
+            <AddToCartActions>
 
-          </AddToCartActions>
-        </template>
-      </MessageTemplate>
-      <MessageTemplate>
-        <template #default>
-          <p>Hi there! How can I help you today?</p>
-        </template>
-        <template #actions>
-          <AddToCartActions is-exist>
+            </AddToCartActions>
+          </template>
+        </MessageTemplate>
+        <MessageTemplate>
+          <template #default>
+            <p>Hi there! How can I help you today?</p>
+          </template>
+          <template #actions>
+            <AddToCartActions is-exist>
 
-          </AddToCartActions>
-        </template>
-      </MessageTemplate>
-      <MessageTemplate class="owner">
-        <template #default>
-          <p>Hi there! How can I help you today?</p>
-        </template>
-      </MessageTemplate>
-      <MessageProduct></MessageProduct>
-    </div>
-    <ChatBotFooter></ChatBotFooter>
+            </AddToCartActions>
+          </template>
+        </MessageTemplate>
+        <MessageTemplate class="owner">
+          <template #default>
+            <p>Hi there! How can I help you today?</p>
+          </template>
+        </MessageTemplate>
+        <MessageProduct></MessageProduct>
+        <OrdersView></OrdersView>
+        <OrderDetails></OrderDetails>
+      </div>
+      <ChatBotFooter></ChatBotFooter>
+    </template>
+    <template v-else>
+      <LoginView/>
+    </template>
   </div>
 </template>
 

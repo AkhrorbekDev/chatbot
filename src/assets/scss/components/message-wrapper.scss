@@ -54,6 +54,13 @@
   &-actions {
     width: 100%;
     margin-top: 10px;
+    display: flex;
+    gap: 14px;
+
+    &:deep(.chat-msg-action) {
+      width: 100%;
+      flex: 1;
+    }
   }
 
 
@@ -121,6 +128,118 @@
     }
 
     .product-template-price {
+      font-size: 18px;
+      font-weight: normal;
+      margin-top: 16px;
+
+      &__label {
+        font-weight: 600;
+      }
+    }
+  }
+}
+
+.chat-msg.orders-view {
+  width: 100%;
+  flex: 1;
+
+  &:deep {
+    .chat-msg-content {
+      max-width: 100%;
+      flex: 1;
+
+      .chat-msg-profile {
+        display: none;
+      }
+
+      .chat-msg-content {
+        margin-left: 0;
+      }
+
+      .chat-msg {
+        padding-left: 0;
+        padding-right: 0;
+        padding-bottom: 35px;
+        width: 100%;
+
+        &:last-child {
+          padding-bottom: 0;
+        }
+      }
+    }
+
+    .chat-msg-text {
+
+      p {
+        color: var(--white);
+        line-height: 1.2;
+        font-size: 16px;
+        font-weight: normal;
+      }
+    }
+
+    .orders-view-description {
+      font-size: 16px;
+      font-weight: 400;
+    }
+
+    .orders-view-price {
+      font-size: 18px;
+      font-weight: normal;
+      margin-top: 16px;
+
+      &__label {
+        font-weight: 600;
+      }
+    }
+  }
+}
+
+.chat-msg.order-details {
+  width: 100%;
+  flex: 1;
+
+  &:deep {
+    .chat-msg-content {
+      max-width: 100%;
+      flex: 1;
+
+      .chat-msg-profile {
+        display: none;
+      }
+
+      .chat-msg-content {
+        margin-left: 0;
+      }
+
+      .chat-msg {
+        padding-left: 0;
+        padding-right: 0;
+        padding-bottom: 35px;
+        width: 100%;
+
+        &:last-child {
+          padding-bottom: 0;
+        }
+      }
+    }
+
+    .chat-msg-text {
+
+      p {
+        color: var(--white);
+        line-height: 1.2;
+        font-size: 16px;
+        font-weight: normal;
+      }
+    }
+
+    .orders-view-description {
+      font-size: 16px;
+      font-weight: 400;
+    }
+
+    .orders-view-price {
       font-size: 18px;
       font-weight: normal;
       margin-top: 16px;

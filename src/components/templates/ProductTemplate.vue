@@ -2,6 +2,7 @@
 
 import {PropType} from "vue";
 import {Product} from "@/types";
+import FeaturesTemplate from "@/components/templates/FeaturesTemplate.vue";
 
 defineProps({
   product: {
@@ -31,56 +32,7 @@ defineProps({
         Redmi 13C заслуживает внимания тех, кто ищет решение со средней ценой и высокими производительными
         характеристиками.
       </p>
-      <ul class="product-template-features">
-        <li class="product-template-features__row">
-          <div class="product-template-features__col">
-            <span class="product-template-features__key">Количество и тип SIM-карты</span>
-          </div>
-          <div class="product-template-features__col">
-            <span class="product-template-features__value">2 (Nano Sim)</span>
-          </div>
-        </li>
-        <li class="product-template-features__row">
-          <div class="product-template-features__col">
-            <span class="product-template-features__key">Количество и тип SIM-карты</span>
-          </div>
-          <div class="product-template-features__col">
-            <span class="product-template-features__value">2 (Nano Sim)</span>
-          </div>
-        </li>
-        <li class="product-template-features__row">
-          <div class="product-template-features__col">
-            <span class="product-template-features__key">Количество и тип SIM-карты</span>
-          </div>
-          <div class="product-template-features__col">
-            <span class="product-template-features__value">2 (Nano Sim)</span>
-          </div>
-        </li>
-        <li class="product-template-features__row">
-          <div class="product-template-features__col">
-            <span class="product-template-features__key">Количество и тип SIM-карты</span>
-          </div>
-          <div class="product-template-features__col">
-            <span class="product-template-features__value">2 (Nano Sim)</span>
-          </div>
-        </li>
-        <li class="product-template-features__row">
-          <div class="product-template-features__col">
-            <span class="product-template-features__key">Количество и тип SIM-карты</span>
-          </div>
-          <div class="product-template-features__col">
-            <span class="product-template-features__value">2 (Nano Sim)</span>
-          </div>
-        </li>
-        <li class="product-template-features__row">
-          <div class="product-template-features__col">
-            <span class="product-template-features__key">Количество и тип SIM-карты</span>
-          </div>
-          <div class="product-template-features__col">
-            <span class="product-template-features__value">2 (Nano Sim)</span>
-          </div>
-        </li>
-      </ul>
+      <FeaturesTemplate></FeaturesTemplate>
       <p class="product-template-price">
         <span class="product-template-price__label">💰Цена:</span> 1 000 000 сум
       </p>
@@ -130,63 +82,5 @@ defineProps({
     gap: 10px;
   }
 
-  &-features {
-    margin-top: 24px;
-
-    &__row {
-      display: flex;
-      margin-bottom: 12px;
-      width: 100%;
-      justify-content: space-between;
-    }
-
-    &__col {
-      align-items: baseline;
-      color: #999;
-      display: flex;
-      flex: 0 0 1;
-      font-size: 14px;
-      font-weight: 500;
-      line-height: 20px;
-      padding-right: 20px;
-      position: relative;
-      text-align: start;
-
-      &:before {
-        border-bottom: 1px dashed #999;
-        content: "";
-        display: block;
-        height: 20px;
-        left: 0;
-        position: absolute;
-        top: -5px;
-        width: 100%;
-        z-index: 1;
-      }
-
-      span {
-        background-color: var(--chat-text-bg);
-        display: inline-block;
-        padding-right: 6px;
-        word-break: break-all;
-        z-index: 2;
-      }
-
-      &:last-child {
-        flex: 0 0 calc(40% - 20px);
-        padding-right: 0;
-
-        &:before {
-          display: none;
-        }
-
-        span {
-          padding-left: 6px;
-          padding-right: 0;
-        }
-      }
-    }
-
-  }
 }
 </style>
