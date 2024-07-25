@@ -30,7 +30,7 @@
   --developer-color: var(--border-color);
   --button-bg-color: #393b40;
   --button-color: var(--body-color);
-  --input-chat-color: #6f7073;
+  --input-chat-color: white;
   --detail-font-color: var(--input-chat-color);
 }
 
@@ -59,4 +59,8 @@
       }
     }
   }
+}
+
+.validation-error {
+  color: red;
 }

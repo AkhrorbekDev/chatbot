@@ -1,9 +1,23 @@
 <script setup>
+import {computed} from "vue";
 
+const props = defineProps({
+  modelValue: {
+    type: String,
+    default: ''
+  }
+})
+
+const emit = defineEmits(['update:modelValue'])
+
+const model_value = computed({
+  get: () => props.modelValue,
+  set: (value) => emit('update:modelValue', value)
+})
 </script>
 
 <template>
-  <input class="base-input" type="text" placeholder="Type something here..."/>
+  <input v-model="model_value" class="base-input" type="text"/>
 </template>
 
 <style scoped lang="scss">

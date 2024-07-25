@@ -51,6 +51,7 @@
   align-items: center;
   padding: 0 20px;
   background: var(--chat-header-bg);
+  z-index: 2;
 }
 
 .close-btn {

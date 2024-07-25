@@ -3,7 +3,7 @@
   --background: #fff;
   --hover-color: #e8e8e8;
   --spin-color: #ddd;
-  --label-color: #c4c4c4;
+  --label-color: var(--input-chat-color);
   display: flex;
   flex-direction: column;
   width: 100%;

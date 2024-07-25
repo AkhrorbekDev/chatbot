@@ -1,35 +1,122 @@
-<script setup>
+<script setup lang="ts">
 import {Form as VeeForm, Field, ErrorMessage} from 'vee-validate'
 import PhoneInput from "@/components/PhoneInput.vue";
 import BaseInput from "@/components/BaseInput.vue";
-import {ref, watch} from "vue";
+import {inject, ref, watch} from "vue";
 import {defineRule} from 'vee-validate';
-import {required} from '@vee-validate/rules';
+import {required, length} from '@vee-validate/rules';
+import ActionButton from "@/components/ActionButton.vue";
+import {Authorization} from "@/core/Api/Authorization.js";
+import useLoading from "@/composables/useLoading";
 
 defineRule('required', required);
+defineRule('length', length);
 const phoneRef = ref(null)
+const vee_form = ref(null)
 const phone = ref('')
 const password = ref('')
 const phoneCode = ref('+998')
-const smsSending = ref(false)
+const smsSending = useLoading()
+const submiting = useLoading()
 const isRegistered = ref(false)
+const $auth = inject('$auth')
+const authorization = new Authorization({$auth})
+const loginType = ref('login')
+const inputType = ref('password')
+const userChecked = ref(false)
+
+let phoneNumber = ref('')
 
 watch(phone, (value) => {
   const prefix = phoneCode.value?.toLocaleString().replace(/\D/g, '')
   const phoneShort = phone.value?.replace(/[\D]/g, '')
-  const phoneNumber = prefix + phoneShort
-  const validLength = phoneRef.value?._phoneCodes[phoneCode]?.validationLength || 9
-  console.log(phoneShort, validLength)
-  if (smsSending.value) return
-  smsSending.value = false
+  phoneNumber.value = prefix + phoneShort
+  const validLength = phoneRef.value?._phoneCodes[prefix]?.validationLength || 9
+
+  if (smsSending.value.idle.value) return
+  smsSending.value.stop()
+  vee_form.value.setFieldError('error_field', '')
   if (phoneShort.length === validLength) {
-    smsSending.value = true
-    console.log('send sms', phoneNumber);
+    smsSending.value.start()
+    userChecked.value = false
+
+    authorization.checkUser(phoneNumber.value).then(async (response) => {
+      isRegistered.value = response.data.exists
+      if (!isRegistered.value) {
+        await sendSms().then(() => {
+          loginType.value = LoginType.register
+          inputType.value = 'text'
+        })
+      }
+      smsSending.value.stop()
+      userChecked.value = true
+    }).catch((error) => {
+      vee_form.value.setFieldError('error_field', error.message)
+
+      smsSending.value.stop()
+    })
   } else {
     console.log('invalid phone number')
   }
 })
 
+enum LoginType {
+  login = 'login',
+  register = 'register',
+  loginWithSms = 'loginWithSms',
+  sendSms = 'sendSms'
+}
+
+watch(isRegistered, (newVal) => {
+  if (!newVal) {
+    loginType.value = LoginType.register
+    inputType.value = 'text'
+  } else {
+    loginType.value = LoginType.login
+    inputType.value = 'password'
+  }
+})
+
+const submitHandlers = {
+  [LoginType.login]: login,
+  [LoginType.register]: register,
+  [LoginType.loginWithSms]: loginWithSms,
+  [LoginType.sendSms]: sendSms
+}
+
+function submit() {
+  return vee_form.value.validate()
+      .then(async res => {
+        if (res.valid && !submiting.value.idle.value) {
+          submiting.value.start()
+          await submitHandlers[loginType.value]()
+          submiting.value.stop()
+        } else {
+          console.log(res)
+        }
+      })
+}
+
+function sendSms() {
+  return authorization.sendSms({phone: phoneNumber.value})
+}
+
+function login() {
+  return $auth.login({
+    body: {
+      username: phoneNumber.value,
+      password: password.value
+    }
+  })
+}
+
+function loginWithSms() {
+  return
+}
+
+function register() {
+
+}
 </script>
 
 <template>
@@ -39,31 +126,46 @@ watch(phone, (value) => {
       <div class="login-view__form-form">
         <h1 class="login-view__form-title">Войти</h1>
 
-        <VeeForm>
+        <VeeForm ref="vee_form" @submit.prevent>
+
+          <Field name="error_field">
+            <ErrorMessage class="validation-error" name="error_field"/>
+          </Field>
+
           <Field
               v-model="phone"
               name="phone"
-              rules="required"
-              :rules="`required|length:${phoneRef?._phoneCodes[phoneCode] ?
-              phoneRef._phoneCodes[phoneCode].validationLength : 9}`"
+              :rules="`required|length:${phoneRef?._phoneCodes[phoneCode] ? phoneRef._phoneCodes[phoneCode].validationLength : 9}`"
           >
             <PhoneInput
                 ref="phoneRef"
                 v-model="phone"
+                label="phone number"
                 :code="phoneCode"
-                :loading="smsSending"
+                :loading="smsSending.idle"
+                :masked-value="false"
                 @select:code="phoneCode = $event"
             />
           </Field>
-
-          <Field
-              v-model="password"
-              name="password"
-              rules="required"
+          <template
+              v-if="userChecked"
           >
-            <BaseInput/>
-          </Field>
-          <button type="submit">Login</button>
+            <Field
+                v-model="password"
+                name="password"
+                rules="required"
+            >
+              <label class="login-view__form-label">
+                <span>password</span>
+                <BaseInput v-model="password" :type="inputType"/>
+              </label>
+            </Field>
+            <ActionButton :class="{__loading: submiting.idle}" type="button" @on:click="submit">
+              <template #label>
+                test
+              </template>
+            </ActionButton>
+          </template>
         </VeeForm>
       </div>
     </div>
@@ -93,6 +195,14 @@ watch(phone, (value) => {
     top: -10%;
     align-items: center;
     justify-content: center;
+
+    &-label {
+      span {
+        color: var(--input-chat-color);
+        margin-bottom: 8px;
+        display: block;
+      }
+    }
 
     &:deep(.phone-input) {
       .phone-input__wrapper {

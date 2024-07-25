@@ -1,0 +1,67 @@
+{
+  "env": {
+    "browser": true,
+    "es2021": true,
+    "node": true
+  },
+  "extends": [
+    "eslint:recommended",
+    "plugin:vue/vue3-essential",
+    "plugin:@typescript-eslint/recommended"
+  ],
+  "parserOptions": {
+    "ecmaVersion": "latest",
+    "parser": "@typescript-eslint/parser",
+    "sourceType": "module"
+  },
+  "plugins": [
+    "vue",
+    "@typescript-eslint"
+  ],
+  "rules": {
+    "vue/no-v-model-argument": 0,
+    "@typescript-eslint/no-empty-interface": 0,
+    "vue/no-v-for-template-key": "off",
+    "no-lonely-if": 0,
+    "no-console": "off",
+    "camelcase": "off",
+    "quotes": [
+      "error",
+      "single"
+    ],
+    "max-len": [
+      "error",
+      {
+        "code": 150,
+        "tabWidth": 2,
+        "ignoreComments": true,
+        "ignoreTrailingComments": true,
+        "ignoreUrls": true,
+        "ignorePattern": "d=\"([\\s\\S]*?)\"",
+        "ignoreStrings": true,
+        "ignoreTemplateLiterals": true,
+        "ignoreRegExpLiterals": true
+      }
+    ],
+    "vue/max-attributes-per-line": [
+      "error",
+      {
+        "singleline": {
+          "max": 10
+        },
+        "multiline": {
+          "max": 1
+        }
+      }
+    ],
+    "no-use-before-define": [
+      "error",
+      {
+        "functions": true,
+        "classes": true,
+        "variables": true,
+        "allowNamedExports": false
+      }
+    ]
+  }
+}

@@ -2,73 +2,47 @@
 import ChatBotFooter from "@/components/ChatBotFooter.vue";
 import ActionButton from "@/components/ActionButton.vue";
 import LoginView from "@/components/LoginView.vue";
-import {onMounted, onUnmounted, ref} from "vue";
+import {computed, inject, onMounted, onUnmounted, ref} from "vue";
 import AddToCartActions from "@/components/AddToCartActions.vue";
 import MessageTemplate from "@/components/templates/MessageTemplate.vue";
 import MessageProduct from "@/components/message-types/MessageProduct.vue";
 import OrdersView from "@/components/message-types/OrdersView.vue";
 import OrderDetails from "@/components/message-types/OrderDetails.vue";
+import {Botman} from "@/core/Api/Botman";
+import {createProductMessageDTO, createSampleMessageDTO} from "@/core/DTO";
 
-const canvas_context = ref(null)
-const canvas_context_gradient = ref(null)
-const chat_bot = ref(null)
+const $auth = inject('$auth')
+const loggedIn = computed(() => $auth.loggedIn)
+const botman = new Botman({$auth})
+const messages = ref([])
+const message = {}
 
-function resizeCanvas() {
-  const canvas = canvas_context.value
-  const chat = chat_bot.value
-  canvas.width = chat.getBoundingClientRect().width;
-  canvas.height = chat.getBoundingClientRect().height;
-  canvas_context_gradient.value.width = chat.getBoundingClientRect().width;
-  canvas_context_gradient.value.height = chat.getBoundingClientRect().height;
-  drawPattern();
+const getMessages = (params) => {
+  return botman.getMessages({
+    ...params
+  })
 }
 
-
-function drawPattern() {
-  const canvas = canvas_context.value
-  const ctx = canvas.getContext('2d');
-
-  const img = new Image();
-  img.src = '/mnt/data/bg-pattern.svg'; // Path to your uploaded SVG file
-  img.onload = function () {
-    const pattern = ctx.createPattern(img, 'repeat');
-    ctx.fillStyle = pattern;
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-  };
-  const canvas_gradient = canvas_context_gradient.value
-  const ctx_canvas_context_gradient = canvas_gradient.getContext('2d');
-
-  const angle = 130 * Math.PI / 180;
-  const x1 = 0;
-  const y1 = 0;
-  const x2 = canvas_gradient.width * Math.cos(angle);
-  const y2 = canvas_gradient.height * Math.sin(angle);
-
-  const gradient = ctx_canvas_context_gradient.createLinearGradient(x1, y1, x2, y2);
-  gradient.addColorStop(0, 'rgba(62, 47, 40, .5)');
-  gradient.addColorStop(1, 'rgba(28, 11, 35, .5)');
-
-  ctx_canvas_context_gradient.fillStyle = gradient;
-  ctx_canvas_context_gradient.fillRect(0, 0, canvas_gradient.width, canvas_gradient.height);
+const sendMessage = (params) => {
+  return botman.sendMessage({
+    ...params
+  })
 }
 
-const loggedIn = ref(false)
+const renderer = () => {
+
+}
+
 
 onMounted(() => {
-
-  window.addEventListener('resize', resizeCanvas);
-  resizeCanvas();
-});
-
-onUnmounted(() => {
-  window.removeEventListener('resize', resizeCanvas);
-});
+  getMessages().then((response) => {
+    messages.value = [{}]
+  })
+})
 </script>
 
 <template>
-  <div ref="chat_bot" class="chat-area">
-    <canvas ref="canvas_context_gradient"></canvas>
-    <canvas ref="canvas_context"></canvas>
+  <div class="chat-area">
     <template v-if="loggedIn">
       <div class="chat-area-main">
         <MessageTemplate>
@@ -108,7 +82,7 @@ onUnmounted(() => {
             <p>Hi there! How can I help you today?</p>
           </template>
         </MessageTemplate>
-        <MessageProduct></MessageProduct>
+        <MessageProduct :message="createProductMessageDTO({})"></MessageProduct>
         <OrdersView></OrdersView>
         <OrderDetails></OrderDetails>
       </div>
@@ -128,13 +102,6 @@ onUnmounted(() => {
   overflow: auto;
   height: 100%;
   position: relative;
-
-  canvas {
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: 1;
-  }
 
   &-header {
     display: flex;
