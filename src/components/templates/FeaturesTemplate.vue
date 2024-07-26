@@ -1,55 +1,27 @@
-<script setup>
+<script setup lang="ts">
+import {PropType} from "vue";
+import {ProductFeature} from "@/types";
 
+defineProps({
+  features: {
+    type: Array as PropType<ProductFeature[]>,
+    default: () => []
+  }
+})
 </script>
 
 <template>
   <ul class="product-template-features">
-    <li class="product-template-features__row">
+    <li v-for="feature in  features" :key="feature.name" class="product-template-features__row">
       <div class="product-template-features__col">
-        <span class="product-template-features__key">Количество и тип SIM-карты</span>
+        <span class="product-template-features__key">
+          {{ feature.name }}
+        </span>
       </div>
       <div class="product-template-features__col">
-        <span class="product-template-features__value">2 (Nano Sim)</span>
-      </div>
-    </li>
-    <li class="product-template-features__row">
-      <div class="product-template-features__col">
-        <span class="product-template-features__key">Количество и тип SIM-карты</span>
-      </div>
-      <div class="product-template-features__col">
-        <span class="product-template-features__value">2 (Nano Sim)</span>
-      </div>
-    </li>
-    <li class="product-template-features__row">
-      <div class="product-template-features__col">
-        <span class="product-template-features__key">Количество и тип SIM-карты</span>
-      </div>
-      <div class="product-template-features__col">
-        <span class="product-template-features__value">2 (Nano Sim)</span>
-      </div>
-    </li>
-    <li class="product-template-features__row">
-      <div class="product-template-features__col">
-        <span class="product-template-features__key">Количество и тип SIM-карты</span>
-      </div>
-      <div class="product-template-features__col">
-        <span class="product-template-features__value">2 (Nano Sim)</span>
-      </div>
-    </li>
-    <li class="product-template-features__row">
-      <div class="product-template-features__col">
-        <span class="product-template-features__key">Количество и тип SIM-карты</span>
-      </div>
-      <div class="product-template-features__col">
-        <span class="product-template-features__value">2 (Nano Sim)</span>
-      </div>
-    </li>
-    <li class="product-template-features__row">
-      <div class="product-template-features__col">
-        <span class="product-template-features__key">Количество и тип SIM-карты</span>
-      </div>
-      <div class="product-template-features__col">
-        <span class="product-template-features__value">2 (Nano Sim)</span>
+        <span class="product-template-features__value">
+          {{ feature.value }}
+        </span>
       </div>
     </li>
   </ul>
@@ -70,7 +42,7 @@
     align-items: baseline;
     color: #999;
     display: flex;
-    flex: 0 0 1;
+    flex: 0 0 60%;
     font-size: 14px;
     font-weight: 500;
     line-height: 20px;

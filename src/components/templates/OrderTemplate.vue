@@ -1,5 +1,13 @@
-<script setup>
+<script setup lang="ts">
+import {Order} from "@/types";
+import {PropType} from "vue";
 
+defineProps({
+  order: {
+    type: Object as PropType<Order>,
+    default: () => ({})
+  }
+})
 </script>
 
 <template>
@@ -7,27 +15,27 @@
     <ul class="orders-view__items">
       <li class="orders-view__item">
         <p class="orders-view__id">
-          Заказ: <b>123333</b>
+          Заказ: <b>{{ order.id }}</b>
         </p>
       </li>
       <li class="orders-view__item">
         <p class="orders-view__price">
-          Сумма: <b>123 333 сум</b>
+          Сумма: <b>{{ order.total_price }} сум</b>
         </p>
       </li>
       <li class="orders-view__item">
         <p class="orders-view__debt">
-          Долг: <b>123 333 сум</b>
+          Долг: <b>{{order.debt_price}} сум</b>
         </p>
       </li>
       <li class="orders-view__item">
         <p class="orders-view__payed">
-          Оплачено: <b>123 333 сум</b>
+          Оплачено: <b>{{ order.payed }} сум</b>
         </p>
       </li>
-      <li class="orders-view__item">
+      <li v-if="order.next_payment" class="orders-view__item">
         <p class="orders-view__next-payment">
-          Следующий платеж: <b>28.08.2024</b>
+          Следующий платеж: <b>{{ order.next_payment }}</b>
         </p>
       </li>
     </ul>

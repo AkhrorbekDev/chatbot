@@ -54,12 +54,16 @@
   &-actions {
     width: 100%;
     margin-top: 10px;
-    display: flex;
+    display: grid;
     gap: 14px;
+    grid-template-columns: repeat(2, 1fr);
 
-    &:deep(.chat-msg-action) {
+    &:deep(.chat-msg-action), &:deep(.chat-msg-actions), &:deep(.add-to-cart-actions) {
       width: 100%;
-      flex: 1;
+
+      &:nth-child(odd):is(:last-child) {
+        grid-column: span 2;
+      }
     }
   }
 

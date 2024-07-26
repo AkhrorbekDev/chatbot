@@ -16,45 +16,46 @@ import type {
 interface OrderDetailsMessageParams {
     user: User;
     created_at: string;
-    content: string | [];
-    content_type: keyof ContentTypes;
+    content?: string | [];
+    content_type: ContentTypes.OrderDetails;
     order: Order;
-    actions: Action[];
+    actions?: Action[];
 }
 
 interface OrderViewMessageParams {
     user: User;
     created_at: string;
-    content: string | [];
-    content_type: keyof ContentTypes;
+    content?: string | [];
+    content_type: ContentTypes.OrdersView;
     orders: Order[];
+    actions?: Action[];
 }
 
 interface ProductMessageParams {
     user: User;
     created_at: string;
-    content: string | [];
-    content_type: keyof ContentTypes;
+    content?: string | [];
+    content_type: ContentTypes.Product;
     product: Product;
-    actions: Action[];
+    actions?: Action[];
 }
 
 interface SampleMessageParams {
     user: User;
     created_at: string;
     content: string | [];
-    content_type: keyof ContentTypes;
-    actions: Action[];
+    content_type: ContentTypes;
+    actions?: Action[];
 }
 
 export const createOrderDetailsMessageDTO = (
     params: OrderDetailsMessageParams
 ): OrderDetailsMessage => ({
-    ...params.order,
     user: params.user,
     created_at: params.created_at,
     content: params.content,
     content_type: params.content_type,
+    order: params.order,
     actions: params.actions
 });
 
@@ -88,3 +89,13 @@ export const createSampleMessageDTO = (
     content_type: params.content_type,
     actions: params.actions
 });
+
+export const createOrderDTO = (data: Order): Order => ({
+    id: data.id,
+    total_price: data.total_price,
+    debt_price: data.debt_price,
+    created_at: data.created_at,
+    address: data.address,
+    payed: data.payed,
+    next_payment: data.next_payment,
+})

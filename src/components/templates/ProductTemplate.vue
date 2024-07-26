@@ -9,32 +9,27 @@ defineProps({
     type: Object as PropType<Product>,
     default: () => ({})
   },
-  isExist: {
-    type: Boolean,
-    default: false
-  }
 })
 </script>
 
 <template>
   <div class="product-template">
-    <div class="product-template-image">
+    <div v-if="product.image" class="product-template-image">
       <img
           class="product-template-img"
-          src="https://olcha.uz/image/original/products/cdn_1/supplier/stores/1/2024-06-24/B1sstxZM8xJNQz63joKdoUbYOi0pyMZoRvRBrL9r7FXX8SC3vmeiqFqQBOfa.jpg"
-          alt=""/>
+          :src="product.image"
+          :alt="product.name"/>
     </div>
     <div class="product-template-content">
       <p class="product-template-title">
-        Redmi 13C (Бывший в употреблении) Midnight Black 8/256 GB
+        {{ product.name }}
       </p>
-      <p class="product-template-description">
-        Redmi 13C заслуживает внимания тех, кто ищет решение со средней ценой и высокими производительными
-        характеристиками.
+      <p v-if="product.description" class="product-template-description">
+        {{ product.description }}
       </p>
-      <FeaturesTemplate></FeaturesTemplate>
+      <FeaturesTemplate :features="product.features"></FeaturesTemplate>
       <p class="product-template-price">
-        <span class="product-template-price__label">💰Цена:</span> 1 000 000 сум
+        <span class="product-template-price__label">💰Цена:</span> {{ product.price }} сум
       </p>
     </div>
 
@@ -65,7 +60,7 @@ defineProps({
   &-img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: contain;
   }
 
   &-content {

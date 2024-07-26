@@ -1,45 +1,37 @@
-<script setup>
+<script setup lang="ts">
 
 import MessageTemplate from "@/components/templates/MessageTemplate.vue";
 import OrderTemplate from "@/components/templates/OrderTemplate.vue";
 import ActionButton from "@/components/ActionButton.vue";
 import EmptyMessageTemplate from "@/components/templates/EmptyMessageTemplate.vue";
+import {PropType} from "vue";
+import {OrderViewMessage} from "@/types";
+import {createOrderDTO} from "@/core/DTO";
+
+defineProps({
+  message: {
+    type: Object as PropType<OrderViewMessage>,
+    default: () => []
+  }
+})
 </script>
 
 <template>
   <EmptyMessageTemplate class="orders-view">
-    <MessageTemplate>
+    <MessageTemplate v-for="order in message.orders" :key="order.id">
       <template #default>
-        <OrderTemplate/>
+        <OrderTemplate :order="createOrderDTO(order)" />
       </template>
 
       <template #actions>
-        <ActionButton>
+        <ActionButton v-for="action in message.actions">
           <template #label>
-            Pay
+            {{ action.text }}
           </template>
-        </ActionButton>
-        <ActionButton>
-          <template #label>
-            More details
-          </template>
-        </ActionButton>
-      </template>
-    </MessageTemplate>
-    <MessageTemplate>
-      <template #default>
-        <OrderTemplate/>
-      </template>
-
-      <template #actions>
-        <ActionButton>
-          <template #label>
-            Pay
-          </template>
-        </ActionButton>
-        <ActionButton>
-          <template #label>
-            More details
+          <template #img>
+            <template v-if="action.icon">
+              <img :src="action.icon" />
+            </template>
           </template>
         </ActionButton>
       </template>

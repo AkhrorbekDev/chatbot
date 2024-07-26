@@ -5,10 +5,11 @@ import {vMaska} from "maska/vue"
 import createAuth from "@/modules/auth";
 import Storage from '@/modules/storage';
 import {createPinia} from "pinia";
-import process from "node:process";
 
 const pinia = createPinia()
 const app = createApp(App)
+app
+    .use(pinia)
 
 const auth = await createAuth(app, {
     baseURL: 'https://auth.olcha.uz/api',
@@ -63,6 +64,5 @@ const auth = await createAuth(app, {
 app
     .directive('maska', vMaska)
     .use(Storage)
-    .use(pinia)
     .use(auth).mount('#app')
 export {App}

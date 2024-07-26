@@ -1,5 +1,14 @@
-<script setup>
+<script setup lang="ts">
 
+import {Order} from "@/types";
+import {PropType} from "vue";
+
+defineProps({
+  order: {
+    type: Object as PropType<Order>,
+    default: () => ({})
+  }
+})
 </script>
 
 <template>
@@ -10,7 +19,7 @@
           Заказ:
         </p>
         <p class="order-detail__item-value">
-          <b>123333</b>
+          <b>#{{ order.id }}</b>
         </p>
       </li>
       <li class="order-detail__item __products">
@@ -18,17 +27,9 @@
           Продукты:
         </p>
         <ol class="order-detail__item-value">
-          <li>
-            <p>TV приставка Xiaomi TV Stick 4K</p>
-          </li>
-          <li>
-            <p>TV приставка Xiaomi TV Stick 4K</p>
-          </li>
-          <li>
-            <p>TV приставка Xiaomi TV Stick 4K</p>
-          </li>
-          <li>
-            <p>TV приставка Xiaomi TV Stick 4K</p>
+          <li v-for="product in order.products" :key="product.id">
+            <p>{{ product.name }}</p>
+            <p>{{ product.quantity }}x</p>
           </li>
         </ol>
       </li>
@@ -37,7 +38,7 @@
           Сумма:
         </p>
         <p class="order-detail__item-value">
-          <b>123 333 сум</b>
+          <b>{{ order.total_price }} сум</b>
         </p>
       </li>
       <li class="order-detail__item">
@@ -45,7 +46,7 @@
           Долг:
         </p>
         <p class="order-detail__item-value">
-          <b>123 333 сум</b>
+          <b>{{ order.debt_price }} сум</b>
         </p>
       </li>
       <li class="order-detail__item">
@@ -53,7 +54,7 @@
           Адрес:
         </p>
         <p class="order-detail__item-value">
-          <b>123 333 сум</b>
+          <b>{{ order.address }}</b>
         </p>
       </li>
       <li class="order-detail__item">
@@ -61,7 +62,7 @@
           Дата:
         </p>
         <p class="order-detail__item-value">
-          <b>123 333 сум</b>
+          <b>{{ order.created_at }}</b>
         </p>
       </li>
     </ul>
@@ -89,13 +90,17 @@
       display: block;
 
       ol {
-        margin-left: 14px;
-        margin-top: 14px;
+        margin-top: 16px;
+        margin-bottom: 16px;
 
         li {
           padding: 4px 0;
           list-style: circle;
           color: white;
+          display: flex;
+          gap: 12px;
+          align-items: flex-start;
+          justify-content: space-between;
         }
       }
     }

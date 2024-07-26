@@ -13,7 +13,7 @@ function onClick() {
       <span class="chat-msg-action__label">
         <slot name="label"></slot>
       </span>
-      <span class="chat-msg-action__img">
+      <span v-if="$slots.img" class="chat-msg-action__img">
         <slot name="img"></slot>
       </span>
     </button>
@@ -72,6 +72,10 @@ function onClick() {
     overflow: hidden;
     font-weight: 500;
     background: var(--action-bg-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
 
     &:focus {
       outline: none;
