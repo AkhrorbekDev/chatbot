@@ -55,6 +55,9 @@ export class Auth {
     async mounted() {
         this.setInterceptor()
         this.loggedIn = await this.getloggedIn()
+        if (this.loggedIn) {
+            this.$storage.setState('loggedIn', true)
+        }
         const statuses = await this.check()
         if (!statuses.valid) {
             this.reset()

@@ -13,8 +13,8 @@ defineProps({
 </script>
 
 <template>
-  <div class="chat-msg" :class="{owner: message.user?.owner}">
-    <div class="chat-msg-profile">
+  <div class="chat-msg" :class="{owner: message.user && message.user.owner}">
+    <div class="chat-msg-profile" v-if="message.user">
       <img class="chat-msg-img" :src="message.user?.avatar"
            alt=""/>
       <div class="chat-msg-date">

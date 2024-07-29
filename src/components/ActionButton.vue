@@ -3,7 +3,7 @@
 const emit = defineEmits(['on:click']);
 
 function onClick() {
-  emit('on:click')
+  emit('on:action')
 }
 </script>
 

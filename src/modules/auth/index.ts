@@ -9,10 +9,10 @@ export default async function createAuth(app: App, options: ModuleOptions | obje
         moduleDefaults
     )
     const auth = new Auth(app, option)
-    await auth.init()
-
+    console.log('auth', auth)
     return {
         install: () => {
+            auth.init()
             app.provide('$auth', auth)
             app.config.globalProperties.$auth = auth
             return auth

@@ -3,15 +3,10 @@
 import ChatBot from "@/components/ChatBot.vue";
 import ChatHeader from "@/components/ChatHeader.vue";
 import {computed, onMounted, onUnmounted, ref} from "vue";
-import LoginView from "@/components/LoginView.vue";
 
 const canvas_context = ref(null)
 const canvas_context_gradient = ref(null)
 const chat_bot = ref(null)
-const loggedIn = computed(() => {
-  console.log($auth.loggedIn)
-  return $auth.loggedIn
-})
 
 
 function resizeCanvas() {

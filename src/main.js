@@ -10,6 +10,8 @@ const pinia = createPinia()
 const app = createApp(App)
 app
     .use(pinia)
+    .use(Storage)
+
 
 const auth = await createAuth(app, {
     baseURL: 'https://auth.olcha.uz/api',
@@ -63,6 +65,5 @@ const auth = await createAuth(app, {
 })
 app
     .directive('maska', vMaska)
-    .use(Storage)
     .use(auth).mount('#app')
 export {App}

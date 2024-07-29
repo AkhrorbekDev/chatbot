@@ -6,7 +6,6 @@ import {ref} from "vue";
 let timeout = null
 
 const typing = (message) => {
-
   if (timeout) clearTimeout(timeout)
 
   timeout = setTimeout(() => {
@@ -17,9 +16,10 @@ const typing = (message) => {
 }
 const message = ref('');
 const emit = defineEmits(['send:message'])
-const returnMessage = () => {
+const returnMessage = (e) => {
   if (message.value) {
     emit('send:message', {message: message.value})
+    e.target.value = ''
   }
 }
 

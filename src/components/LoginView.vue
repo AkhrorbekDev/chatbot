@@ -11,6 +11,7 @@ import useLoading from "@/composables/useLoading";
 
 defineRule('required', required);
 defineRule('length', length);
+
 const phoneRef = ref(null)
 const vee_form = ref(null)
 const phone = ref('')

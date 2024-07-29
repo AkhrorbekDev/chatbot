@@ -3,10 +3,10 @@ import ApiCore from "./core/ApiCore";
 
 export class Botman extends ApiCore {
     getMessages(data: Object) {
-        return this.get(`/botman`, data)
+        return this.get(`/chat`, {data})
     }
 
     sendMessage(data: Object) {
-        return this.post(`/botman`, data)
+        return this.post(`/chat`, {data})
     }
 }
