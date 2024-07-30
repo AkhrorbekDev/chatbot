@@ -1,5 +1,4 @@
 import Pusher from 'pusher'
-import http from 'http'
 import bodyParser from 'body-parser'
 import express from 'express'
 import morgan from 'morgan'
@@ -41,6 +40,18 @@ app.post("/pusher/user-auth", (req, res) => {
     res.sendStatus(200);
 });
 
+app.post('/pusher/send-sms', (req, res) => {
+    pusher.trigger(
+        "botman",
+        "on:message",
+        {
+            message: "hello world test 1",
+        },
+        {}
+    );
+    res.setHeader("Content-Type", "application/json");
+    res.sendStatus(200);
+})
 
 app.post("/pusher/auth", (req, res) => {
     const socketId = req.body.socket_id;
@@ -53,7 +64,8 @@ app.post("/pusher/auth", (req, res) => {
     const presenceData = {
         user_id: "unique_user_id",
         user_info: {
-            name: "Mr Channels", twitter_id: "@pusher"},
+            name: "Mr Channels", twitter_id: "@pusher"
+        },
     };
     // This authenticates every user. Don't do this in production!
     const authResponse = pusher.authorizeChannel(socketId, channel, presenceData);
@@ -64,11 +76,3 @@ pusher.trigger('botman', 'on:message', {'message': 'hello world test'})
 
 const port = process.env.PORT || 8888;
 app.listen(port);
-
-pusher.trigger("botman", "send:message", {
-    message: "hello world"
-});
-
-pusher.trigger("botman", "in:message", {
-    message: "hello world"
-});

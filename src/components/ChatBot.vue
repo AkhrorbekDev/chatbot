@@ -33,13 +33,13 @@ import EmptyMessageTemplate from "@/components/templates/EmptyMessageTemplate.vu
 const pusher = new Pusher('21f054cecc8f4861fa4b', {
   cluster: 'ap2',
   userAuthentication: {
-    endpoint: "http://localhost:8888/pusher/user-auth",
+    endpoint: "https://ajalchat.crmgeomotive.uz/api/v1/pusher/user-auth",
     transport: "ajax",
     params: {},
     customHandler: null,
   },
   channelAuthorization: {
-    endpoint: "http://localhost:8888/pusher/auth",
+    endpoint: "https://ajalchat.crmgeomotive.uz/api/v1/pusher/auth",
     transport: "ajax",
     params: {},
     customHandler: null,
