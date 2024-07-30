@@ -21,7 +21,7 @@ defineProps({
       <OrderDetailsTemplate :order="message.order"/>
     </template>
     <template #actions>
-      <ActionButton v-for="action in message.actions">
+      <ActionButton :action="action" v-for="action in message.actions" @on:action="$emit('on:action', action)">
         <template #label>
           {{ action.text }}
         </template>

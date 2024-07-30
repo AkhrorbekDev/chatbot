@@ -95,10 +95,11 @@ function onClick() {
 
   &__img {
     display: block;
+    width: 1rem;
+    height: 1rem;
 
     img {
-      width: 2rem;
-      height: 2rem;
+
       border-radius: 50%;
     }
   }

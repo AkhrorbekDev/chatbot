@@ -21,10 +21,10 @@ defineProps({
     <template #actions>
       <template v-for="action in message.actions" :key="action.type">
         <template v-if="action.type === 'add_to_cart'">
-          <AddToCartActions />
+          <AddToCartActions :action="action" @on:action="$emit('on:action', action)"/>
         </template>
         <template v-else>
-          <ActionButton />
+          <ActionButton :action="action" @on:action="$emit('on:action', action)"/>
         </template>
       </template>
     </template>

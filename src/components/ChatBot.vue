@@ -87,18 +87,373 @@ const paginateMessages = () => {
         .then((res) => {
           messages.value = [...res.data.message, ...messages.value]
           pagination.value = res.data.paginator
-        })
+        }).catch(() => {
+      const data = [
+        {
+          content_type: ContentTypes.Text,
+          content: 'Hi there! How can I help you today?',
+          actions: [{
+            text: 'Add to cart',
+            // icon: 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/3364143/download+%283%29+%281%29.png',
+            type: 'add_to_cart',
+            alias: 'product_id123333'
+          }],
+          created_at: new Date().toISOString(),
+          user: {
+            id: '1',
+            name: 'Botman',
+            avatar: 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/3364143/download+%283%29+%281%29.png',
+            last_sean: new Date().toISOString()
+          },
+        },
+        {
+          user: {
+            id: '3', name: 'Botman',
+            avatar: 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/3364143/download+%283%29+%281%29.png',
+            last_sean: new Date().toISOString()
+          },
+          created_at: new Date().toISOString(),
+          content_type: ContentTypes.Product,
+          content: [],
+          product: {
+            id: 'prod1',
+            name: 'Redmi 13C (Бывший в употреблении) Midnight Black 8/256 GB',
+            description: 'Product 1 description',
+            discount: 10,
+            price: 1000000,
+            features: [{
+              name: 'Контроллер в комплекте\n',
+              value: 'Value 1'
+            }, {
+              name: 'Контроллер в комплекте\n',
+              value: 'Value 2'
+            }],
+            image: 'https://olcha.uz/image/300x300/products/PaM0CUVGoX5QsvtKi6TiICrUtZW0lmfgz9q07KKoHKnyHbDP33p0egVhTFIf.jpg',
+          },
+          actions: [{
+            type: 'add_to_cart',
+            text: 'Buy Now',
+            icon: 'https://example.com/buy.png',
+            alias: 'product_id123333'
+
+          }, {
+            type: 'add_to_cart',
+            text: 'Buy Now',
+            icon: 'https://example.com/buy.png',
+            alias: 'product_id123333'
+
+          }, {
+            type: 'add_to_cart',
+            text: 'Buy Now',
+            icon: 'https://example.com/buy.png',
+            alias: 'product_id123333'
+
+          }]
+        },
+        {
+          content_type: ContentTypes.OrdersView,
+          created_at: new Date().toISOString(),
+          content: [],
+          user: {
+            id: '1',
+            name: 'Botman',
+            avatar: 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/3364143/download+%283%29+%281%29.png',
+            last_sean: new Date().toISOString()
+          },
+          orders: [{
+            id: '1',
+            total_price: 1000000,
+            debt_price: 1000000,
+            payed: 0,
+            next_payment: '2022-12-12',
+            address: 'Tashkent, Mirzo Ulugbek district, 12-23',
+            created_at: new Date().toISOString()
+          },
+            {
+              id: '1',
+              total_price: 1000000,
+              debt_price: 1000000,
+              payed: 0,
+              next_payment: '2022-12-12',
+              address: 'Tashkent, Mirzo Ulugbek district, 12-23',
+              created_at: new Date().toISOString()
+            }],
+          actions: [{
+            text: 'Pay now',
+            icon: 'https://example.com/pay.png',
+            alias: 'order_id123333',
+            type: 'pay_now'
+          }]
+
+        },
+        {
+          content_type: ContentTypes.OrderDetails,
+          created_at: new Date().toISOString(),
+          content: [],
+          user: {
+            id: '1',
+            name: 'Botman',
+            avatar: 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/3364143/download+%283%29+%281%29.png',
+            last_sean: new Date().toISOString()
+          },
+          order: {
+            id: '1',
+            total_price: 1000000,
+            debt_price: 1000000,
+            payed: 0,
+            products: [
+              {
+                id: 'prod1',
+                name: 'Redmi 13C (Бывший в употреблении) Midnight Black 8/256 GB',
+                description: 'Product 1 description',
+                discount: 10,
+                price: 1000000,
+                features: [{
+                  name: 'Контроллер в комплекте\n',
+                  value: 'Value 1'
+                }, {
+                  name: 'Контроллер в комплекте\n',
+                  value: 'Value 2'
+                }],
+                quantity: 2,
+                image: 'https://olcha.uz/image/300x300/products/PaM0CUVGoX5QsvtKi6TiICrUtZW0lmfgz9q07KKoHKnyHbDP33p0egVhTFIf.jpg',
+              },
+              {
+                id: 'prod1',
+                name: 'Redmi 13C (Бывший в употреблении) Midnight Black 8/256 GB',
+                description: 'Product 1 description',
+                discount: 10,
+                price: 1000000,
+                features: [{
+                  name: 'Контроллер в комплекте\n',
+                  value: 'Value 1'
+                }, {
+                  name: 'Контроллер в комплекте\n',
+                  value: 'Value 2'
+                }],
+                quantity: 3,
+                image: 'https://olcha.uz/image/300x300/products/PaM0CUVGoX5QsvtKi6TiICrUtZW0lmfgz9q07KKoHKnyHbDP33p0egVhTFIf.jpg',
+              }
+            ],
+            created_at: new Date().toISOString(),
+            next_payment: '2022-12-12',
+            address: 'Tashkent, Mirzo Ulugbek district, 12-23',
+          },
+          actions: [{
+            text: 'Pay now',
+            icon: 'https://example.com/pay.png',
+            alias: 'order_id123333',
+            type: 'pay_now'
+          }]
+
+        }
+      ]
+      messages.value = [...data, ...messages.value]
+    })
   }
 }
 
 const getMessages = (params = {}) => {
   return botman.getMessages({
     ...params
+  }).catch(() => {
+    const data = [
+      {
+        content_type: ContentTypes.Text,
+        content: 'Hi there! How can I help you today?',
+        actions: [{
+          text: 'Add to cart',
+          // icon: 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/3364143/download+%283%29+%281%29.png',
+          type: 'add_to_cart',
+          alias: 'product_id123333'
+        }],
+        created_at: new Date().toISOString(),
+        user: {
+          id: '1',
+          name: 'Botman',
+          avatar: 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/3364143/download+%283%29+%281%29.png',
+          last_sean: new Date().toISOString()
+        },
+      },
+      {
+        user: {
+          id: '3', name: 'Botman',
+          avatar: 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/3364143/download+%283%29+%281%29.png',
+          last_sean: new Date().toISOString()
+        },
+        created_at: new Date().toISOString(),
+        content_type: ContentTypes.Product,
+        content: [],
+        products: [{
+          id: 'prod1',
+          name: 'Redmi 13C (Бывший в употреблении) Midnight Black 8/256 GB',
+          description: 'Product 1 description',
+          discount: 10,
+          price: 1000000,
+          features: [{
+            name: 'Контроллер в комплекте\n',
+            value: 'Value 1'
+          }, {
+            name: 'Контроллер в комплекте\n',
+            value: 'Value 2'
+          }],
+          image: 'https://olcha.uz/image/300x300/products/PaM0CUVGoX5QsvtKi6TiICrUtZW0lmfgz9q07KKoHKnyHbDP33p0egVhTFIf.jpg',
+        }, {
+          id: 'prod1',
+          name: 'Redmi 13C (Бывший в употреблении) Midnight Black 8/256 GB',
+          description: 'Product 1 description',
+          discount: 10,
+          price: 1000000,
+          features: [{
+            name: 'Контроллер в комплекте\n',
+            value: 'Value 1'
+          }, {
+            name: 'Контроллер в комплекте\n',
+            value: 'Value 2'
+          }],
+          image: 'https://olcha.uz/image/300x300/products/PaM0CUVGoX5QsvtKi6TiICrUtZW0lmfgz9q07KKoHKnyHbDP33p0egVhTFIf.jpg',
+        }, {
+          id: 'prod1',
+          name: 'Redmi 13C (Бывший в употреблении) Midnight Black 8/256 GB',
+          description: 'Product 1 description',
+          discount: 10,
+          price: 1000000,
+          features: [{
+            name: 'Контроллер в комплекте\n',
+            value: 'Value 1'
+          }, {
+            name: 'Контроллер в комплекте\n',
+            value: 'Value 2'
+          }],
+          image: 'https://olcha.uz/image/300x300/products/PaM0CUVGoX5QsvtKi6TiICrUtZW0lmfgz9q07KKoHKnyHbDP33p0egVhTFIf.jpg',
+        }],
+        actions: [{
+          type: 'add_to_cart',
+          text: 'Buy Now',
+          icon: 'https://example.com/buy.png',
+          alias: 'product_id123333'
+
+        }, {
+          type: 'add_to_cart',
+          text: 'Buy Now',
+          icon: 'https://example.com/buy.png',
+          alias: 'product_id123333'
+
+        }, {
+          type: 'add_to_cart',
+          text: 'Buy Now',
+          icon: 'https://example.com/buy.png',
+          alias: 'product_id123333'
+
+        }]
+      },
+      {
+        content_type: ContentTypes.OrdersView,
+        created_at: new Date().toISOString(),
+        content: [],
+        user: {
+          id: '1',
+          name: 'Botman',
+          avatar: 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/3364143/download+%283%29+%281%29.png',
+          last_sean: new Date().toISOString()
+        },
+        orders: [{
+          id: '1',
+          total_price: 1000000,
+          debt_price: 1000000,
+          payed: 0,
+          next_payment: '2022-12-12',
+          address: 'Tashkent, Mirzo Ulugbek district, 12-23',
+          created_at: new Date().toISOString()
+        },
+          {
+            id: '1',
+            total_price: 1000000,
+            debt_price: 1000000,
+            payed: 0,
+            next_payment: '2022-12-12',
+            address: 'Tashkent, Mirzo Ulugbek district, 12-23',
+            created_at: new Date().toISOString()
+          }],
+        actions: [{
+          text: 'Pay now',
+          icon: 'https://example.com/pay.png',
+          alias: 'order_id123333',
+          type: 'pay_now'
+        }]
+
+      },
+      {
+        content_type: ContentTypes.OrderDetails,
+        created_at: new Date().toISOString(),
+        content: [],
+        user: {
+          id: '1',
+          name: 'Botman',
+          avatar: 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/3364143/download+%283%29+%281%29.png',
+          last_sean: new Date().toISOString()
+        },
+        order: {
+          id: '1',
+          total_price: 1000000,
+          debt_price: 1000000,
+          payed: 0,
+          products: [
+            {
+              id: 'prod1',
+              name: 'Redmi 13C (Бывший в употреблении) Midnight Black 8/256 GB',
+              description: 'Product 1 description',
+              discount: 10,
+              price: 1000000,
+              features: [{
+                name: 'Контроллер в комплекте\n',
+                value: 'Value 1'
+              }, {
+                name: 'Контроллер в комплекте\n',
+                value: 'Value 2'
+              }],
+              quantity: 2,
+              image: 'https://olcha.uz/image/300x300/products/PaM0CUVGoX5QsvtKi6TiICrUtZW0lmfgz9q07KKoHKnyHbDP33p0egVhTFIf.jpg',
+            },
+            {
+              id: 'prod1',
+              name: 'Redmi 13C (Бывший в употреблении) Midnight Black 8/256 GB',
+              description: 'Product 1 description',
+              discount: 10,
+              price: 1000000,
+              features: [{
+                name: 'Контроллер в комплекте\n',
+                value: 'Value 1'
+              }, {
+                name: 'Контроллер в комплекте\n',
+                value: 'Value 2'
+              }],
+              quantity: 3,
+              image: 'https://olcha.uz/image/300x300/products/PaM0CUVGoX5QsvtKi6TiICrUtZW0lmfgz9q07KKoHKnyHbDP33p0egVhTFIf.jpg',
+            }
+          ],
+          created_at: new Date().toISOString(),
+          next_payment: '2022-12-12',
+          address: 'Tashkent, Mirzo Ulugbek district, 12-23',
+        },
+        actions: [{
+          text: 'Pay now',
+          icon: 'https://example.com/pay.png',
+          alias: 'order_id123333',
+          type: 'pay_now'
+        }]
+
+      }
+    ]
+    messages.value = [...data]
   })
 }
 
 const handleAction = (action) => {
-  sendMessage({message: action.text})
+  sendMessage({
+    message: action.text,
+    payload: action.payload,
+  })
 }
 
 const createSampleMessage = (content) => {
@@ -111,7 +466,8 @@ const sampleMessageRenderer = (message: SampleMessage) => {
     default: () => h('p', {}, message.content),
     actions: () => message.actions && message.actions.map((action) => {
       return h(ActionButton, {
-        action
+        action,
+        'onOn:action': () => handleAction(action)
       }, {
         label: () => h('span', {}, action.text),
         img: () => action.icon ? h('img', {src: action.icon}) : false
@@ -120,10 +476,9 @@ const sampleMessageRenderer = (message: SampleMessage) => {
   })
 }
 const productMessageRenderer = (message: ProductMessage) => {
-  console.log(message)
   if (message.products) {
     const products = message.products
-    return h(EmptyMessageTemplate, {}, products.map((product) => {
+    return h(EmptyMessageTemplate, {class: '__products-template'}, products.map((product) => {
       return h(MessageProduct, {message: createProductMessageDTO({...message, user: undefined, product})})
     }))
   }
@@ -146,7 +501,10 @@ const sendMessage = (params) => {
   })
   inComeMessage(newMessage)
   messages.value.unshift(newMessage)
-  return botman.sendMessage({message: newMessage}).then((res) => {
+  return botman.sendMessage({
+    message: newMessage,
+    payload: params.payload,
+  }).then((res) => {
     messages.value.unshift(...res.data.reverse())
   }).finally(() => {
 
@@ -158,7 +516,6 @@ const lastScrollEndHeight = ref(null)
 
 watch(messages, () => {
   const lastMessage = messages.value[0]
-  console.log(messages.value, lastMessage)
   if (!lastMessage.id && lastMessage.id !== lastItemId.value && lastMessage.user.owner) {
     lastItemId.value = null
     chatContainer.value.scrollTop = chatContainer.value.scrollHeight;
@@ -236,7 +593,7 @@ onMounted(() => {
     <template v-if="loggedIn">
       <div ref="chatContainer" class="chat-area-main" @scroll="handleScroll">
         <template v-for="message in messages">
-          <component :is="renderer(message)" :message="message" @on:action="handleAction(message.action)"></component>
+          <component :is="renderer(message)" :message="message" @on:action="handleAction"></component>
         </template>
         <template
             v-if="pagination.last_page > pagination.current_page "

@@ -161,7 +161,7 @@ function register() {
                 <BaseInput v-model="password" :type="inputType"/>
               </label>
             </Field>
-            <ActionButton :class="{__loading: submiting.idle}" type="button" @on:click="submit">
+            <ActionButton :class="{__loading: submiting.idle}" type="button" @on:action="submit">
               <template #label>
                 test
               </template>

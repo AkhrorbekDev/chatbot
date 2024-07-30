@@ -28,7 +28,7 @@ defineProps({
         {{ product.description }}
       </p>
       <FeaturesTemplate :features="product.features"></FeaturesTemplate>
-      <p class="product-template-price">
+      <p v-if="product.price" class="product-template-price">
         <span class="product-template-price__label">💰Цена:</span> {{ product.price }} сум
       </p>
     </div>

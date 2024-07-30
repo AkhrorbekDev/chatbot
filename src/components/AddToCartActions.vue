@@ -8,6 +8,10 @@ defineProps({
   isExist: {
     type: Boolean,
     default: false
+  },
+  action: {
+    type: Object,
+    default: () => {}
   }
 })
 </script>
@@ -28,9 +32,9 @@ defineProps({
       </ActionButton>
     </template>
     <template v-else>
-      <ActionButton>
+      <ActionButton @on:action="$emit('on:action')">
         <template #label>
-          Add to cart
+          {{ action.text }}
         </template>
       </ActionButton>
     </template>
