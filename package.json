@@ -15,7 +15,7 @@
     }
   },
   "scripts": {
-    "dev": "vite --host",
+    "dev": "vite --host --port=3333",
     "build": "vite build",
     "preview": "vite preview"
   },

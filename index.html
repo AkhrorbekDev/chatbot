@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <link rel="icon" href="/favicon.ico">
     <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
-    <script type="module" src="/dist/chat-widget.umd.js"></script>
-    <link rel="stylesheet" href="/dist/style.css">
+    <script type="module" src="src/main.js"></script>
+    <link rel="stylesheet" href="src/assets/main.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vite App</title>
     <style>
@@ -29,10 +29,10 @@
 <div id="app" class="app"></div>
 
 <script>
-    const {createApp, ref} = Vue
-    const ChatBotWidget = window.ChatWidget.App
-    console.log(ChatBotWidget)
-    createApp(ChatBotWidget).mount('#app')
+    // const {createApp, ref} = Vue
+    // const ChatBotWidget = window.ChatWidget.App
+    // console.log(ChatBotWidget)
+    // createApp(ChatBotWidget).mount('#app')
 </script>
 </body>
 </html>
