@@ -60,7 +60,6 @@ onUnmounted(() => {
 
 <template>
   <div ref="chat_bot" class="app">
-
     <ChatHeader/>
     <canvas ref="canvas_context_gradient"></canvas>
     <canvas ref="canvas_context"></canvas>

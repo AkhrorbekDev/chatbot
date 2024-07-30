@@ -9,7 +9,6 @@ export default async function createAuth(app: App, options: ModuleOptions | obje
         moduleDefaults
     )
     const auth = new Auth(app, option)
-    console.log('auth', auth)
     return {
         install: () => {
             auth.init()
