@@ -173,7 +173,7 @@ function register() {
   </div>
 </template>
 
-<style  lang="scss">
+<style scoped lang="scss">
 .login-view {
   position: absolute;
   z-index: 2;

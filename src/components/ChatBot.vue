@@ -612,7 +612,7 @@ onMounted(() => {
   </div>
 </template>
 
-<style  lang="scss">
+<style scoped lang="scss">
 
 .chat-area {
   display: flex;

@@ -20,7 +20,7 @@ function onClick() {
   </div>
 </template>
 
-<style  lang="scss">
+<style scoped lang="scss">
 
 .chat-msg-action {
   overflow: hidden;

@@ -36,7 +36,7 @@ defineProps({
   </div>
 </template>
 
-<style  lang="scss">
+<style scoped lang="scss">
 .product-template {
   display: flex;
   flex-direction: column;

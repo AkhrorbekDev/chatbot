@@ -7,6 +7,6 @@ import MessageTemplate from "@/components/templates/MessageTemplate.vue";
   <MessageTemplate />
 </template>
 
-<style  lang="scss">
+<style scoped lang="scss">
 
 </style>
