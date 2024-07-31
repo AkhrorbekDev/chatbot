@@ -1,5 +1,5 @@
 import {ModuleOptions} from '@/modules/auth/types';
-import {App} from 'vue';
+import {App, ref} from 'vue';
 import Storage from '@/modules/storage/Storage'
 import {defineStore, PiniaPluginContext} from 'pinia';
 
@@ -62,6 +62,14 @@ class _Storage extends Storage {
 
             this.state = authStore()
         } else {
+            this.state = ref({
+                ...this.initialState,
+                SET(payload: { key: string, value: any }) {
+                    console.log(payload.key, payload.value)
+                    // @ts-ignore
+                    this[payload.key] = payload.value
+                }
+            })
             // eslint-disable-next-line no-console
             console.warn(
                 '[AUTH] The Vuex Store is not activated. This might cause issues in auth module behavior, like redirects not working properly.' +
@@ -84,7 +92,12 @@ class _Storage extends Storage {
     }
 
     setState<V extends unknown>(key: string, value: V): V {
-        if (this._useStore) {
+        if (!this._useStore) {
+            this.state.value.SET({
+                key,
+                value: this.options.setLoggedIn
+            })
+        } else if (this._useStore) {
             this.state.SET({
                 key,
                 value

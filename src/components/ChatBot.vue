@@ -72,7 +72,7 @@ pusher.signin();
 
 const $auth = inject('$auth')
 const loggedIn = computed(() => {
-  return $auth.$storage.state.loggedIn
+  return $auth.$storage.state.value.loggedIn
 })
 const botman = new Botman({$auth})
 const messages = ref<AnyMessage[]>([])
