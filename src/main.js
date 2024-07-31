@@ -67,5 +67,5 @@ const auth = createAuth(app, {
 })
 app
     .directive('maska', vMaska)
-    .use(auth).mount(ChatConnectionWidget.options.rootId)
+    .use(auth).mount(`#${ChatConnectionWidget.options.rootId}`)
 // export {App}
