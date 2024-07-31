@@ -62,7 +62,7 @@ const returnMessage = (e) => {
   </div>
 </template>
 
-<style scoped lang="scss">
+<style  lang="scss">
 @use "@/assets/scss/components/footer";
 @use "@/assets/scss/components/input";
 </style>

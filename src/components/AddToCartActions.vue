@@ -42,7 +42,7 @@ defineProps({
   </div>
 </template>
 
-<style scoped lang="scss">
+<style  lang="scss">
 
 .add-to-cart-actions {
   width: 100%;

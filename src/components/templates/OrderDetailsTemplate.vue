@@ -69,7 +69,7 @@ defineProps({
   </div>
 </template>
 
-<style scoped lang="scss">
+<style  lang="scss">
 .order-detail {
   &__items {
     list-style: none;

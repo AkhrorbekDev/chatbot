@@ -8,6 +8,6 @@
   <p>{{ message }}</p>
 </template>
 
-<style scoped>
+<style >
 
 </style>

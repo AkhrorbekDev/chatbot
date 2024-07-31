@@ -220,6 +220,6 @@ defineExpose({
   </div>
 </template>
 
-<style scoped lang="scss">
+<style  lang="scss">
 @import "../assets/scss/phone-input.scss";
 </style>

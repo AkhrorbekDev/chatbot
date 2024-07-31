@@ -20,7 +20,7 @@ const model_value = computed({
   <input v-model="model_value" class="base-input" type="text"/>
 </template>
 
-<style scoped lang="scss">
+<style  lang="scss">
 @use "@/assets/scss/components/input";
 
 </style>

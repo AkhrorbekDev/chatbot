@@ -27,7 +27,7 @@ defineProps({
   </ul>
 </template>
 
-<style scoped lang="scss">
+<style  lang="scss">
 .product-template-features {
   margin-top: 24px;
 

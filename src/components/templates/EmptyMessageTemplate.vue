@@ -24,6 +24,6 @@ defineProps({
 
 </template>
 
-<style scoped lang="scss">
+<style  lang="scss">
 @use "@/assets/scss/components/message-wrapper";
 </style>

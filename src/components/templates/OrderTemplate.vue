@@ -42,7 +42,7 @@ defineProps({
   </div>
 </template>
 
-<style scoped lang="scss">
+<style  lang="scss">
 .orders-view {
   &__items {
     display: flex;

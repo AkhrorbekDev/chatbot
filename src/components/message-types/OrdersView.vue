@@ -39,6 +39,6 @@ defineProps({
   </EmptyMessageTemplate>
 </template>
 
-<style scoped lang="scss">
+<style  lang="scss">
 
 </style>
