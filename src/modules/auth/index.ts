@@ -3,7 +3,7 @@ import {Auth} from './Auth';
 import {moduleDefaults, ModuleOptions} from '@/modules/auth/types';
 import defu from 'defu';
 
-export default async function createAuth(app: App, options: ModuleOptions | object) {
+export default function createAuth(app: App, options: ModuleOptions | object) {
     const option: ModuleOptions = defu(
         options,
         moduleDefaults

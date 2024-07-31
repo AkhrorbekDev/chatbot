@@ -4,8 +4,7 @@
     <meta charset="UTF-8">
     <link rel="icon" href="/favicon.ico">
     <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
-    <script type="module" src="src/main.js"></script>
-    <link rel="stylesheet" href="src/assets/main.css">
+    <link rel="stylesheet" href="./dist/style.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vite App</title>
     <style>
@@ -27,8 +26,14 @@
 </head>
 <body class="dark-mode">
 <div id="app" class="app"></div>
-
 <script>
+    window.process = {
+        env: {
+            NODE_ENV: 'production'
+        }
+    };
+</script>
+<script src="./dist/chat-widget.main.iife.js">
     // const {createApp, ref} = Vue
     // const ChatBotWidget = window.ChatWidget.App
     // console.log(ChatBotWidget)
