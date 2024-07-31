@@ -44,23 +44,23 @@ class _Storage extends Storage {
         this._useStore = this.options.store && !!this.app.config.globalProperties.$pinia
 
         if (this._useStore) {
-            const authStore = defineStore({
-                id: this.options.store.namespace,
-                state: () => this.initialState,
-                actions: {
-                    SET(payload: { key: string, value: any }) {
-                        console.log(payload.key, payload.value)
-                        // @ts-ignore
-                        this[payload.key] = payload.value
-                    }
-                }
-            })
-
-            this.app.config.globalProperties.$pinia.use(({store}: { store: PiniaPluginContext['store'] }) => {
-                store[this.options.store.namespace] = authStore()
-            })
-
-            this.state = authStore()
+            // const authStore = defineStore({
+            //     id: this.options.store.namespace,
+            //     state: () => this.initialState,
+            //     actions: {
+            //         SET(payload: { key: string, value: any }) {
+            //             console.log(payload.key, payload.value)
+            //             // @ts-ignore
+            //             this[payload.key] = payload.value
+            //         }
+            //     }
+            // })
+            //
+            // this.app.config.globalProperties.$pinia.use(({store}: { store: PiniaPluginContext['store'] }) => {
+            //     store[this.options.store.namespace] = authStore()
+            // })
+            //
+            // this.state = authStore()
         } else {
             this.state = ref({
                 ...this.initialState,
