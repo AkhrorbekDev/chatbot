@@ -7,6 +7,7 @@ import Storage from '@/modules/storage';
 import {createPinia} from "pinia";
 
 const pinia = createPinia()
+const ChatConnectionWidget = window.ChatConnectionWidget
 const app = createApp(App)
 app
     .use(pinia)
@@ -66,5 +67,5 @@ const auth = createAuth(app, {
 })
 app
     .directive('maska', vMaska)
-    .use(auth).mount('#app')
+    .use(auth).mount(ChatConnectionWidget.options.rootId)
 // export {App}
