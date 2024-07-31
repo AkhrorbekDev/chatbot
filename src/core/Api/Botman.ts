@@ -7,6 +7,6 @@ export class Botman extends ApiCore {
     }
 
     sendMessage(data: Object) {
-        return this.post(`/chat`, {data})
+        return this.post(`/send-sms`, {data})
     }
 }

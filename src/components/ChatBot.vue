@@ -29,12 +29,14 @@ import {
 } from "@/types.js";
 import InfiniteScrollObserver from "@/components/InfiniteScrollObserver.vue";
 import EmptyMessageTemplate from "@/components/templates/EmptyMessageTemplate.vue";
+
 const $auth = inject('$auth')
 const loggedIn = computed(() => {
   return $auth.$storage.state.value.loggedIn
 })
 const pusher = new Pusher('21f054cecc8f4861fa4b', {
   cluster: 'ap2',
+
   userAuthentication: {
     endpoint: "https://ajalchat.crmgeomotive.uz/api/v1/pusher/user-auth",
     transport: "ajax",
@@ -44,8 +46,9 @@ const pusher = new Pusher('21f054cecc8f4861fa4b', {
     },
     customHandler: null,
   },
+
   channelAuthorization: {
-    endpoint: "https://ajalchat.crmgeomotive.uz/api/v1/pusher/auth",
+    endpoint: "https://ajalchat.crmgeomotive.uz/api/v1/pusher/user-auth",
     transport: "ajax",
     params: {},
     headers: {
@@ -55,30 +58,64 @@ const pusher = new Pusher('21f054cecc8f4861fa4b', {
   }
 });
 let socketId = null;
-pusher.connection.bind("connected", () => {
+
+pusher.connection.bind("connected", (e) => {
+  console.log('Connected to Pusher');
   socketId = pusher.connection.socket_id;
+  console.log(pusher)
+  pusher.signin();
 });
 
-pusher.subscribe('botman')
+const chanel =
+    pusher.subscribe('private-chat.46679');
 
-pusher.bind('pusher:subscription_succeeded', (e) => {
-  console.log(e, 'pusher:subscription_succeeded')
-})
-pusher.bind('pusher:subscription_error', (e) => {
-  console.log(e, 'pusher:subscription_error')
-})
-pusher.bind('message', (e) => {
-  messages.value.unshift(e.data.message)
-})
+
 pusher.bind('pusher:signin_success', (e) => {
-  console.log(e, 'pusher:signin_success')
-})
+  console.log('Pusher sign-in successful');
+});
+pusher.bind('pusher:subscription_succeeded', (e) => {
+  console.log('Successfully subscribed to channel');
+});
+
+pusher.bind('pusher:subscription_error', (e) => {
+  console.error('Pusher subscription error:', e);
+});
+
+chanel.bind('message', (e) => {
+  messages.value.unshift(e.data.message);
+});
+
+pusher.connection.bind('error', function (err) {
+  console.trace('Pusher connection error:', err);
+});
+
 pusher.bind('pusher:error', (e) => {
-  console.trace(e, 'pusher:error')
-})
+  console.trace('Pusher error:', e);
+});
 
-pusher.signin();
+pusher.bind('pusher:subscription_error', (e) => {
+  console.error('Pusher subscription error:', e);
+});
 
+pusher.bind('message', (e) => {
+  console.log('Received message:', e);
+  if (e.data && e.data.message) {
+    messages.value.unshift(e.data.message);
+  } else {
+    console.error('Missing parameter: data.message', e.data);
+  }
+});
+
+pusher.connection.bind('error', function (err) {
+  console.error('Pusher connection error:', err);
+});
+
+pusher.bind('pusher:error', (e) => {
+  console.error('Pusher error:', e);
+  if (e.data && e.data.user === undefined) {
+    console.error('Missing parameter: data.user', e.data);
+  }
+});
 
 const botman = new Botman({$auth})
 const messages = ref<AnyMessage[]>([])
@@ -522,12 +559,12 @@ const lastScrollEndHeight = ref(null)
 
 watch(messages, () => {
   const lastMessage = messages.value[0]
-  if (!lastMessage.id && lastMessage.id !== lastItemId.value && lastMessage.user.owner) {
+  if (!lastMessage?.id && lastMessage?.id !== lastItemId.value && lastMessage?.user.owner) {
     lastItemId.value = null
     chatContainer.value.scrollTop = chatContainer.value.scrollHeight;
 
   } else {
-    lastItemId.value = lastMessage.id
+    lastItemId.value = lastMessage?.id
   }
 }, {
   immediate: false,
@@ -588,7 +625,7 @@ onMounted(() => {
         .then((res) => {
           messages.value = res.data.messages
           pagination.value = res.data.paginator
-          lastItemId.value = messages.value[0].id
+          lastItemId.value = messages.value[0]?.id
         })
   }
 })

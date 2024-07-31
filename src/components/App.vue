@@ -26,7 +26,7 @@ function drawPattern() {
   const img = new Image();
   img.src = options.background.pattern; // Path to your uploaded SVG file
   img.onload = function () {
-    const pattern = ctx.createPattern(img, options.background.repeat ? 'repeat': null);
+    const pattern = ctx.createPattern(img, options.background.repeat ? 'repeat' : null);
     ctx.fillStyle = pattern;
     ctx.fillRect(0, 0, canvas.width, canvas.height);
   };
@@ -49,7 +49,7 @@ function drawPattern() {
 
 
 onMounted(() => {
-  if (options.background.pattern) {
+  if (options.background?.pattern) {
     resizeCanvas();
     window.addEventListener('resize', resizeCanvas);
   }
