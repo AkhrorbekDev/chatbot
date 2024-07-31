@@ -2,12 +2,12 @@
 
 import ChatBot from "@/components/ChatBot.vue";
 import ChatHeader from "@/components/ChatHeader.vue";
-import {computed, onMounted, onUnmounted, ref} from "vue";
+import {computed, inject, onMounted, onUnmounted, ref} from "vue";
 
 const canvas_context = ref(null)
 const canvas_context_gradient = ref(null)
 const chat_bot = ref(null)
-
+const options = inject('widget-options')
 
 function resizeCanvas() {
   const canvas = canvas_context.value
@@ -24,9 +24,9 @@ function drawPattern() {
   const ctx = canvas.getContext('2d');
 
   const img = new Image();
-  img.src = '/mnt/data/bg-pattern.svg'; // Path to your uploaded SVG file
+  img.src = options.background.pattern; // Path to your uploaded SVG file
   img.onload = function () {
-    const pattern = ctx.createPattern(img, 'repeat');
+    const pattern = ctx.createPattern(img, options.background.repeat ? 'repeat': null);
     ctx.fillStyle = pattern;
     ctx.fillRect(0, 0, canvas.width, canvas.height);
   };
@@ -49,8 +49,10 @@ function drawPattern() {
 
 
 onMounted(() => {
-  window.addEventListener('resize', resizeCanvas);
-  resizeCanvas();
+  if (options.background.pattern) {
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
+  }
 });
 
 onUnmounted(() => {

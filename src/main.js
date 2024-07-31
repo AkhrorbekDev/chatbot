@@ -11,6 +11,7 @@ const ChatConnectionWidget = window.ChatConnectionWidget
 const app = createApp(App)
 app
     .use(pinia)
+    .provide('widget-options', ChatConnectionWidget.options)
     .use(Storage)
 
 
@@ -68,4 +69,3 @@ const auth = createAuth(app, {
 app
     .directive('maska', vMaska)
     .use(auth).mount(`#${ChatConnectionWidget.options.rootId}`)
-// export {App}
