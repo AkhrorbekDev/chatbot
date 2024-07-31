@@ -50,7 +50,7 @@ const pusher = new Pusher('21f054cecc8f4861fa4b', {
     params: {},
     headers: {
       Authorization: $auth.$token.get()
-    }
+    },
     customHandler: null,
   }
 });
