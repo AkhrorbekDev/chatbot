@@ -17,8 +17,8 @@ export default defineConfig({
         lib: {
             entry: './src/main.js',
             name: 'ChatWidget',
-            formats: ['es', 'iife', 'umd'],
-            fileName: (format) => `chat-widget.${format}.js`
+            formats: ['es', 'iife'],
+            fileName: (format, name) => `chat-widget.${name}.${format}.js`
         },
         rollupOptions: {
             external: ['vue'],
