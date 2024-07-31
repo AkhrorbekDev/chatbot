@@ -17,6 +17,7 @@ export default defineConfig({
         lib: {
             entry: './src/main.js',
             name: 'ChatWidget',
+            formats: ['es', 'iife', 'umd'],
             fileName: (format) => `chat-widget.${format}.js`
         },
         rollupOptions: {
