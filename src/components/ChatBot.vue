@@ -29,19 +29,28 @@ import {
 } from "@/types.js";
 import InfiniteScrollObserver from "@/components/InfiniteScrollObserver.vue";
 import EmptyMessageTemplate from "@/components/templates/EmptyMessageTemplate.vue";
-
+const $auth = inject('$auth')
+const loggedIn = computed(() => {
+  return $auth.$storage.state.value.loggedIn
+})
 const pusher = new Pusher('21f054cecc8f4861fa4b', {
   cluster: 'ap2',
   userAuthentication: {
     endpoint: "https://ajalchat.crmgeomotive.uz/api/v1/pusher/user-auth",
     transport: "ajax",
     params: {},
+    headers: {
+      Authorization: $auth.$token.get()
+    },
     customHandler: null,
   },
   channelAuthorization: {
     endpoint: "https://ajalchat.crmgeomotive.uz/api/v1/pusher/auth",
     transport: "ajax",
     params: {},
+    headers: {
+      Authorization: $auth.$token.get()
+    }
     customHandler: null,
   }
 });
@@ -70,10 +79,7 @@ pusher.bind('pusher:error', (e) => {
 
 pusher.signin();
 
-const $auth = inject('$auth')
-const loggedIn = computed(() => {
-  return $auth.$storage.state.value.loggedIn
-})
+
 const botman = new Botman({$auth})
 const messages = ref<AnyMessage[]>([])
 const pagination = ref({})

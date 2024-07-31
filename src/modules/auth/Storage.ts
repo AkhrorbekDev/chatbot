@@ -95,7 +95,7 @@ class _Storage extends Storage {
         if (!this._useStore) {
             this.state.value.SET({
                 key,
-                value: this.options.setLoggedIn
+                value
             })
         } else if (this._useStore) {
             this.state.SET({
@@ -106,7 +106,7 @@ class _Storage extends Storage {
             if (!this.options.setLoggedIn) {
                 this.state.SET({
                     key,
-                    value: this.options.setLoggedIn
+                    value: !this.options.setLoggedIn
                 })
             } else {
                 this.state.SET({
