@@ -7,7 +7,12 @@ import Storage from '@/modules/storage';
 import {createPinia} from "pinia";
 
 const pinia = createPinia()
-const ChatConnectionWidget = window.ChatConnectionWidget
+const ChatConnectionWidget = window.ChatConnectionWidget || {
+    options: {
+        rootId: 'app',
+        defaultTheme: 'theme-light',
+    }
+}
 const app = createApp(App)
 app
     .use(pinia)
@@ -66,6 +71,7 @@ const auth = createAuth(app, {
     store: false,
     clientSecret: 'RnfliHduJAdJ5bcmDOp63WDu0uMjA0ZPYvirCnHD'
 })
+
 app
     .directive('maska', vMaska)
     .use(auth).mount(`#${ChatConnectionWidget.options.rootId}`)

@@ -7,11 +7,16 @@ import Storage from '@/modules/storage';
 import {createPinia} from "pinia";
 
 const pinia = createPinia()
-const ChatConnectionWidget = window.ChatConnectionWidget
-const app = createApp(App)
+const ChatConnectionWidget = window.ChatConnectionWidget || {
+    options: {
+        rootId: 'app',
+        defaultTheme: 'theme-light',
+    }
+}
+const app = createApp(App, {class: ChatConnectionWidget.options.defaultTheme})
 app
     .use(pinia)
-    .provide('widget-options', ChatConnectionWidget?.options || {})
+    .provide('widget-options', ChatConnectionWidget?.options)
     .use(Storage)
 
 

@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import {computed, h, inject, onMounted, onUnmounted, ref, watch} from "vue";
-import Pusher from 'pusher-js'
 import ChatBotFooter from "@/components/ChatBotFooter.vue";
 import ActionButton from "@/components/ActionButton.vue";
 import LoginView from "@/components/LoginView.vue";
@@ -29,98 +28,19 @@ import {
 } from "@/types.js";
 import InfiniteScrollObserver from "@/components/InfiniteScrollObserver.vue";
 import EmptyMessageTemplate from "@/components/templates/EmptyMessageTemplate.vue";
+import Echo from 'laravel-echo';
+import Pusher from 'pusher-js';
+
 
 const $auth = inject('$auth')
+const widgetOptions = inject('widget-options')
 const loggedIn = computed(() => {
   return $auth.$storage.state.value.loggedIn
 })
-const pusher = new Pusher('21f054cecc8f4861fa4b', {
-  cluster: 'ap2',
-
-  userAuthentication: {
-    endpoint: "https://ajalchat.crmgeomotive.uz/api/v1/pusher/user-auth",
-    transport: "ajax",
-    params: {},
-    headers: {
-      Authorization: $auth.$token.get()
-    },
-    customHandler: null,
-  },
-
-  channelAuthorization: {
-    endpoint: "https://ajalchat.crmgeomotive.uz/api/v1/pusher/user-auth",
-    transport: "ajax",
-    params: {},
-    headers: {
-      Authorization: $auth.$token.get()
-    },
-    customHandler: null,
-  }
-});
-let socketId = null;
-
-pusher.connection.bind("connected", (e) => {
-  console.log('Connected to Pusher');
-  socketId = pusher.connection.socket_id;
-  console.log(pusher)
-  pusher.signin();
-});
-
-const chanel =
-    pusher.subscribe('private-chat.46679');
-
-
-pusher.bind('pusher:signin_success', (e) => {
-  console.log('Pusher sign-in successful');
-});
-pusher.bind('pusher:subscription_succeeded', (e) => {
-  console.log('Successfully subscribed to channel');
-});
-
-pusher.bind('pusher:subscription_error', (e) => {
-  console.error('Pusher subscription error:', e);
-});
-
-chanel.bind('message', (e) => {
-  messages.value.unshift(e.data.message);
-});
-
-pusher.connection.bind('error', function (err) {
-  console.trace('Pusher connection error:', err);
-});
-
-pusher.bind('pusher:error', (e) => {
-  console.trace('Pusher error:', e);
-});
-
-pusher.bind('pusher:subscription_error', (e) => {
-  console.error('Pusher subscription error:', e);
-});
-
-pusher.bind('message', (e) => {
-  console.log('Received message:', e);
-  if (e.data && e.data.message) {
-    messages.value.unshift(e.data.message);
-  } else {
-    console.error('Missing parameter: data.message', e.data);
-  }
-});
-
-pusher.connection.bind('error', function (err) {
-  console.error('Pusher connection error:', err);
-});
-
-pusher.bind('pusher:error', (e) => {
-  console.error('Pusher error:', e);
-  if (e.data && e.data.user === undefined) {
-    console.error('Missing parameter: data.user', e.data);
-  }
-});
 
 const botman = new Botman({$auth})
 const messages = ref<AnyMessage[]>([])
 const pagination = ref({})
-const message = {}
 const chatContainer = ref(null)
 const isUserNearTop = ref(false)
 
@@ -297,9 +217,7 @@ const paginateMessages = () => {
 }
 
 const getMessages = (params = {}) => {
-  return botman.getMessages({
-    ...params
-  }).catch(() => {
+  return botman.getMessages({params}).catch(() => {
     const data = [
       {
         content_type: ContentTypes.Text,
@@ -602,6 +520,12 @@ const inComeMessage = (message: Message) => {
 }
 
 const reMount = () => {
+  $auth.fetchUser()
+      .then((res) => {
+        window.Echo.private(`App.Models.User.${res.data.user.id}`).listen(".NewChatMessage", res => {
+          messages.value.unshift(...res.reverse())
+        });
+      })
   getMessages().then((res) => {
     messages.value = res.data.messages
     pagination.value = res.data.paginator
@@ -611,15 +535,33 @@ const reMount = () => {
 watch(loggedIn, (value) => {
   if (value) {
     reMount()
+  } else {
+    window.Echo?.leaveAllChannels()
   }
 }, {
-  immediate: false
+  immediate: true
 })
 const handleScroll = () => {
   const chat = chatContainer.value;
   isUserNearTop.value = chat.scrollTop < 100; // Adjust the threshold as needed
 }
+
+
 onMounted(() => {
+  window.Pusher = Pusher;
+  window.Echo = new Echo({
+    broadcaster: 'pusher',
+    key: '21f054cecc8f4861fa4b',
+    cluster: 'ap2',
+    authEndpoint: 'https://ajalchat.crmgeomotive.uz/broadcasting/auth', // Add this line
+    forceTLS: true,
+    auth: {
+      headers: {
+        Authorization: $auth.$token.get(),
+        Accept: 'application/json'
+      },
+    },
+  });
   if (loggedIn.value) {
     getMessages()
         .then((res) => {

@@ -47,6 +47,17 @@ function drawPattern() {
   ctx_canvas_context_gradient.fillRect(0, 0, canvas_gradient.width, canvas_gradient.height);
 }
 
+const changeTheme = () => {
+  const root = chat_bot.value
+  if (root.classList.contains('theme-dark')) {
+    root.classList.remove('theme-dark');
+    root.classList.add('theme-light');
+  } else if (root.classList.contains('theme-light')) {
+    root.classList.remove('theme-light');
+    root.classList.add('theme-dark');
+  }
+}
+
 
 onMounted(() => {
   if (options.background?.pattern) {
@@ -61,8 +72,8 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <div ref="chat_bot" class="app">
-    <ChatHeader/>
+  <div ref="chat_bot" class="__root">
+    <ChatHeader @on:close="close" @change:theme="changeTheme"/>
     <canvas ref="canvas_context_gradient"></canvas>
     <canvas ref="canvas_context"></canvas>
     <ChatBot class="chat-bot"></ChatBot>
@@ -70,7 +81,7 @@ onUnmounted(() => {
 </template>
 
 <style scoped lang="scss">
-.app {
+.__root {
   display: flex;
   flex-direction: column;
   background-color: var(--theme-bg-color);

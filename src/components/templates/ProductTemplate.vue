@@ -68,7 +68,7 @@ defineProps({
     flex-direction: column;
     gap: 10px;
     padding: 0 10px 16px;
-    color: var(--white);
+    color: var(--chat-text-color);
   }
 
 

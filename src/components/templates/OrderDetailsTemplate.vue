@@ -82,6 +82,10 @@ defineProps({
     justify-content: space-between;
     padding: 8px 0;
 
+    p.order-detail__item-value {
+      text-align: right;
+    }
+
     &:first-child {
       border-bottom: 1px solid #e0e0e0;
     }

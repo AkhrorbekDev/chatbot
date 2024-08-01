@@ -65,7 +65,6 @@ class _Storage extends Storage {
             this.state = ref({
                 ...this.initialState,
                 SET(payload: { key: string, value: any }) {
-                    console.log(payload.key, payload.value)
                     // @ts-ignore
                     this[payload.key] = payload.value
                 }

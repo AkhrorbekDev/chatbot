@@ -1,6 +1,6 @@
 $fontFamily: 'Raleway', sans-serif;
 
-:root {
+.theme-light {
   --body-bg-color: #e5ecef;
   --theme-bg-color: #fff;
   --settings-icon-hover: #9fa7ac;
@@ -8,13 +8,14 @@ $fontFamily: 'Raleway', sans-serif;
   --input-bg: #f8f8fa;
   --input-chat-color: #a2a2a2;
   --border-color: #eef2f4;
-  --body-font: $fontFamily;
+  --body-font: "Manrope", sans-serif;
   --body-color: #273346;
   --settings-icon-color: #c1c7cd;
   --msg-message: #969eaa;
   --chat-text-bg: #f1f2f6;
   --theme-color: #0086ff;
   --msg-date: #c0c7d2;
+  --chat-text-color: #273346;
   --button-bg-color: #f0f7ff;
   --button-color: var(--theme-color);
   --detail-font-color: #919ca2;
@@ -33,10 +34,34 @@ $fontFamily: 'Raleway', sans-serif;
   --chat-header-bg: linear-gradient(
                   to bottom,
                   rgba(255, 255, 255, 1) 0%,
-                  rgba(255, 255, 255, 1) 78%,
+                  rgba(255, 255, 255, 1) 100%,
                   rgba(255, 255, 255, 0) 100%
   );
   --white: #fff;
+  --action-highlighting-color: rgba(119, 48, 144, calc(0.4 + .24));
+  --action-bg-color: #686b75
+}
+
+.theme-dark {
+  --body-bg-color: #1d1d1d;
+  --theme-bg-color: #27292d;
+  --border-color: #323336;
+  --body-color: #d1d1d2;
+  --active-conversation-bg: linear-gradient(to right, rgba(47, 50, 56, 0.54), rgba(238, 242, 244, 0) 100%);
+  --msg-hover-bg: rgba(47, 50, 56, 0.54);
+  --chat-text-bg: #383b40;
+  --chat-text-color: #b5b7ba;
+  --msg-date: #626466;
+  --msg-message: var(--msg-date);
+  --overlay-bg: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, #27292d 65%, #27292d 100%);
+  --input-bg: #2f3236;
+  --chat-header-bg: linear-gradient(to bottom, #27292d 0%, #27292d 78%, rgba(255, 255, 255, 0) 100%);
+  --settings-icon-color: #7c7e80;
+  --developer-color: var(--border-color);
+  --button-bg-color: #393b40;
+  --button-color: var(--body-color);
+  --input-chat-color: #6f7073;
+  --detail-font-color: var(--input-chat-color);
   --action-highlighting-color: rgba(119, 48, 144, calc(0.4 + .24));
   --action-bg-color: hsla(284.8192771084337, 49.74418604651163%, 37.59803921568628%, .4)
 }

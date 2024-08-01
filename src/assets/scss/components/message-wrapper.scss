@@ -116,23 +116,21 @@
       padding: 0;
 
       p {
-        color: var(--white);
+        color: var(--chat-text-color);
         line-height: 1.2;
       }
     }
 
     .product-template-title {
-      font-size: 20px;
-      font-weight: 500;
+      font-size: 16px;
+      font-weight: 600;
     }
 
     .product-template-description {
-      font-size: 16px;
       font-weight: 400;
     }
 
     .product-template-price {
-      font-size: 18px;
       font-weight: normal;
       margin-top: 16px;
 
@@ -175,20 +173,17 @@
     .chat-msg-text {
 
       p {
-        color: var(--white);
+        color: var(--chat-text-color);
         line-height: 1.2;
-        font-size: 16px;
         font-weight: normal;
       }
     }
 
     .orders-view-description {
-      font-size: 16px;
       font-weight: 400;
     }
 
     .orders-view-price {
-      font-size: 18px;
       font-weight: normal;
       margin-top: 16px;
 
@@ -231,20 +226,17 @@
     .chat-msg-text {
 
       p {
-        color: var(--white);
+        color: var(--chat-text-color);
         line-height: 1.2;
-        font-size: 16px;
         font-weight: normal;
       }
     }
 
     .orders-view-description {
-      font-size: 16px;
       font-weight: 400;
     }
 
     .orders-view-price {
-      font-size: 18px;
       font-weight: normal;
       margin-top: 16px;
 
@@ -287,20 +279,17 @@
     .chat-msg-text {
 
       p {
-        color: var(--white);
+        color: var(--chat-text-color);
         line-height: 1.2;
-        font-size: 16px;
         font-weight: normal;
       }
     }
 
     .orders-view-description {
-      font-size: 16px;
       font-weight: 400;
     }
 
     .orders-view-price {
-      font-size: 18px;
       font-weight: normal;
       margin-top: 16px;
 

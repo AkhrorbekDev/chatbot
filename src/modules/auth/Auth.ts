@@ -32,9 +32,19 @@ export class Auth {
             throw Error('base url is required option')
         }
 
-        this._fetch = createFetch({
-            defaults: {
-                baseURL: options.baseURL,
+        this._fetch = $fetch.create({
+            baseURL: options.baseURL,
+            async onRequest(ctx) {
+                if (ctx.options.config) {
+                    Object.keys(ctx.options.config).forEach((key) => {
+                        ctx.options[key] = ctx.options.config[key]
+                    })
+                }
+                ctx.options.headers = {
+                    ...ctx.options.headers,
+                    ClientModel: 'Chat'
+                }
+                delete ctx.options.params
             }
         })
     }
@@ -247,7 +257,6 @@ export class Auth {
 
             // Sync token
             const token = await this.$token.get()
-
             // Scheme checks were performed, but returned that is not valid.
             if (!isValid) {
                 if (this.options.redirect) {
@@ -275,18 +284,17 @@ export class Auth {
         this.$storage.removeState('loggedIn')
     }
 
-    request(endpoint: any, defaults?: object) {
-        console.log({endpoint, defaults})
-        const _endpoint =
+    async request(endpoint: any, defaults?: object) {
+        let _endpoint =
             typeof defaults === 'object'
                 ? Object.assign({}, defaults, endpoint)
                 : endpoint
-
-        // Fix baseURL for relative endpoints
-        // if (_endpoint.baseURL === '' || !_endpoint.baseURL) {
-        //     _endpoint.baseURL = window.location.origin
-        // }
-        console.log(endpoint, _endpoint)
+        if (!_endpoint.headers) {
+            _endpoint.headers = {}
+        }
+        if (this.interceptor) {
+            _endpoint = await this.interceptor(_endpoint)
+        }
         return this._fetch(_endpoint.url, _endpoint).then((res) => {
             return Promise.resolve(res)
         }).catch((err) => {
