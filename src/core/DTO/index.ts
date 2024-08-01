@@ -71,14 +71,18 @@ export const createOrderViewMessageDTO = (
 
 export const createProductMessageDTO = (
     params: ProductMessageParams
-): ProductMessage => ({
-    user: params.user,
-    created_at: params.created_at,
-    content: params.content,
-    content_type: params.content_type,
-    product: params.product,
-    actions: params.actions
-});
+): ProductMessage => {
+    console.log(params)
+    return {
+        id: params.id,
+        user: params.user,
+        created_at: params.created_at,
+        content: params.content,
+        content_type: params.content_type,
+        product: params.product,
+        actions: params.actions
+    }
+};
 
 export const createSampleMessageDTO = (
     params: SampleMessageParams

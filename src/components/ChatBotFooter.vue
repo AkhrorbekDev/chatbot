@@ -6,7 +6,7 @@ import {ref} from "vue";
 const message = ref('');
 const emit = defineEmits(['send:message'])
 const returnMessage = (e) => {
-  if (message.value) {
+  if (message.value && message.value.length > 0) {
     emit('send:message', {message: message.value})
     e.target.value = ''
   }

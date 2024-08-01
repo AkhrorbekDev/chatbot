@@ -3,6 +3,7 @@
 import ChatBot from "@/components/ChatBot.vue";
 import ChatHeader from "@/components/ChatHeader.vue";
 import {computed, inject, onMounted, onUnmounted, ref} from "vue";
+import ChatWidgetBtn from "@/components/ChatWidgetBtn.vue";
 
 const canvas_context = ref(null)
 const canvas_context_gradient = ref(null)
@@ -54,10 +55,12 @@ const changeTheme = () => {
 }
 
 const close = () => {
-  const root = document.getElementById(options.rootId)
-  root.classList.add('__in-active')
+  _show.value = false
 }
-
+const _show = ref(false)
+const showChat = () => {
+  _show.value = true
+}
 
 onMounted(() => {
   if (options.background?.pattern) {
@@ -72,7 +75,8 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <div ref="chat_bot" class="__root">
+  <ChatWidgetBtn @click="showChat" :class="{ _hide: _show}"/>
+  <div :class="{ _hide: !_show}" ref="chat_bot" class="__root">
     <ChatHeader @on:close="close" @change:theme="changeTheme"/>
     <canvas ref="canvas_context_gradient"></canvas>
     <canvas ref="canvas_context"></canvas>
@@ -81,6 +85,11 @@ onUnmounted(() => {
 </template>
 
 <style scoped lang="scss">
+
+._hide {
+  display: none !important;
+}
+
 .__root {
   display: flex;
   flex-direction: column;

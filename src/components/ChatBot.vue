@@ -67,9 +67,11 @@ const getMessages = (params = {}) => {
 const handleAction = (action) => {
   sendMessage({
     message: action.text,
+    content_type: 'action',
     payload: {
       alias: action.alias,
-      ...action.payload
+      ...action.payload,
+      type: action.type
     },
   })
 }
@@ -97,6 +99,7 @@ const productMessageRenderer = (message: ProductMessage) => {
   if (message.products) {
     const products = message.products
     return h(EmptyMessageTemplate, {class: '__products-template'}, products.map((product) => {
+      console.log()
       return h(MessageProduct, {message: createProductMessageDTO({...message, user: undefined, product})})
     }))
   }
@@ -120,7 +123,10 @@ const sendMessage = (params) => {
   inComeMessage(newMessage)
   messages.value.unshift(newMessage)
   return botman.sendMessage({
-    message: newMessage,
+    message: {
+      ...newMessage,
+      content_type: params.content_type ? params.content_type : newMessage.content_type,
+    },
     payload: params.payload,
   }).then((res) => {
     messages.value.unshift(...res.data.reverse())
