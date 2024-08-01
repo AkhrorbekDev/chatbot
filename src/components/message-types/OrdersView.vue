@@ -17,7 +17,7 @@ defineProps({
 </script>
 
 <template>
-  <EmptyMessageTemplate class="orders-view">
+  <EmptyMessageTemplate :message="message" class="orders-view">
     <MessageTemplate v-for="order in message.orders" :key="order.id">
       <template #default>
         <OrderTemplate :order="createOrderDTO(order)" />

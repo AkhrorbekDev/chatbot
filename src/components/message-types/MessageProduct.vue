@@ -24,7 +24,16 @@ defineProps({
           <AddToCartActions :action="action" @on:action="$emit('on:action', action)"/>
         </template>
         <template v-else>
-          <ActionButton :action="action" @on:action="$emit('on:action', action)"/>
+          <ActionButton :action="action" @on:action="$emit('on:action', action)">
+            <template #label>
+              {{ action.text }}
+            </template>
+            <template #img>
+              <template v-if="action.icon">
+                <img :src="action.icon"/>
+              </template>
+            </template>
+          </ActionButton>
         </template>
       </template>
     </template>

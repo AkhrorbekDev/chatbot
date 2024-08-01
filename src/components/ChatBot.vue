@@ -31,6 +31,7 @@ import InfiniteScrollObserver from "@/components/InfiniteScrollObserver.vue";
 import EmptyMessageTemplate from "@/components/templates/EmptyMessageTemplate.vue";
 import Echo from 'laravel-echo';
 import Pusher from 'pusher-js';
+import useLoading from "@/composables/useLoading";
 
 
 const $auth = inject('$auth')
@@ -44,377 +45,32 @@ const messages = ref<AnyMessage[]>([])
 const pagination = ref({})
 const chatContainer = ref(null)
 const isUserNearTop = ref(false)
+const paginationLoading = useLoading()
 
 const paginateMessages = () => {
-  if (pagination.value.current_page < pagination.value.last_page) {
+  if (pagination.value.current_page < pagination.value.last_page && !paginationLoading.value.idle.value) {
+    paginationLoading.value.start()
     getMessages({page: pagination.value.current_page + 1})
         .then((res) => {
-          messages.value = [...res.data.message, ...messages.value]
+          messages.value = [...res.data.messages, ...messages.value]
           pagination.value = res.data.paginator
-        }).catch(() => {
-      const data = [
-        {
-          content_type: ContentTypes.Text,
-          content: 'Hi there! How can I help you today?',
-          actions: [{
-            text: 'Add to cart',
-            // icon: 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/3364143/download+%283%29+%281%29.png',
-            type: 'add_to_cart',
-            alias: 'product_id123333'
-          }],
-          created_at: new Date().toISOString(),
-          user: {
-            id: '1',
-            name: 'Botman',
-            avatar: 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/3364143/download+%283%29+%281%29.png',
-            last_sean: new Date().toISOString()
-          },
-        },
-        {
-          user: {
-            id: '3', name: 'Botman',
-            avatar: 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/3364143/download+%283%29+%281%29.png',
-            last_sean: new Date().toISOString()
-          },
-          created_at: new Date().toISOString(),
-          content_type: ContentTypes.Product,
-          content: [],
-          product: {
-            id: 'prod1',
-            name: 'Redmi 13C (Бывший в употреблении) Midnight Black 8/256 GB',
-            description: 'Product 1 description',
-            discount: 10,
-            price: 1000000,
-            features: [{
-              name: 'Контроллер в комплекте\n',
-              value: 'Value 1'
-            }, {
-              name: 'Контроллер в комплекте\n',
-              value: 'Value 2'
-            }],
-            image: 'https://olcha.uz/image/300x300/products/PaM0CUVGoX5QsvtKi6TiICrUtZW0lmfgz9q07KKoHKnyHbDP33p0egVhTFIf.jpg',
-          },
-          actions: [{
-            type: 'add_to_cart',
-            text: 'Buy Now',
-            icon: 'https://example.com/buy.png',
-            alias: 'product_id123333'
-
-          }, {
-            type: 'add_to_cart',
-            text: 'Buy Now',
-            icon: 'https://example.com/buy.png',
-            alias: 'product_id123333'
-
-          }, {
-            type: 'add_to_cart',
-            text: 'Buy Now',
-            icon: 'https://example.com/buy.png',
-            alias: 'product_id123333'
-
-          }]
-        },
-        {
-          content_type: ContentTypes.OrdersView,
-          created_at: new Date().toISOString(),
-          content: [],
-          user: {
-            id: '1',
-            name: 'Botman',
-            avatar: 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/3364143/download+%283%29+%281%29.png',
-            last_sean: new Date().toISOString()
-          },
-          orders: [{
-            id: '1',
-            total_price: 1000000,
-            debt_price: 1000000,
-            payed: 0,
-            next_payment: '2022-12-12',
-            address: 'Tashkent, Mirzo Ulugbek district, 12-23',
-            created_at: new Date().toISOString()
-          },
-            {
-              id: '1',
-              total_price: 1000000,
-              debt_price: 1000000,
-              payed: 0,
-              next_payment: '2022-12-12',
-              address: 'Tashkent, Mirzo Ulugbek district, 12-23',
-              created_at: new Date().toISOString()
-            }],
-          actions: [{
-            text: 'Pay now',
-            icon: 'https://example.com/pay.png',
-            alias: 'order_id123333',
-            type: 'pay_now'
-          }]
-
-        },
-        {
-          content_type: ContentTypes.OrderDetails,
-          created_at: new Date().toISOString(),
-          content: [],
-          user: {
-            id: '1',
-            name: 'Botman',
-            avatar: 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/3364143/download+%283%29+%281%29.png',
-            last_sean: new Date().toISOString()
-          },
-          order: {
-            id: '1',
-            total_price: 1000000,
-            debt_price: 1000000,
-            payed: 0,
-            products: [
-              {
-                id: 'prod1',
-                name: 'Redmi 13C (Бывший в употреблении) Midnight Black 8/256 GB',
-                description: 'Product 1 description',
-                discount: 10,
-                price: 1000000,
-                features: [{
-                  name: 'Контроллер в комплекте\n',
-                  value: 'Value 1'
-                }, {
-                  name: 'Контроллер в комплекте\n',
-                  value: 'Value 2'
-                }],
-                quantity: 2,
-                image: 'https://olcha.uz/image/300x300/products/PaM0CUVGoX5QsvtKi6TiICrUtZW0lmfgz9q07KKoHKnyHbDP33p0egVhTFIf.jpg',
-              },
-              {
-                id: 'prod1',
-                name: 'Redmi 13C (Бывший в употреблении) Midnight Black 8/256 GB',
-                description: 'Product 1 description',
-                discount: 10,
-                price: 1000000,
-                features: [{
-                  name: 'Контроллер в комплекте\n',
-                  value: 'Value 1'
-                }, {
-                  name: 'Контроллер в комплекте\n',
-                  value: 'Value 2'
-                }],
-                quantity: 3,
-                image: 'https://olcha.uz/image/300x300/products/PaM0CUVGoX5QsvtKi6TiICrUtZW0lmfgz9q07KKoHKnyHbDP33p0egVhTFIf.jpg',
-              }
-            ],
-            created_at: new Date().toISOString(),
-            next_payment: '2022-12-12',
-            address: 'Tashkent, Mirzo Ulugbek district, 12-23',
-          },
-          actions: [{
-            text: 'Pay now',
-            icon: 'https://example.com/pay.png',
-            alias: 'order_id123333',
-            type: 'pay_now'
-          }]
-
-        }
-      ]
-      messages.value = [...data, ...messages.value]
+        }).finally(() => {
+      paginationLoading.value.stop()
     })
   }
 }
 
 const getMessages = (params = {}) => {
-  return botman.getMessages({params}).catch(() => {
-    const data = [
-      {
-        content_type: ContentTypes.Text,
-        content: 'Hi there! How can I help you today?',
-        actions: [{
-          text: 'Add to cart',
-          // icon: 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/3364143/download+%283%29+%281%29.png',
-          type: 'add_to_cart',
-          alias: 'product_id123333'
-        }],
-        created_at: new Date().toISOString(),
-        user: {
-          id: '1',
-          name: 'Botman',
-          avatar: 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/3364143/download+%283%29+%281%29.png',
-          last_sean: new Date().toISOString()
-        },
-      },
-      {
-        user: {
-          id: '3', name: 'Botman',
-          avatar: 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/3364143/download+%283%29+%281%29.png',
-          last_sean: new Date().toISOString()
-        },
-        created_at: new Date().toISOString(),
-        content_type: ContentTypes.Product,
-        content: [],
-        products: [{
-          id: 'prod1',
-          name: 'Redmi 13C (Бывший в употреблении) Midnight Black 8/256 GB',
-          description: 'Product 1 description',
-          discount: 10,
-          price: 1000000,
-          features: [{
-            name: 'Контроллер в комплекте\n',
-            value: 'Value 1'
-          }, {
-            name: 'Контроллер в комплекте\n',
-            value: 'Value 2'
-          }],
-          image: 'https://olcha.uz/image/300x300/products/PaM0CUVGoX5QsvtKi6TiICrUtZW0lmfgz9q07KKoHKnyHbDP33p0egVhTFIf.jpg',
-        }, {
-          id: 'prod1',
-          name: 'Redmi 13C (Бывший в употреблении) Midnight Black 8/256 GB',
-          description: 'Product 1 description',
-          discount: 10,
-          price: 1000000,
-          features: [{
-            name: 'Контроллер в комплекте\n',
-            value: 'Value 1'
-          }, {
-            name: 'Контроллер в комплекте\n',
-            value: 'Value 2'
-          }],
-          image: 'https://olcha.uz/image/300x300/products/PaM0CUVGoX5QsvtKi6TiICrUtZW0lmfgz9q07KKoHKnyHbDP33p0egVhTFIf.jpg',
-        }, {
-          id: 'prod1',
-          name: 'Redmi 13C (Бывший в употреблении) Midnight Black 8/256 GB',
-          description: 'Product 1 description',
-          discount: 10,
-          price: 1000000,
-          features: [{
-            name: 'Контроллер в комплекте\n',
-            value: 'Value 1'
-          }, {
-            name: 'Контроллер в комплекте\n',
-            value: 'Value 2'
-          }],
-          image: 'https://olcha.uz/image/300x300/products/PaM0CUVGoX5QsvtKi6TiICrUtZW0lmfgz9q07KKoHKnyHbDP33p0egVhTFIf.jpg',
-        }],
-        actions: [{
-          type: 'add_to_cart',
-          text: 'Buy Now',
-          icon: 'https://example.com/buy.png',
-          alias: 'product_id123333'
-
-        }, {
-          type: 'add_to_cart',
-          text: 'Buy Now',
-          icon: 'https://example.com/buy.png',
-          alias: 'product_id123333'
-
-        }, {
-          type: 'add_to_cart',
-          text: 'Buy Now',
-          icon: 'https://example.com/buy.png',
-          alias: 'product_id123333'
-
-        }]
-      },
-      {
-        content_type: ContentTypes.OrdersView,
-        created_at: new Date().toISOString(),
-        content: [],
-        user: {
-          id: '1',
-          name: 'Botman',
-          avatar: 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/3364143/download+%283%29+%281%29.png',
-          last_sean: new Date().toISOString()
-        },
-        orders: [{
-          id: '1',
-          total_price: 1000000,
-          debt_price: 1000000,
-          payed: 0,
-          next_payment: '2022-12-12',
-          address: 'Tashkent, Mirzo Ulugbek district, 12-23',
-          created_at: new Date().toISOString()
-        },
-          {
-            id: '1',
-            total_price: 1000000,
-            debt_price: 1000000,
-            payed: 0,
-            next_payment: '2022-12-12',
-            address: 'Tashkent, Mirzo Ulugbek district, 12-23',
-            created_at: new Date().toISOString()
-          }],
-        actions: [{
-          text: 'Pay now',
-          icon: 'https://example.com/pay.png',
-          alias: 'order_id123333',
-          type: 'pay_now'
-        }]
-
-      },
-      {
-        content_type: ContentTypes.OrderDetails,
-        created_at: new Date().toISOString(),
-        content: [],
-        user: {
-          id: '1',
-          name: 'Botman',
-          avatar: 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/3364143/download+%283%29+%281%29.png',
-          last_sean: new Date().toISOString()
-        },
-        order: {
-          id: '1',
-          total_price: 1000000,
-          debt_price: 1000000,
-          payed: 0,
-          products: [
-            {
-              id: 'prod1',
-              name: 'Redmi 13C (Бывший в употреблении) Midnight Black 8/256 GB',
-              description: 'Product 1 description',
-              discount: 10,
-              price: 1000000,
-              features: [{
-                name: 'Контроллер в комплекте\n',
-                value: 'Value 1'
-              }, {
-                name: 'Контроллер в комплекте\n',
-                value: 'Value 2'
-              }],
-              quantity: 2,
-              image: 'https://olcha.uz/image/300x300/products/PaM0CUVGoX5QsvtKi6TiICrUtZW0lmfgz9q07KKoHKnyHbDP33p0egVhTFIf.jpg',
-            },
-            {
-              id: 'prod1',
-              name: 'Redmi 13C (Бывший в употреблении) Midnight Black 8/256 GB',
-              description: 'Product 1 description',
-              discount: 10,
-              price: 1000000,
-              features: [{
-                name: 'Контроллер в комплекте\n',
-                value: 'Value 1'
-              }, {
-                name: 'Контроллер в комплекте\n',
-                value: 'Value 2'
-              }],
-              quantity: 3,
-              image: 'https://olcha.uz/image/300x300/products/PaM0CUVGoX5QsvtKi6TiICrUtZW0lmfgz9q07KKoHKnyHbDP33p0egVhTFIf.jpg',
-            }
-          ],
-          created_at: new Date().toISOString(),
-          next_payment: '2022-12-12',
-          address: 'Tashkent, Mirzo Ulugbek district, 12-23',
-        },
-        actions: [{
-          text: 'Pay now',
-          icon: 'https://example.com/pay.png',
-          alias: 'order_id123333',
-          type: 'pay_now'
-        }]
-
-      }
-    ]
-    messages.value = [...data]
-  })
+  return botman.getMessages({params})
 }
 
 const handleAction = (action) => {
   sendMessage({
     message: action.text,
-    payload: action.payload,
+    payload: {
+      alias: action.alias,
+      ...action.payload
+    },
   })
 }
 
@@ -425,7 +81,7 @@ const createSampleMessage = (content) => {
 
 const sampleMessageRenderer = (message: SampleMessage) => {
   return h(MessageTemplate, {message}, {
-    default: () => h('p', {}, message.content),
+    default: message.content ? () => h('p', {}, message.content) : null,
     actions: () => message.actions && message.actions.map((action) => {
       return h(ActionButton, {
         action,
@@ -585,7 +241,7 @@ onMounted(() => {
             v-if="pagination.current_page < pagination.last_page"
         >
           <InfiniteScrollObserver
-              :loader-disable="pagination.last_page === pagination.current_page"
+              :loader-disable="pagination.last_page === pagination.current_page && !paginationLoading.idle"
               :loader-method="paginateMessages">
             <Loader/>
           </InfiniteScrollObserver>

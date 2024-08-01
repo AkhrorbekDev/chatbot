@@ -12,12 +12,13 @@ defineProps({
 <template>
   <div class="chat-msg">
     <div class="chat-msg-profile">
-      <img class="chat-msg-img" src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/3364143/download+%283%29+%281%29.png"
+      <img class="chat-msg-img"
+           :src="message.user?.avatar"
            alt=""/>
-      <div class="chat-msg-date">Message seen 1.22pm</div>
+      <div class="chat-msg-date">{{ message.created_at }}</div>
     </div>
     <div class="chat-msg-content">
-     <slot></slot>
+      <slot></slot>
     </div>
 
   </div>
