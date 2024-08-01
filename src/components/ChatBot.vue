@@ -3,6 +3,7 @@ import {computed, h, inject, onMounted, onUnmounted, ref, watch} from "vue";
 import ChatBotFooter from "@/components/ChatBotFooter.vue";
 import ActionButton from "@/components/ActionButton.vue";
 import LoginView from "@/components/LoginView.vue";
+import Loader from "@/components/Loader.vue";
 
 import AddToCartActions from "@/components/AddToCartActions.vue";
 import MessageTemplate from "@/components/templates/MessageTemplate.vue";
@@ -581,13 +582,15 @@ onMounted(() => {
           <component :is="renderer(message)" :message="message" @on:action="handleAction"></component>
         </template>
         <template
-            v-if="pagination.last_page > pagination.current_page "
+            v-if="pagination.current_page < pagination.last_page"
         >
-
+          <InfiniteScrollObserver
+              :loader-disable="pagination.last_page === pagination.current_page"
+              :loader-method="paginateMessages">
+            <Loader/>
+          </InfiniteScrollObserver>
         </template>
-        <InfiniteScrollObserver
-            :loader-disable="pagination.last_page === pagination.current_page"
-            :loader-method="paginateMessages" :loader-params="{page: 1}"></InfiniteScrollObserver>
+
       </div>
       <ChatBotFooter @send:message="sendMessage"></ChatBotFooter>
     </template>
@@ -605,6 +608,8 @@ onMounted(() => {
   overflow: auto;
   height: 100%;
   position: relative;
+  scrollbar-color: #8a8d9c #f1f2f6;
+  scrollbar-width: thin;
 
   &-header {
     display: flex;

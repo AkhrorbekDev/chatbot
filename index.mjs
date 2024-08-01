@@ -21,8 +21,6 @@ app.use(bodyParser.urlencoded({extended: false}));
 app.use(express.static('test'))
 app.post("/pusher/user-auth", (req, res) => {
     const socketId = req.body.socket_id;
-    console.log(socketId)
-
     if (!socketId) {
         return res.status(400).send({message: "socket_id is required"});
     }
@@ -55,8 +53,6 @@ app.post('/pusher/send-sms', (req, res) => {
 
 app.post("/pusher/auth", (req, res) => {
     const socketId = req.body.socket_id;
-    console.log(socketId)
-
     if (!socketId) {
         return res.status(400).send({message: "socket_id is required"});
     }

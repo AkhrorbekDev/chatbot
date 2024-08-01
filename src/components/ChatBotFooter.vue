@@ -3,17 +3,6 @@
 import BaseInput from "@/components/BaseInput.vue";
 import {ref} from "vue";
 
-let timeout = null
-
-const typing = (message) => {
-  if (timeout) clearTimeout(timeout)
-
-  timeout = setTimeout(() => {
-    console.log(message)
-  }, 1000)
-
-
-}
 const message = ref('');
 const emit = defineEmits(['send:message'])
 const returnMessage = (e) => {

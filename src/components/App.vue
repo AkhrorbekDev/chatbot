@@ -48,14 +48,9 @@ function drawPattern() {
 }
 
 const changeTheme = () => {
-  const root = chat_bot.value
-  if (root.classList.contains('theme-dark')) {
-    root.classList.remove('theme-dark');
-    root.classList.add('theme-light');
-  } else if (root.classList.contains('theme-light')) {
-    root.classList.remove('theme-light');
-    root.classList.add('theme-dark');
-  }
+  const root = document.getElementById(options.rootId)
+  console.log(root)
+  root.classList.toggle('theme-dark');
 }
 
 const close = () => {

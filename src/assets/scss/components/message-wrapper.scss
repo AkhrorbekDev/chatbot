@@ -73,8 +73,14 @@
 
 .owner {
   flex-direction: row-reverse;
+  padding-bottom: 30px;
 
   .chat-msg {
+
+    &-actions {
+      display: none;
+    }
+
     &-content {
       margin-left: 0;
       margin-right: 0;
@@ -97,6 +103,7 @@
 
     &-profile {
       width: 0;
+      height: 0;
 
       .chat-msg-img {
         display: none;
