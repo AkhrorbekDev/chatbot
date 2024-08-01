@@ -13,7 +13,8 @@ const ChatConnectionWidget = window.ChatConnectionWidget || {
         defaultTheme: 'theme-light',
     }
 }
-const app = createApp(App)
+const app = createApp(App, {class: ChatConnectionWidget.options.defaultTheme})
+
 app
     .use(pinia)
     .provide('widget-options', ChatConnectionWidget.options)
