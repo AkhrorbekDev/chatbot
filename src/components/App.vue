@@ -58,6 +58,11 @@ const changeTheme = () => {
   }
 }
 
+const close = () => {
+  const root = document.getElementById(options.rootId)
+  root.classList.add('__in-active')
+}
+
 
 onMounted(() => {
   if (options.background?.pattern) {
