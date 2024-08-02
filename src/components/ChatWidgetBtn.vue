@@ -40,8 +40,8 @@
   background-color: #fff;
   width: 60px;
   height: 60px;
-  right: 24px;
-  bottom: 24px;
+  right: 0;
+  bottom: 0;
   margin: 0;
   padding: 0;
   border: 0;
