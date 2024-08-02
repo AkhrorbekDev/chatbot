@@ -33,6 +33,7 @@ body {
   color: var(--body-color);
 }
 
-.__in-active {
-  display: none;
+._app-hide {
+  width: 0 !important;
+  height: 0 !important;
 }

@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import {computed, h, inject, onMounted, onUnmounted, ref, watch} from "vue";
+import {computed, h, inject, onMounted, onUnmounted, ref, shallowRef, watch} from "vue";
 import ChatBotFooter from "@/components/ChatBotFooter.vue";
 import ActionButton from "@/components/ActionButton.vue";
 import LoginView from "@/components/LoginView.vue";
 import Loader from "@/components/Loader.vue";
-
+import {v4 as uuidv4} from 'uuid';
 import AddToCartActions from "@/components/AddToCartActions.vue";
 import MessageTemplate from "@/components/templates/MessageTemplate.vue";
 import MessageProduct from "@/components/message-types/MessageProduct.vue";
@@ -48,11 +48,12 @@ const isUserNearTop = ref(false)
 const paginationLoading = useLoading()
 
 const paginateMessages = () => {
+  console.log(paginationLoading.value.idle.value)
   if (pagination.value.current_page < pagination.value.last_page && !paginationLoading.value.idle.value) {
     paginationLoading.value.start()
     getMessages({page: pagination.value.current_page + 1})
         .then((res) => {
-          messages.value = [...res.data.messages, ...messages.value]
+          messages.value = [...messages.value, ...res.data.messages]
           pagination.value = res.data.paginator
         }).finally(() => {
       paginationLoading.value.stop()
@@ -65,12 +66,13 @@ const getMessages = (params = {}) => {
 }
 
 const handleAction = (action) => {
+  const payload = action.payload ?? {}
   sendMessage({
     message: action.text,
     content_type: 'action',
     payload: {
       alias: action.alias,
-      ...action.payload,
+      ...payload,
       type: action.type
     },
   })
@@ -99,8 +101,10 @@ const productMessageRenderer = (message: ProductMessage) => {
   if (message.products) {
     const products = message.products
     return h(EmptyMessageTemplate, {class: '__products-template'}, products.map((product) => {
-      console.log()
-      return h(MessageProduct, {message: createProductMessageDTO({...message, user: undefined, product})})
+      return h(MessageProduct, {
+        message: createProductMessageDTO({...message, actions: product.actions, user: undefined, product}),
+        'onOn:action': (e) => handleAction(e)
+      })
     }))
   }
   return h(MessageProduct, {message: createProductMessageDTO(message)})
@@ -112,9 +116,11 @@ const orderDetailMessageRenderer = (message: OrderDetailsMessage) => {
   return h(OrderDetails, {message: createOrderDetailsMessageDTO(message)})
 }
 const sendMessage = (params) => {
+  const id = uuidv4()
   const newMessage = createSampleMessage({
     content_type: ContentTypes.Text,
     content: params.message,
+    id,
     user: {
       owner: true,
       last_sean: new Date().toISOString()
@@ -137,21 +143,6 @@ const sendMessage = (params) => {
 
 const lastItemId = ref(null)
 const lastScrollEndHeight = ref(null)
-
-watch(messages, () => {
-  const lastMessage = messages.value[0]
-  if (!lastMessage?.id && lastMessage?.id !== lastItemId.value && lastMessage?.user.owner) {
-    lastItemId.value = null
-    chatContainer.value.scrollTop = chatContainer.value.scrollHeight;
-
-  } else {
-    lastItemId.value = lastMessage?.id
-  }
-}, {
-  immediate: false,
-  deep: true
-})
-
 
 const messagesTemplates = {
   [ContentTypes.Text]: sampleMessageRenderer,
@@ -185,6 +176,20 @@ const inComeMessage = (message: Message) => {
 const reMount = () => {
   $auth.fetchUser()
       .then((res) => {
+        window.Pusher = Pusher;
+        window.Echo = new Echo({
+          broadcaster: 'pusher',
+          key: '21f054cecc8f4861fa4b',
+          cluster: 'ap2',
+          authEndpoint: 'https://ajalchat.crmgeomotive.uz/broadcasting/auth', // Add this line
+          forceTLS: true,
+          auth: {
+            headers: {
+              Authorization: $auth.$token.get(),
+              Accept: 'application/json'
+            },
+          },
+        });
         window.Echo.private(`App.Models.User.${res.data.user.id}`).listen(".NewChatMessage", res => {
           messages.value.unshift(...res.reverse())
         });
@@ -192,8 +197,23 @@ const reMount = () => {
   getMessages().then((res) => {
     messages.value = res.data.messages
     pagination.value = res.data.paginator
+    lastItemId.value = messages.value[0]?.id
   })
 }
+
+watch(messages, () => {
+  const lastMessage = messages.value[0]
+  if (lastMessage?.user.owner) {
+    lastItemId.value = null
+    chatContainer.value.scroll({top: 0});
+
+  } else {
+    lastItemId.value = lastMessage?.id
+  }
+}, {
+  immediate: false,
+  deep: true
+})
 
 watch(loggedIn, (value) => {
   if (value) {
@@ -204,27 +224,14 @@ watch(loggedIn, (value) => {
 }, {
   immediate: true
 })
-const handleScroll = () => {
+
+const handleScroll = (e) => {
   const chat = chatContainer.value;
   isUserNearTop.value = chat.scrollTop < 100; // Adjust the threshold as needed
 }
 
 
 onMounted(() => {
-  window.Pusher = Pusher;
-  window.Echo = new Echo({
-    broadcaster: 'pusher',
-    key: '21f054cecc8f4861fa4b',
-    cluster: 'ap2',
-    authEndpoint: 'https://ajalchat.crmgeomotive.uz/broadcasting/auth', // Add this line
-    forceTLS: true,
-    auth: {
-      headers: {
-        Authorization: $auth.$token.get(),
-        Accept: 'application/json'
-      },
-    },
-  });
   if (loggedIn.value) {
     getMessages()
         .then((res) => {
@@ -240,9 +247,8 @@ onMounted(() => {
   <div class="chat-area">
     <template v-if="loggedIn">
       <div ref="chatContainer" class="chat-area-main" @scroll="handleScroll">
-        <template v-for="message in messages">
-          <component :is="renderer(message)" :message="message" @on:action="handleAction"></component>
-        </template>
+        <component v-for="(message, ind) in messages" :key="message.id || ind" :is="renderer(message)"
+                   :message="message" @on:action="handleAction"></component>
         <template
             v-if="pagination.current_page < pagination.last_page"
         >

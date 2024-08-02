@@ -65,7 +65,9 @@ const auth = createAuth(app, {
                 key: 'user'
             }
         },
-
+    },
+    cookies: {
+        prefix: 'chat-bot.auth_',
     },
     grantType: 'password',
     clientId: '6',

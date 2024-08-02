@@ -24,7 +24,7 @@ defineProps({
           <AddToCartActions :action="action" @on:action="$emit('on:action', action)"/>
         </template>
         <template v-else>
-          <ActionButton :action="action" @on:action="$emit('on:action', action)">
+          <ActionButton :action="{...action, type: 'redirect'}" @on:action="$emit('on:action', action)">
             <template #label>
               {{ action.text }}
             </template>

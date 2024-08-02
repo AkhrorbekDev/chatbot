@@ -50,16 +50,19 @@ function drawPattern() {
 
 const changeTheme = () => {
   const root = document.getElementById(options.rootId)
-  console.log(root)
   root.classList.toggle('theme-dark');
 }
 
 const close = () => {
   _show.value = false
+  const root = document.getElementById(options.rootId)
+  root.classList.add('_app-hide');
 }
 const _show = ref(false)
 const showChat = () => {
   _show.value = true
+  const root = document.getElementById(options.rootId)
+  root.classList.remove('_app-hide');
 }
 
 onMounted(() => {
@@ -99,6 +102,11 @@ onUnmounted(() => {
   margin: 0 auto;
   overflow: hidden;
   position: relative;
+  max-width: 350px;
+  min-width: 350px;
+  max-height: 665px;
+  min-height: 665px;
+  box-shadow: 0 1px 1px rgb(0 0 0 / 7%), 0 2px 2px rgb(0 0 0 / 7%), 0 4px 4px rgb(0 0 0 / 7%), 0 8px 8px rgb(0 0 0 / 7%), 0 16px 16px rgb(0 0 0 / 7%);
 
   canvas {
     position: absolute;

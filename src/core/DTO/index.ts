@@ -15,6 +15,7 @@ import type {
 
 interface OrderDetailsMessageParams {
     user: User;
+    id: number;
     created_at: string;
     content?: string | [];
     content_type: ContentTypes.OrderDetails;
@@ -24,6 +25,7 @@ interface OrderDetailsMessageParams {
 
 interface OrderViewMessageParams {
     user: User;
+    id: number;
     created_at: string;
     content?: string | [];
     content_type: ContentTypes.OrdersView;
@@ -34,6 +36,7 @@ interface OrderViewMessageParams {
 interface ProductMessageParams {
     user: User;
     created_at: string;
+    id: number;
     content?: string | [];
     content_type: ContentTypes.Product;
     product: Product;
@@ -42,6 +45,7 @@ interface ProductMessageParams {
 
 interface SampleMessageParams {
     user: User;
+    id: number;
     created_at: string;
     content: string | [];
     content_type: ContentTypes;
@@ -52,6 +56,7 @@ export const createOrderDetailsMessageDTO = (
     params: OrderDetailsMessageParams
 ): OrderDetailsMessage => ({
     user: params.user,
+    id: params.id,
     created_at: params.created_at,
     content: params.content,
     content_type: params.content_type,
@@ -63,6 +68,7 @@ export const createOrderViewMessageDTO = (
     params: OrderViewMessageParams
 ): OrderViewMessage => ({
     user: params.user,
+    id: params.id,
     created_at: params.created_at,
     content: params.content,
     content_type: params.content_type,
@@ -88,6 +94,7 @@ export const createSampleMessageDTO = (
     params: SampleMessageParams
 ): SampleMessage => ({
     user: params.user,
+    id: params.id,
     created_at: params.created_at,
     content: params.content,
     content_type: params.content_type,

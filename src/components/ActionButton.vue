@@ -1,22 +1,38 @@
 <script setup>
 
 const emit = defineEmits(['on:click']);
-
+const props = defineProps({
+  action: {
+    type: Object,
+    default: () => ({})
+  }
+})
 function onClick() {
+  if (props.action.type === 'redirect') {
+    return
+  }
   emit('on:action')
+}
+
+const _component = () => {
+  if (props.action.type === 'redirect') {
+    return 'a'
+  } else {
+    return 'button'
+  }
 }
 </script>
 
 <template>
   <div class="chat-msg-action">
-    <button type="button" class="chat-msg-action__btn" @click="onClick">
+    <component :is="_component()" :href="action.alias" target="_blank" type="button" class="chat-msg-action__btn" @click="onClick">
       <span class="chat-msg-action__label">
         <slot name="label"></slot>
       </span>
       <span v-if="$slots.img" class="chat-msg-action__img">
         <slot name="img"></slot>
       </span>
-    </button>
+    </component>
   </div>
 </template>
 

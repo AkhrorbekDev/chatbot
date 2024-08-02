@@ -79,15 +79,18 @@ class _Storage extends Storage {
 
     setCookie(key: string, value: string | boolean, options?: _CookieBase) {
         // @ts-ignore
-        return this.set({key, value, options})
+        const _key = this.options.cookies.prefix + key
+        return this.set({key: _key, value, options})
     }
 
     getCookie(key: string) {
-        return this.get({key})
+        const _key = this.options.cookies.prefix + key
+        return this.get({key: _key})
     }
 
     removeCookie(key: string, options?: object) {
-        return this.remove({key, options})
+        const _key = this.options.cookies.prefix + key
+        return this.remove({key: _key, options})
     }
 
     setState<V extends unknown>(key: string, value: V): V {

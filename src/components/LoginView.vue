@@ -141,7 +141,7 @@ function register() {
             <PhoneInput
                 ref="phoneRef"
                 v-model="phone"
-                label="phone number"
+                label="Номер телефона"
                 :code="phoneCode"
                 :loading="smsSending.idle"
                 :masked-value="false"
@@ -157,13 +157,13 @@ function register() {
                 rules="required"
             >
               <label class="login-view__form-label">
-                <span>password</span>
+                <span>Пароль</span>
                 <BaseInput v-model="password" :type="inputType"/>
               </label>
             </Field>
             <ActionButton :class="{__loading: submiting.idle}" type="button" @on:action="submit">
               <template #label>
-                test
+                Подтвердить
               </template>
             </ActionButton>
           </template>
@@ -206,7 +206,7 @@ function register() {
     }
 
     &:deep(.phone-input) {
-      .phone-input__wrapper {
+      .phone-input__wrapper, input {
         border: none;
       }
 
@@ -229,7 +229,7 @@ function register() {
 
     &-title {
       font-size: 24px;
-      color: #fff;
+      color: var(--chat-text-color);
       text-align: center;
     }
 
