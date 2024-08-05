@@ -29,9 +29,7 @@ defineProps({
         <slot name="actions"></slot>
       </div>
     </div>
-
   </div>
-
 </template>
 
 <style scoped lang="scss">
