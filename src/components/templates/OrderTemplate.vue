@@ -20,12 +20,17 @@ defineProps({
       </li>
       <li class="orders-view__item">
         <p class="orders-view__price">
+          Статус: <b>{{ order.status }}</b>
+        </p>
+      </li>
+      <li class="orders-view__item">
+        <p class="orders-view__price">
           Сумма: <b>{{ order.total_price }} сум</b>
         </p>
       </li>
       <li class="orders-view__item">
         <p class="orders-view__debt">
-          Долг: <b>{{order.debt_price}} сум</b>
+          Долг: <b>{{ order.debt_price }} сум</b>
         </p>
       </li>
       <li class="orders-view__item">

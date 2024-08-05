@@ -1,5 +1,8 @@
 <script setup>
 
+import AlertMessage from "@/components/AlertMessage.vue";
+import {inject, onMounted} from "vue";
+
 </script>
 
 <template>
@@ -39,6 +42,7 @@
         </svg>
       </button>
     </div>
+    <AlertMessage/>
   </div>
 </template>
 

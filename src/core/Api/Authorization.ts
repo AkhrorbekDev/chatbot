@@ -12,4 +12,10 @@ export class Authorization extends ApiCore {
     sendSms(data: object) {
         return this.post(`sendsms2`, {data})
     }
+    loginWithSms(data: object) {
+        return this.post(`login-with-sms`, {data})
+    }
+    registerWithSms(data: object) {
+        return this.post(`register-with-sms`, {data})
+    }
 }

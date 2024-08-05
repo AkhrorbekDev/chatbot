@@ -85,13 +85,24 @@ const submitHandlers = {
   [LoginType.sendSms]: sendSms
 }
 
+const alertOptions = inject('alertOptions')
+
 function submit() {
   return vee_form.value.validate()
       .then(async res => {
         if (res.valid && !submiting.value.idle.value) {
           submiting.value.start()
           await submitHandlers[loginType.value]()
-          submiting.value.stop()
+              .catch((error) => {
+                if (error.response?.status === 401) {
+                  alertOptions.value.events.openModal('error', 'Неверный номер телефона или пароль')
+                } else {
+                  alertOptions.value.events.openModal('error', 'Произошла ошибка')
+                }
+              }).finally(() => {
+            submiting.value.stop()
+          })
+
         } else {
           console.log(res)
         }
@@ -112,11 +123,25 @@ function login() {
 }
 
 function loginWithSms() {
-  return
+  return authorization.loginWithSms({phone: phoneNumber.value, code: password.value}).then((res) => {
+    setLoggedIn(res.data.token)
+  })
 }
 
 function register() {
+  return authorization.registerWithSms({phone: phoneNumber.value, code: password.value}).then((res) => {
+    setLoggedIn(res.data.token)
+  })
+}
 
+function setLoggedIn(data) {
+  $auth.reset()
+  $auth.$token.set(data.access_token)
+  $auth.$refreshToken.set(data.refresh_token)
+  $auth.setInterceptor()
+  $auth.$token._updateExpiration(data.access_token)
+  $auth.$refreshToken._updateExpiration(data.refresh_token)
+  $auth.setloggedIn(true)
 }
 </script>
 
@@ -135,12 +160,14 @@ function register() {
 
           <Field
               v-model="phone"
+              v-slot="{meta, errorMessage}"
               name="phone"
               :rules="`required|length:${phoneRef?._phoneCodes[phoneCode] ? phoneRef._phoneCodes[phoneCode].validationLength : 9}`"
           >
             <PhoneInput
                 ref="phoneRef"
                 v-model="phone"
+                :class="{ 'has-error': errorMessage }"
                 label="Номер телефона"
                 :code="phoneCode"
                 :loading="smsSending.idle"
@@ -153,17 +180,22 @@ function register() {
           >
             <Field
                 v-model="password"
+                v-slot="{meta, errorMessage}"
                 name="password"
                 rules="required"
             >
               <label class="login-view__form-label">
-                <span>Пароль</span>
-                <BaseInput v-model="password" :type="inputType"/>
+                <span>
+                {{ loginType === LoginType.login ? 'Пароль' : 'Введите СМС-код' }}
+                  </span>
+                <BaseInput
+                    :class="{ 'has-error': errorMessage }"
+                    v-model="password" :type="inputType"/>
               </label>
             </Field>
             <ActionButton :class="{__loading: submiting.idle}" type="button" @on:action="submit">
               <template #label>
-                Подтвердить
+                {{ !submiting.idle ? 'Подтвердить' : 'Загрузка...' }}
               </template>
             </ActionButton>
           </template>
@@ -206,13 +238,34 @@ function register() {
     }
 
     &:deep(.phone-input) {
+
+      &.has-error {
+        .phone-input__wrapper, .input, .phone-input__prefix-list {
+          //color: #f23648;
+          //background: #fddfe2;
+        }
+
+        .phone-input__wrapper {
+          border: 1px solid #f23648;
+        }
+      }
+
+      .phone-input__prefix, .phone-input__wrapper {
+        border-radius: 6px;
+      }
+
+      .input {
+        border-radius: 0 6px 6px 0;
+
+      }
+
       .phone-input__wrapper, input {
         border: none;
       }
 
       .phone-input__wrapper, .input, .phone-input__prefix-list {
         color: var(--body-color);
-        background-color: var(--input-bg);
+        background: var(--input-bg);
       }
 
       .phone-input__prefix .icon {
@@ -225,6 +278,10 @@ function register() {
 
     &:deep(.base-input) {
       height: 48px;
+
+      &.has-error {
+        border: 1px solid #f23648;
+      }
     }
 
     &-title {

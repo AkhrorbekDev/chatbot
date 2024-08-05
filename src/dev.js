@@ -1,5 +1,5 @@
 import './assets/scss/main.scss'
-import {createApp} from 'vue';
+import {createApp, ref} from 'vue';
 import App from './components/App.vue'
 import {vMaska} from "maska/vue"
 import createAuth from "@/modules/auth";
@@ -14,6 +14,38 @@ const ChatConnectionWidget = window.ChatConnectionWidget || {
     }
 }
 const app = createApp(App)
+const alertOptions = ref({
+    color: 'info',
+    text: '',
+    'open': false,
+    events: {
+        openModal: (statusColor, msg) => {
+            let openTimeout
+            let closeTimeout
+
+            if (openTimeout) {
+                clearTimeout(openTimeout)
+            }
+            if (closeTimeout) {
+                clearTimeout(closeTimeout)
+            }
+
+            openTimeout = setTimeout(() => {
+                alertOptions.value['open'] = true
+                alertOptions.value.color = statusColor
+                alertOptions.value.text = msg
+            }, 0)
+
+            closeTimeout = setTimeout(() => {
+                alertOptions.value['open'] = false
+            }, 2000)
+        },
+        closeModal: () => {
+            alertOptions.value['open'] = false
+        },
+    },
+})
+app.provide('alertOptions', alertOptions)
 app
     .use(pinia)
     .provide('widget-options', ChatConnectionWidget?.options)

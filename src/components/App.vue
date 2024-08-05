@@ -115,6 +115,15 @@ onUnmounted(() => {
     z-index: 1;
   }
 
+  @media (max-width: 576px) {
+    width: 100%;
+    height: 100%;
+    bottom: 0;
+    right: 0;
+    max-width: unset;
+    max-height: unset;
+  }
+
 }
 
 </style>

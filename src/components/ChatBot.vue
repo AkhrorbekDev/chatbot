@@ -46,9 +46,9 @@ const pagination = ref({})
 const chatContainer = ref(null)
 const isUserNearTop = ref(false)
 const paginationLoading = useLoading()
+const alertOptions = inject('alertOptions')
 
 const paginateMessages = () => {
-  console.log(paginationLoading.value.idle.value)
   if (pagination.value.current_page < pagination.value.last_page && !paginationLoading.value.idle.value) {
     paginationLoading.value.start()
     getMessages({page: pagination.value.current_page + 1})
@@ -62,7 +62,9 @@ const paginateMessages = () => {
 }
 
 const getMessages = (params = {}) => {
-  return botman.getMessages({params})
+  return botman.getMessages({params}).catch(() => {
+    alertOptions.value.events.openModal('error', 'Произошла ошибка')
+  })
 }
 
 const handleAction = (action) => {
@@ -136,8 +138,8 @@ const sendMessage = (params) => {
     payload: params.payload,
   }).then((res) => {
     messages.value.unshift(...res.data.reverse())
-  }).finally(() => {
-
+  }).catch(() => {
+    alertOptions.value.events.openModal('error', 'Произошла ошибка')
   })
 }
 
