@@ -66,6 +66,7 @@ export type Order = {
     address: string;
     payed: number
     next_payment: string;
+    actions?: Action[];
 }
 
 export type OrderDetailsMessage = Message & {

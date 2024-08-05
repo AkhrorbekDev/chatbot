@@ -19,6 +19,9 @@ defineProps({
     </div>
     <div class="chat-msg-content">
       <slot></slot>
+      <div v-if="$slots.actions" class="chat-msg-actions">
+        <slot name="actions"></slot>
+      </div>
     </div>
 
   </div>

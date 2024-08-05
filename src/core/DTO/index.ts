@@ -109,4 +109,5 @@ export const createOrderDTO = (data: Order): Order => ({
     address: data.address,
     payed: data.payed,
     next_payment: data.next_payment,
+    actions: data.actions,
 })
