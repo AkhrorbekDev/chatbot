@@ -6,7 +6,7 @@ import {inject, onMounted} from "vue";
 </script>
 
 <template>
-  <div class="header">
+  <div class="chat-bot-header">
     <div class="logo">
       <img src="@/assets/favicon.png" alt="l">
 

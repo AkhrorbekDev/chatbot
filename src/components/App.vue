@@ -79,7 +79,7 @@ onUnmounted(() => {
 
 <template>
   <ChatWidgetBtn @click="showChat" :class="{ _hide: _show}"/>
-  <div :class="{ _hide: !_show}" ref="chat_bot" class="__root">
+  <div :class="{ _hide: !_show}" ref="chat_bot" class="__root chat-bot">
     <ChatHeader @on:close="close" @change:theme="changeTheme"/>
     <canvas ref="canvas_context_gradient"></canvas>
     <canvas ref="canvas_context"></canvas>

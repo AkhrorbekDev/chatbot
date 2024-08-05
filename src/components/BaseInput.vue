@@ -17,7 +17,7 @@ const model_value = computed({
 </script>
 
 <template>
-  <input v-model="model_value" class="base-input" type="text"/>
+  <input v-model="model_value" class="base-input chat-bot-input" type="text"/>
 </template>
 
 <style scoped lang="scss">

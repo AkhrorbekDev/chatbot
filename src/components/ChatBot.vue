@@ -45,6 +45,7 @@ const messages = ref<AnyMessage[]>([])
 const pagination = ref({})
 const chatContainer = ref(null)
 const isUserNearTop = ref(false)
+const firstLoading = useLoading()
 const paginationLoading = useLoading()
 const alertOptions = inject('alertOptions')
 
@@ -176,6 +177,7 @@ const inComeMessage = (message: Message) => {
 }
 
 const reMount = () => {
+  firstLoading.value.start()
   $auth.fetchUser()
       .then((res) => {
         window.Pusher = Pusher;
@@ -200,6 +202,8 @@ const reMount = () => {
     messages.value = res.data.messages
     pagination.value = res.data.paginator
     lastItemId.value = messages.value[0]?.id
+  }).finally(() => {
+    firstLoading.value.stop()
   })
 }
 
@@ -235,12 +239,15 @@ const handleScroll = (e) => {
 
 onMounted(() => {
   if (loggedIn.value) {
+    firstLoading.value.start()
     getMessages()
         .then((res) => {
           messages.value = res.data.messages
           pagination.value = res.data.paginator
           lastItemId.value = messages.value[0]?.id
-        })
+        }).finally(() => {
+      firstLoading.value.stop()
+    })
   }
 })
 </script>
@@ -248,17 +255,24 @@ onMounted(() => {
 <template>
   <div class="chat-area">
     <template v-if="loggedIn">
+
       <div ref="chatContainer" class="chat-area-main" @scroll="handleScroll">
-        <component v-for="(message, ind) in messages" :key="message.id || ind" :is="renderer(message)"
-                   :message="message" @on:action="handleAction"></component>
-        <template
-            v-if="pagination.current_page < pagination.last_page"
-        >
-          <InfiniteScrollObserver
-              :loader-disable="pagination.last_page === pagination.current_page && !paginationLoading.idle"
-              :loader-method="paginateMessages">
-            <Loader/>
-          </InfiniteScrollObserver>
+        <template v-if="firstLoading.idle">
+          <Loader class="firstTimeLoader"></Loader>
+        </template>
+
+        <template v-else>
+          <component v-for="(message, ind) in messages" :key="message.id || ind" :is="renderer(message)"
+                     :message="message" @on:action="handleAction"></component>
+          <template
+              v-if="pagination.current_page < pagination.last_page"
+          >
+            <InfiniteScrollObserver
+                :loader-disable="pagination.last_page === pagination.current_page && !paginationLoading.idle"
+                :loader-method="paginateMessages">
+              <Loader/>
+            </InfiniteScrollObserver>
+          </template>
         </template>
 
       </div>
@@ -313,5 +327,11 @@ onMounted(() => {
   &-footer {
     z-index: 2;
   }
+}
+
+.firstTimeLoader {
+  width: 50px;
+  height: 50px;
+  margin: auto auto;
 }
 </style>
