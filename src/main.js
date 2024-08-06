@@ -20,13 +20,27 @@ const alertOptions = ref({
     'open': false,
     events: {
         openModal: (statusColor, msg) => {
-            setTimeout(() => {
+            let openTimeout
+            let closeTimeout
+
+            if (openTimeout) {
+                clearTimeout(openTimeout)
+            }
+            if (closeTimeout) {
+                clearTimeout(closeTimeout)
+            }
+
+            openTimeout = setTimeout(() => {
                 alertOptions.value['open'] = true
                 alertOptions.value.color = statusColor
                 alertOptions.value.text = msg
             }, 0)
+
+            closeTimeout = setTimeout(() => {
+                alertOptions.value['open'] = false
+            }, 2000)
         },
-        closeAlert: () => {
+        closeModal: () => {
             alertOptions.value['open'] = false
         },
     },
