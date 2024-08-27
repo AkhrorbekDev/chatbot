@@ -46,8 +46,8 @@ class ApiCore {
                 ctx.request = buildURL(ctx.request, ctx.options.params, ctx.options.paramsSerializer).replace(/^\?/, '')
                 ctx.options._params = ctx.options.params
                 delete ctx.options.params
-                if (context.$auth.interceptor) {
-                    ctx.options = await context.$auth.interceptor({
+                if (context['$chatbot-auth'].interceptor) {
+                    ctx.options = await context['$chatbot-auth'].interceptor({
                         ...ctx.options,
                         url: ctx.request
                     })
