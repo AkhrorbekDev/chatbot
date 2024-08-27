@@ -2,19 +2,28 @@
   display: flex;
   padding: 0 14px 45px;
 
-  &-content {
-    margin-left: 12px;
-    max-width: 70%;
+  &-wrapper {
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
+  }
+
+  &-content {
+    max-width: 70%;
+    display: flex;
+    align-items: flex-end;
+
+    background-color: var(--chat-text-bg);
+    border-radius: 16px 16px 16px 0;
+    width: 100%;
+    padding: 10px;
+    max-width: fit-content;
   }
 
   &-text {
     background-color: var(--chat-text-bg);
     border-radius: 16px 16px 16px 0;
     width: 100%;
-    padding: 10px 24px 10px 8px;
+    padding: 0 14px 0 0;
 
     &:deep(p) {
       color: var(--chat-text-color);
@@ -43,9 +52,9 @@
   }
 
   &-date {
-    position: absolute;
-    left: calc(100% + 12px);
-    bottom: 0;
+    // position: absolute;
+    // left: calc(100% + 12px);
+    // bottom: 0;
     font-size: 12px;
     font-weight: 600;
     color: var(--msg-date);
@@ -58,8 +67,11 @@
     display: grid;
     gap: 14px;
     grid-template-columns: repeat(2, 1fr);
+    max-width: fit-content;
 
-    &:deep(.chat-msg-action), &:deep(.chat-msg-actions), &:deep(.add-to-cart-actions) {
+    &:deep(.chat-msg-action),
+    &:deep(.chat-msg-actions),
+    &:deep(.add-to-cart-actions) {
       width: 100%;
 
       &:nth-child(odd):is(:last-child) {
@@ -67,8 +79,6 @@
       }
     }
   }
-
-
 }
 
 .owner {
@@ -76,7 +86,6 @@
   padding-bottom: 30px;
 
   .chat-msg {
-
     &-actions {
       display: none;
     }
@@ -88,11 +97,12 @@
     }
 
     &-text {
-      background-color: var(--theme-color);
+      // background-color: var(--theme-color);
+      background-color: var(--chat-text-bg);
       border-radius: 16px 16px 0 16px;
 
       &:deep(p) {
-        color: #fff;
+        color: var(--chat-text-color);
       }
     }
 
@@ -113,8 +123,6 @@
 }
 
 .chat-msg.product-template {
-
-
   &:deep {
     .chat-msg-content {
       max-width: 100%;
@@ -179,7 +187,6 @@
     }
 
     .chat-msg-text {
-
       p {
         color: var(--chat-text-color);
         line-height: 1.2;
@@ -232,7 +239,6 @@
     }
 
     .chat-msg-text {
-
       p {
         color: var(--chat-text-color);
         line-height: 1.2;
@@ -285,7 +291,6 @@
     }
 
     .chat-msg-text {
-
       p {
         color: var(--chat-text-color);
         line-height: 1.2;
