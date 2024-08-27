@@ -12,8 +12,8 @@ export default function createAuth(app: App, options: ModuleOptions | object) {
     return {
         install: () => {
             auth.init()
-            app.provide('$auth', auth)
-            app.config.globalProperties.$auth = auth
+            app.provide('$chatbot-auth', auth)
+            app.config.globalProperties['$chatbot-auth'] = auth
             return auth
         }
     }

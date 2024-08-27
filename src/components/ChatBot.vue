@@ -34,7 +34,7 @@ import Pusher from 'pusher-js';
 import useLoading from "@/composables/useLoading";
 
 
-const $auth = inject('$auth')
+const $auth = inject('$chatbot-auth')
 const widgetOptions = inject('widget-options')
 const loggedIn = computed(() => {
   return $auth.$storage.state.value.loggedIn
