@@ -22,7 +22,8 @@ class ApiCore {
     private fetch: $Fetch
     private readonly $_fetch: (url, options) => Promise<unknown>
 
-    constructor(context, baseURL = 'https://ajalchat.crmgeomotive.uz/api/v1') {
+    // constructor(context, baseURL = 'https://ajalchat.crmgeomotive.uz/api/v1') {
+    constructor(context, baseURL = 'http://92.204.254.100:5050/api/v1') {
         this.fetch = $fetch.create({
             retry: 0,
             baseURL,

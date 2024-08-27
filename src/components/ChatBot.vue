@@ -185,7 +185,8 @@ const reMount = () => {
           broadcaster: 'pusher',
           key: '21f054cecc8f4861fa4b',
           cluster: 'ap2',
-          authEndpoint: 'https://ajalchat.crmgeomotive.uz/broadcasting/auth', // Add this line
+          // authEndpoint: 'https://ajalchat.crmgeomotive.uz/broadcasting/auth', // Add this line
+          authEndpoint: 'http://92.204.254.100:5050/broadcasting/auth', // Add this line
           forceTLS: true,
           auth: {
             headers: {
