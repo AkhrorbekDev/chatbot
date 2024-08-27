@@ -3,7 +3,7 @@ import ApiCore from "./core/ApiCore";
 
 export class Authorization extends ApiCore {
     constructor(options) {
-        super(options, 'https://auth.olcha.uz/api/v1');
+        super(options, 'https://auth.olcha.uz/test/api/v1');
     }
 
     checkUser(phone: string) {
