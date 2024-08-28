@@ -4,9 +4,7 @@ import App from './components/App.vue'
 import {vMaska} from "maska/vue"
 import createAuth from "@/modules/auth";
 import Storage from '@/modules/storage';
-import {createPinia} from "pinia";
 
-const pinia = createPinia()
 const ChatConnectionWidget = window.ChatConnectionWidget || {
     options: {
         rootId: 'app',
@@ -47,7 +45,6 @@ const alertOptions = ref({
 })
 app.provide('alertOptions', alertOptions)
 app
-    .use(pinia)
     .provide('widget-options', ChatConnectionWidget.options)
     .use(Storage)
 

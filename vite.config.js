@@ -13,6 +13,10 @@ export default defineConfig({
             '@': fileURLToPath(new URL('./src', import.meta.url))
         }
     },
+    define: {
+        'process.env.NODE_ENV': JSON.stringify('production'), // Remove process.env
+        'process': '{}', // Fallback for any other process references
+    },
     build: {
         target: '',
         lib: {
@@ -25,8 +29,9 @@ export default defineConfig({
             external: ['vue'],
             output: {
                 globals: {
-                    vue: 'Vue'
-                }
+                    vue: 'Vue',
+                },
+                inlineDynamicImports: true, //
             }
         }
     },
