@@ -27,9 +27,9 @@ defineProps({
       <p v-if="product.description" class="product-template-description">
         {{ product.description }}
       </p>
-      <FeaturesTemplate :features="product.features"></FeaturesTemplate>
+      <FeaturesTemplate v-if="product.features" :features="product.features"></FeaturesTemplate>
       <p v-if="product.price" class="product-template-price">
-        <span class="product-template-price__label">💰Цена:</span> {{ product.price }} сум
+        <span class="product-template-price__label">Цена:</span> {{ product.price?.toLocaleString('en-US').replace(/,/g, ' ')}} сум
       </p>
     </div>
 

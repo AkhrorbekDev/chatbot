@@ -122,4 +122,9 @@ const _component = () => {
 
 }
 
+.product-template{
+  .chat-msg-action__btn{
+    margin: 0 10px;
+  }
+}
 </style>

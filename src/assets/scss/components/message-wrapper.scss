@@ -1,6 +1,6 @@
 .chat-msg {
   display: flex;
-  padding: 0 14px 45px;
+  padding: 0 20px 45px;
 
   &-wrapper {
     display: flex;
@@ -123,6 +123,12 @@
 }
 
 .chat-msg.product-template {
+  .chat-msg-wrapper {
+    .chat-msg-actions {
+      max-width: none;
+    }
+  }
+
   &:deep {
     .chat-msg-content {
       max-width: 100%;
@@ -264,6 +270,10 @@
 .chat-msg.__products-template {
   width: 100%;
   flex: 1;
+
+  .chat-msg-date {
+    display: none;
+  }
 
   &:deep {
     .chat-msg-content {
