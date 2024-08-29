@@ -94,7 +94,9 @@ const auth = createAuth(app, {
             }
         },
     },
-
+    cookies: {
+        prefix: 'auth.',
+    },
     grantType: 'password',
     clientId: '6',
     store: false,
