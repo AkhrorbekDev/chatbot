@@ -1,6 +1,7 @@
 <script setup>
-import {computed} from "vue";
+import {computed, ref} from "vue";
 
+const input = ref(null)
 const props = defineProps({
   modelValue: {
     type: String,
@@ -14,10 +15,16 @@ const model_value = computed({
   get: () => props.modelValue,
   set: (value) => emit('update:modelValue', value)
 })
+
+defineExpose({
+  clear() {
+    input.value.value = ''
+  }
+})
 </script>
 
 <template>
-  <input v-model="model_value" class="base-input chat-bot-input" type="text"/>
+  <input ref="input" v-model="model_value" class="base-input chat-bot-input" type="text"/>
 </template>
 
 <style scoped lang="scss">

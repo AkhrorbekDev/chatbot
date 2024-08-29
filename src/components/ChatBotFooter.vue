@@ -9,6 +9,7 @@ const returnMessage = (e) => {
   if (message.value && message.value.length > 0) {
     emit('send:message', {message: message.value})
     e.target.value = ''
+    message.value = ''
   }
 }
 
