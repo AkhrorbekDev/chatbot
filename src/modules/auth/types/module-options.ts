@@ -77,7 +77,7 @@ export const moduleDefaults: ModuleOptions = {
     namespace: 'auth'
   },
   strategy: {
-    name: 'laravelPassword',
+    name: 'laravelPassport',
     endpoints:
       {
         login: {
