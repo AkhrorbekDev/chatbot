@@ -141,6 +141,8 @@ const sendMessage = (params) => {
     messages.value.unshift(...res.data.reverse())
   }).catch(() => {
     alertOptions.value.events.openModal('error', 'Произошла ошибка')
+  }).finally(() => {
+
   })
 }
 
