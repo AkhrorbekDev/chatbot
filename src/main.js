@@ -53,7 +53,7 @@ const auth = createAuth(app, {
     baseURL: 'https://auth.olcha.uz/test/api',
     redirect: false,
     strategy: {
-        name: 'laravelPassword',
+        name: 'laravelPassport',
         endpoints: {
             login: {
                 url: '/v2/oauth/token',
