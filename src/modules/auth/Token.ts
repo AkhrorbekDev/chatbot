@@ -104,7 +104,7 @@ export class Token {
     }
 
     private _getExpirationKey() {
-        return this.strategy.properties.token.key + '.' + this.strategy.name + '.expiration'
+        return this.strategy.properties.token.expirationPrefix + '.' + this.strategy.name
     }
 
 
