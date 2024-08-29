@@ -88,7 +88,7 @@ const auth = createAuth(app, {
                 type: false,
                 maxAge: 60 * 60 * 24 * 30,
                 property: '',
-                key: 'refresh_token_v2',
+                key: 'refresh_token',
           expirationPrefix: 'refresh_token_v2_expiration'
 
             },
