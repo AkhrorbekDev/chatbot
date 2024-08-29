@@ -79,14 +79,14 @@ const auth = createAuth(app, {
                 global: true,
                 maxAge: 60 * 60 * 24 * 30,
                 type: 'Bearer',
+                key: 'access_token',
                 property: '',
-                key: 'access_token'
             },
             refreshToken: {
                 type: false,
                 maxAge: 60 * 60 * 24 * 30,
                 property: '',
-                key: 'refresh_token'
+                key: 'refresh_token_v2',
             },
             user: {
                 property: '',
