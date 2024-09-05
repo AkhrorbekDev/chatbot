@@ -78,9 +78,11 @@ const _component = () => {
     padding: .5625rem .5625rem;
     border-radius: .375rem;
     z-index: 2;
-    font-size: 14px;
+    font-size: 16px;
+    line-height: 20px;
+    font-family: "Inter", sans-serif;
     text-align: center;
-    color: #fff !important;
+    color: var(--action-text-color);
     outline: none;
     border: none;
     width: 100%;
