@@ -53,7 +53,7 @@ const auth = createAuth(app, {
     baseURL: 'https://auth.olcha.uz/test/api',
     redirect: false,
     strategy: {
-        name: 'laravelPassword',
+        name: 'laravelPassport',
         endpoints: {
             login: {
                 url: '/v2/oauth/token',
@@ -79,14 +79,18 @@ const auth = createAuth(app, {
                 global: true,
                 maxAge: 60 * 60 * 24 * 30,
                 type: 'Bearer',
+                key: 'access_token',
                 property: '',
-                key: 'access_token'
+          expirationPrefix: 'access_token_expiration'
+
             },
             refreshToken: {
                 type: false,
                 maxAge: 60 * 60 * 24 * 30,
                 property: '',
-                key: 'refresh_token'
+                key: 'refresh_token',
+          expirationPrefix: 'refresh_token_v2_expiration'
+
             },
             user: {
                 property: '',
@@ -95,7 +99,7 @@ const auth = createAuth(app, {
         },
     },
     cookies: {
-        prefix: 'chat-bot.auth_',
+        prefix: 'auth.',
     },
     grantType: 'password',
     clientId: '6',

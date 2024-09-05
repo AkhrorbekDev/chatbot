@@ -105,7 +105,7 @@ export class RefreshToken {
     }
 
     private _getExpirationKey() {
-        return this.strategy.properties.refreshToken.key + '.' + this.strategy.name + '.expiration'
+        return this.strategy.properties.refreshToken.expirationPrefix + '.' + this.strategy.name
     }
 
 
