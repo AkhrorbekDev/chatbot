@@ -12,7 +12,10 @@
     display: flex;
     align-items: flex-end;
 
-    background-color: var(--chat-text-bg);
+    // background-color: var(--chat-text-bg);
+    border: 1px solid #E8E8F0;
+    background-color: #fff;
+    color: #1B1B1B;
     border-radius: 16px 16px 16px 0;
     width: 100%;
     padding: 10px;
@@ -20,7 +23,8 @@
   }
 
   &-text {
-    background-color: var(--chat-text-bg);
+    // background-color: var(--chat-text-bg);
+    background-color: #fff;
     border-radius: 16px 16px 16px 0;
     width: 100%;
     padding: 0 14px 0 0;
@@ -91,9 +95,11 @@
     }
 
     &-content {
+    background-color: var(--chat-text-bg);
       margin-left: 0;
       margin-right: 0;
       align-items: flex-end;
+      border: none;
     }
 
     &-text {
@@ -132,6 +138,7 @@
   &:deep {
     .chat-msg-content {
       max-width: 100%;
+      border: none;
     }
 
     .chat-msg-text {
