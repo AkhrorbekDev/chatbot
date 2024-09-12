@@ -103,16 +103,17 @@ onUnmounted(() => {
   display: flex;
   flex-direction: column;
   background-color: var(--theme-bg-color);
-  width: 100%;
+  width: auto;
   height: 100%;
   margin: 0 auto;
   overflow: hidden;
   position: relative;
-  max-width: 350px;
+  max-width: 632px;
   min-width: 350px;
   max-height: 665px;
   min-height: 665px;
   box-shadow: 0 1px 1px rgb(0 0 0 / 7%), 0 2px 2px rgb(0 0 0 / 7%), 0 4px 4px rgb(0 0 0 / 7%), 0 8px 8px rgb(0 0 0 / 7%), 0 16px 16px rgb(0 0 0 / 7%);
+  border-radius: 16px;
 
   canvas {
     position: absolute;

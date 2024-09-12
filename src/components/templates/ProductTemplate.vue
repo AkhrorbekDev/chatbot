@@ -13,7 +13,7 @@ defineProps({
 </script>
 
 <template>
-  <div class="product-template">
+  <div class="product-template" style="background: var(--chat-text-bg);">
     <div v-if="product.image" class="product-template-image">
       <img
           class="product-template-img"
@@ -27,9 +27,9 @@ defineProps({
       <p v-if="product.description" class="product-template-description">
         {{ product.description }}
       </p>
-      <FeaturesTemplate :features="product.features"></FeaturesTemplate>
+      <FeaturesTemplate v-if="product.features" :features="product.features"></FeaturesTemplate>
       <p v-if="product.price" class="product-template-price">
-        <span class="product-template-price__label">💰Цена:</span> {{ product.price }} сум
+        <span class="product-template-price__label">Цена:</span> {{ product.price?.toLocaleString('en-US').replace(/,/g, ' ')}} сум
       </p>
     </div>
 
@@ -41,12 +41,14 @@ defineProps({
   display: flex;
   flex-direction: column;
   gap: 20px;
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  //border-radius: 12px 12px 12px 0;
+  //box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   transition: all 0.3s ease;
+  //padding: 6px;
+  //background: var(--chat-text-bg);
 
   &:hover {
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    //box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
   }
 
   &-image {
@@ -54,6 +56,7 @@ defineProps({
     height: 300px;
     border-radius: 10px;
     overflow: hidden;
+    background: var(--theme-bg-color);
   }
 
   &-img {
@@ -66,7 +69,8 @@ defineProps({
     display: flex;
     flex-direction: column;
     gap: 10px;
-    padding: 0 10px 16px;
+    //padding: 0 10px 16px;
+    padding: 0 6px 30px;
     color: var(--chat-text-color);
   }
 

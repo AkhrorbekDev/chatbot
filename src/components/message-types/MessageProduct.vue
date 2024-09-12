@@ -41,5 +41,7 @@ defineProps({
 </template>
 
 <style scoped lang="scss">
-
+:deep(.chat-msg-content) {
+  background-color: var(--chat-text-bg) !important;
+}
 </style>

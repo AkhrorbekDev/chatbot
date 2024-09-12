@@ -29,13 +29,16 @@ defineProps({
 
 <style scoped lang="scss">
 .product-template-features {
-  margin-top: 24px;
+  //margin-top: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 
   &__row {
     display: flex;
-    margin-bottom: 12px;
+    //margin-bottom: 12px;
     width: 100%;
-    justify-content: space-between;
+    //justify-content: space-between;
   }
 
   &__col {
@@ -43,7 +46,7 @@ defineProps({
     color: #999;
     display: flex;
     flex: 0 0 60%;
-    font-size: 14px;
+    font-size: 16px;
     font-weight: 500;
     line-height: 20px;
     padding-right: 20px;
