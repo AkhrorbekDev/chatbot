@@ -40,5 +40,15 @@ defineProps({
 </template>
 
 <style scoped lang="scss">
+.orders-view {
+  :deep(.chat-msg-content) {
+    display: flex;
+    flex-direction: column;
+
+    .chat-msg-wrapper {
+      width: 100%;
+    }
+  }
+}
 
 </style>

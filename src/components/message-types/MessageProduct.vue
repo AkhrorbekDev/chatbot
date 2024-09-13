@@ -16,7 +16,7 @@ defineProps({
 </script>
 
 <template>
-  <MessageTemplate :message="message" class="product-template">
+  <MessageTemplate :message="message" class="product-template _product-item">
     <ProductTemplate :product="message.product"></ProductTemplate>
     <template #actions>
       <template v-for="action in message.actions" :key="action.type">
@@ -30,7 +30,7 @@ defineProps({
             </template>
             <template #img>
               <template v-if="action.icon">
-                <img :src="action.icon"/>
+                <img :src="action.icon" alt="icon" />
               </template>
             </template>
           </ActionButton>
@@ -43,5 +43,10 @@ defineProps({
 <style scoped lang="scss">
 :deep(.chat-msg-content) {
   background-color: var(--chat-text-bg) !important;
+  max-width: 100% !important;
+}
+
+:deep(.chat-msg-wrapper) {
+  width: 100%;
 }
 </style>

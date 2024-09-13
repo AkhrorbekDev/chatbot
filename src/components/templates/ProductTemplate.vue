@@ -13,7 +13,7 @@ defineProps({
 </script>
 
 <template>
-  <div class="product-template" style="background: var(--chat-text-bg);">
+  <div class="product-template">
     <div v-if="product.image" class="product-template-image">
       <img
           class="product-template-img"
@@ -45,7 +45,7 @@ defineProps({
   //box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   transition: all 0.3s ease;
   //padding: 6px;
-  //background: var(--chat-text-bg);
+  background: var(--chat-text-bg);
 
   &:hover {
     //box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
@@ -72,6 +72,18 @@ defineProps({
     //padding: 0 10px 16px;
     padding: 0 6px 30px;
     color: var(--chat-text-color);
+
+    @media (max-width: 1200px) {
+      padding-bottom: 24px;
+    }
+
+    @media (max-width: 992px) {
+      padding-bottom: 20px;
+    }
+
+    @media (max-width: 768px) {
+      padding-bottom: 12px;
+    }
   }
 
 

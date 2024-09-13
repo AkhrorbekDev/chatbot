@@ -95,6 +95,11 @@ const _component = () => {
     align-items: center;
     gap: 10px;
 
+    @media (max-width: 992px) {
+      font-size: 14px;
+      line-height: 18px;
+    }
+
     &:focus {
       outline: none;
     }
