@@ -129,6 +129,7 @@ onUnmounted(() => {
     right: 0;
     max-width: unset;
     max-height: unset;
+    border-radius: 0;
   }
 
 }

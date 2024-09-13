@@ -1,10 +1,12 @@
 .chat-msg {
   display: flex;
-  padding: 0 20px 45px;
+  //padding: 0 20px 45px;
+  padding: 0 20px 24px;
 
   &-wrapper {
     display: flex;
     flex-direction: column;
+    max-width: 60%;
   }
 
   &-content {
@@ -213,9 +215,19 @@
   flex: 1;
 
   &:deep {
+    .chat-msg-date {
+      display: none;
+    }
+
     .chat-msg-content {
       max-width: 100%;
       flex: 1;
+      border: none;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      padding: 0;
+      align-items: flex-start;
 
       .chat-msg-profile {
         display: none;
@@ -223,6 +235,22 @@
 
       .chat-msg-content {
         margin-left: 0;
+        align-items: flex-end;
+      }
+
+      .order-template {
+        padding-bottom: 0 !important;
+        //max-width: 380px;
+
+        .chat-msg-date {
+          display: flex;
+        }
+
+        .chat-msg-content {
+          padding: 10px;
+          border: 1px solid var(--border-darker-color);
+          gap: 6px;
+        }
       }
 
       .chat-msg {
@@ -316,13 +344,11 @@
   width: 100%;
   flex: 1;
 
-  ._product-item {
+  &:deep {
     .chat-msg-date {
       display: none;
     }
-  }
 
-  &:deep {
     .chat-msg-content {
       max-width: 100%;
       flex: 1;
@@ -331,6 +357,11 @@
       flex-direction: column;
       //max-width: fit-content;
       gap: 16px;
+      padding: 0;
+
+      &:first-of-type {
+        border: none;
+      }
 
       .chat-msg-profile {
         display: none;
@@ -343,12 +374,22 @@
       .chat-msg {
         padding-left: 0;
         padding-right: 0;
-        padding-bottom: 35px;
+        padding-bottom: 0;
         width: 100%;
 
         &:last-child {
           padding-bottom: 0;
         }
+      }
+    }
+
+    .product-template {
+      .chat-msg-date {
+        display: flex;
+      }
+
+      .chat-msg-content {
+        padding: 10px;
       }
     }
 

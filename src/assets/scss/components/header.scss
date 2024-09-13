@@ -9,6 +9,13 @@
   z-index: 3;
   position: relative;
 
+  &__name {
+    margin: 0 12px;
+    font-weight: 500;
+    font-size: 16px;
+    color: var(--chat-text-color);
+  }
+
   .close-btn {
     border: none;
     background: none;

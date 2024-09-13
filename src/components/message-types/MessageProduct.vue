@@ -16,7 +16,7 @@ defineProps({
 </script>
 
 <template>
-  <MessageTemplate :message="message" class="product-template _product-item">
+  <MessageTemplate :message="message" class="product-template">
     <ProductTemplate :product="message.product"></ProductTemplate>
     <template #actions>
       <template v-for="action in message.actions" :key="action.type">
@@ -43,10 +43,15 @@ defineProps({
 <style scoped lang="scss">
 :deep(.chat-msg-content) {
   background-color: var(--chat-text-bg) !important;
-  max-width: 100% !important;
+  //max-width: 100% !important;
 }
 
 :deep(.chat-msg-wrapper) {
   width: 100%;
+  max-width: 380px;
+
+  @media (max-width: 576px) {
+    max-width: 80%;
+  }
 }
 </style>

@@ -19,15 +19,19 @@ defineProps({
     <!-- </div> -->
 
     <div class="chat-msg-wrapper">
-      <div class="chat-msg-content">
-        <div v-if="$slots.default" class="chat-msg-text">
+      <div v-if="$slots.default" class="chat-msg-content">
+        <div class="chat-msg-text">
           <slot />
         </div>
         <div class="chat-msg-date">
           {{ message.created_at?.slice(11, 16) || message.created_at }}
         </div>
       </div>
-      <div v-if="$slots.actions" class="chat-msg-actions">
+      <div
+          v-if="$slots.actions !== false"
+          class="chat-msg-actions"
+          :style="$slots.default ? '' : { 'margin-top': 0 }"
+      >
         <slot name="actions"></slot>
       </div>
     </div>

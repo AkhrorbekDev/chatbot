@@ -10,7 +10,7 @@ import {inject, onMounted} from "vue";
     <div class="logo">
       <img src="@/assets/favicon.png" alt="l">
     </div>
-    <h3 class="" style="margin: 0 12px; font-weight: 500; font-size: 16px;">
+    <h3 class="chat-bot-header__name">
       Olcha Assistant
     </h3>
     <div class="user-settings">

@@ -266,13 +266,20 @@ const sampleMessageRenderer = (message: SampleMessage) => {
   return h(MessageTemplate, {message}, {
     default: message.content ? () => h('p', {}, message.content) : null,
     actions: () => message.actions && message.actions.map((action) => {
+      let data = {
+        label: () => h('span', {}, action.text)
+      }
+      if (action.icon) {
+        data = {
+          label: () => h('span', {}, action.text),
+          img: () => action.icon ? h('img', {src: action.icon}) : false
+        }
+      }
       return h(ActionButton, {
         action,
+        class: 'tttt',
         'onOn:action': () => handleAction(action)
-      }, {
-        label: () => h('span', {}, action.text),
-        img: () => action.icon ? h('img', {src: action.icon}) : false
-      })
+      }, data)
     })
   })
 }
@@ -296,10 +303,12 @@ const orderDetailMessageRenderer = (message: OrderDetailsMessage) => {
 }
 const sendMessage = (params) => {
   const id = uuidv4()
+  // const date = new Date()
   const newMessage = createSampleMessage({
     content_type: ContentTypes.Text,
     content: params.message,
     id,
+    // created_at: date,
     user: {
       owner: true,
       last_sean: new Date().toISOString()
@@ -307,6 +316,7 @@ const sendMessage = (params) => {
   })
   inComeMessage(newMessage)
   messages.value.unshift(newMessage)
+  console.log('newMessage', newMessage)
   return botman.sendMessage({
     message: {
       ...newMessage,

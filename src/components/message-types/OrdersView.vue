@@ -18,19 +18,24 @@ defineProps({
 
 <template>
   <EmptyMessageTemplate :message="message" class="orders-view">
-    <MessageTemplate v-for="order in message.orders" :key="order.id">
+    <MessageTemplate
+        v-for="order in message.orders"
+        :key="order.id"
+        :message="message"
+        class="order-template"
+    >
       <template #default>
         <OrderTemplate :order="createOrderDTO(order)" />
       </template>
 
-      <template #actions>
+      <template #actions v-if="order.actions?.length > 0">
         <ActionButton :action="action" v-for="action in order.actions" @on:action="$emit('on:action', action)">
           <template #label>
             {{ action.text }}
           </template>
           <template #img>
             <template v-if="action.icon">
-              <img :src="action.icon" />
+              <img :src="action.icon" alt="icon" />
             </template>
           </template>
         </ActionButton>
