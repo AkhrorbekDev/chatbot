@@ -55,5 +55,12 @@ defineProps({
     flex-direction: column;
   }
 
+  &__item p {
+    font-size: 15px !important;
+
+    @media (max-width: 992px) {
+      font-size: 14px !important;
+    }
+  }
 }
 </style>

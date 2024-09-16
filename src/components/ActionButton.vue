@@ -78,9 +78,11 @@ const _component = () => {
     padding: .5625rem .5625rem;
     border-radius: .375rem;
     z-index: 2;
-    font-size: 14px;
+    font-size: 16px;
+    line-height: 20px;
+    font-family: "Inter", sans-serif;
     text-align: center;
-    color: #fff !important;
+    color: var(--action-text-color);
     outline: none;
     border: none;
     width: 100%;
@@ -92,6 +94,11 @@ const _component = () => {
     justify-content: center;
     align-items: center;
     gap: 10px;
+
+    @media (max-width: 992px) {
+      font-size: 14px;
+      line-height: 18px;
+    }
 
     &:focus {
       outline: none;
@@ -122,4 +129,9 @@ const _component = () => {
 
 }
 
+//.product-template{
+//  .chat-msg-action__btn{
+//    margin: 0 10px;
+//  }
+//}
 </style>

@@ -14,21 +14,28 @@ defineProps({
 
 <template>
   <div class="chat-msg" :class="{owner: message.user && message.user.owner}">
-    <div class="chat-msg-profile" v-if="message.user">
-      <img class="chat-msg-img" :src="message.user?.avatar"
-           alt=""/>
-      <div class="chat-msg-date">
-        {{ message.created_at }}
+    <!-- <div class="chat-msg-profile" v-if="message.user"> -->
+    <!-- <img class="chat-msg-img" :src="message.user?.avatar" alt=""/> -->
+    <!-- </div> -->
+
+    <div class="chat-msg-wrapper">
+      <div v-if="$slots.default" class="chat-msg-content">
+        <div class="chat-msg-text">
+          <slot />
+        </div>
+        <div class="chat-msg-date">
+          {{ message.created_at?.slice(11, 16) || message.created_at }}
+        </div>
       </div>
-    </div>
-    <div class="chat-msg-content">
-      <div v-if="$slots.default" class="chat-msg-text">
-        <slot/>
-      </div>
-      <div v-if="$slots.actions" class="chat-msg-actions">
+      <div
+          v-if="$slots.actions !== false"
+          class="chat-msg-actions"
+          :style="$slots.default ? '' : { 'margin-top': 0 }"
+      >
         <slot name="actions"></slot>
       </div>
     </div>
+
   </div>
 </template>
 

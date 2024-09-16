@@ -30,7 +30,7 @@ defineProps({
             </template>
             <template #img>
               <template v-if="action.icon">
-                <img :src="action.icon"/>
+                <img :src="action.icon" alt="icon" />
               </template>
             </template>
           </ActionButton>
@@ -41,5 +41,17 @@ defineProps({
 </template>
 
 <style scoped lang="scss">
+:deep(.chat-msg-content) {
+  background-color: var(--chat-text-bg) !important;
+  //max-width: 100% !important;
+}
 
+:deep(.chat-msg-wrapper) {
+  width: 100%;
+  max-width: 380px;
+
+  @media (max-width: 576px) {
+    max-width: 80%;
+  }
+}
 </style>

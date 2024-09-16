@@ -9,8 +9,10 @@ import {inject, onMounted} from "vue";
   <div class="chat-bot-header">
     <div class="logo">
       <img src="@/assets/favicon.png" alt="l">
-
     </div>
+    <h3 class="chat-bot-header__name">
+      Olcha Assistant
+    </h3>
     <div class="user-settings">
       <div class="dark-light" @click="$emit('change:theme')">
         <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round"

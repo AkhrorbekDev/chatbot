@@ -27,7 +27,7 @@ defineProps({
         </template>
         <template #img>
           <template v-if="action.icon">
-            <img :src="action.icon"/>
+            <img :src="action.icon" alt="icon" />
           </template>
         </template>
       </ActionButton>

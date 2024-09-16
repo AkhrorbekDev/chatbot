@@ -1,18 +1,21 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
 $fontFamily: 'Raleway', sans-serif;
 
 .theme-light {
   --body-bg-color: #e5ecef;
   --theme-bg-color: #fff;
+  --button-sender-color: #f1f1f5;
   --settings-icon-hover: #9fa7ac;
   --developer-color: #f9fafb;
-  --input-bg: #f8f8fa;
+  --input-bg: #f1f1f5;
   --input-chat-color: #a2a2a2;
   --border-color: #eef2f4;
+  --border-darker-color: #E8E8F0;
   --body-font: "Manrope", sans-serif;
   --body-color: #273346;
   --settings-icon-color: #c1c7cd;
   --msg-message: #969eaa;
-  --chat-text-bg: #f1f2f6;
+  --chat-text-bg: #F1F1F5;
   --theme-color: #0086ff;
   --msg-date: #c0c7d2;
   --chat-text-color: #273346;
@@ -39,14 +42,17 @@ $fontFamily: 'Raleway', sans-serif;
   );
   --white: #fff;
   --action-highlighting-color: rgba(119, 48, 144, calc(0.4 + .24));
-  --action-bg-color: #686b75
+  --action-bg-color: #D0D7DF;
+  --action-text-color:  #1B1B1B;
 }
 
 .theme-dark {
   --body-bg-color: #1d1d1d;
   --theme-bg-color: #27292d;
   --border-color: #323336;
+  --border-darker-color: #44464e;
   --body-color: #d1d1d2;
+  --button-sender-color: #2f3236;
   --active-conversation-bg: linear-gradient(to right, rgba(47, 50, 56, 0.54), rgba(238, 242, 244, 0) 100%);
   --msg-hover-bg: rgba(47, 50, 56, 0.54);
   --chat-text-bg: #383b40;
@@ -63,7 +69,8 @@ $fontFamily: 'Raleway', sans-serif;
   --input-chat-color: #6f7073;
   --detail-font-color: var(--input-chat-color);
   --action-highlighting-color: rgba(119, 48, 144, calc(0.4 + .24));
-  --action-bg-color: hsla(284.8192771084337, 49.74418604651163%, 37.59803921568628%, .4)
+  --action-bg-color: hsla(284.8192771084337, 49.74418604651163%, 37.59803921568628%, .4);
+  --action-text-color:  #fff;
 }
 
 [data-theme="purple"] {

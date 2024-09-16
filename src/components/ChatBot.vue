@@ -90,13 +90,19 @@ const sampleMessageRenderer = (message: SampleMessage) => {
   return h(MessageTemplate, {message}, {
     default: message.content ? () => h('p', {}, message.content) : null,
     actions: () => message.actions && message.actions.map((action) => {
+      let data = {
+        label: () => h('span', {}, action.text)
+      }
+      if (action.icon) {
+        data = {
+          label: () => h('span', {}, action.text),
+          img: () => action.icon ? h('img', {src: action.icon}) : false
+        }
+      }
       return h(ActionButton, {
         action,
         'onOn:action': () => handleAction(action)
-      }, {
-        label: () => h('span', {}, action.text),
-        img: () => action.icon ? h('img', {src: action.icon}) : false
-      })
+      }, data)
     })
   })
 }
@@ -124,6 +130,7 @@ const sendMessage = (params) => {
     content_type: ContentTypes.Text,
     content: params.message,
     id,
+    created_at: new Date().toISOString(),
     user: {
       owner: true,
       last_sean: new Date().toISOString()
@@ -272,7 +279,7 @@ onMounted(() => {
             <InfiniteScrollObserver
                 :loader-disable="pagination.last_page === pagination.current_page && !paginationLoading.idle"
                 :loader-method="paginateMessages">
-              <Loader/>
+              <Loader />
             </InfiniteScrollObserver>
           </template>
         </template>
@@ -281,7 +288,7 @@ onMounted(() => {
       <ChatBotFooter @send:message="sendMessage"></ChatBotFooter>
     </template>
     <template v-else>
-      <LoginView/>
+      <LoginView />
     </template>
   </div>
 </template>
