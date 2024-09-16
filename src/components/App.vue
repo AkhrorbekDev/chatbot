@@ -105,7 +105,7 @@ onUnmounted(() => {
   background-color: var(--theme-bg-color);
   width: auto;
   height: 100%;
-  margin: 0 auto;
+  margin: 0 0 0 auto;
   overflow: hidden;
   position: relative;
   max-width: 632px;
