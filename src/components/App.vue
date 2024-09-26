@@ -64,7 +64,7 @@ const _show = ref(false)
 const showChat = () => {
   _show.value = true
   const root = document.getElementById(options.rootId)
-  root.classList.addClass('_app-show');
+  root.classList.add('_app-show');
   if (window.innerWidth < 577) {
     document.body.style.overflow = 'hidden';
   }
