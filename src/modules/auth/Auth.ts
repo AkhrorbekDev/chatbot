@@ -75,6 +75,8 @@ export class Auth {
             return Promise.resolve()
         }
 
+        await this.setloggedIn(true)ы
+
         if (this.options.strategy.properties.fetchUser) {
             return await this.fetchUser()
         }
