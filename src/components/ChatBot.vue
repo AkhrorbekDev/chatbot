@@ -64,8 +64,8 @@ const paginateMessages = () => {
 
 const getMessages = (params = {}) => {
   return botman.getMessages({params}).catch(() => {
-    // alertOptions.value.events.openModal('error', 'Произошла ошибка')
-  }).finally(() => {
+    alertOptions.value.events.openModal('error', 'Произошла ошибка')
+  })/*.finally(() => {
     const data = [
       {
         content_type: ContentTypes.Text,
@@ -241,7 +241,7 @@ const getMessages = (params = {}) => {
       }
     ]
     messages.value = [...data, ...messages.value]
-  })
+  })*/
 }
 
 const handleAction = (action) => {
@@ -266,13 +266,16 @@ const sampleMessageRenderer = (message: SampleMessage) => {
   return h(MessageTemplate, {message}, {
     default: message.content ? () => h('p', {}, message.content) : null,
     actions: () => message.actions && message.actions.map((action) => {
+      const slots = {
+        label: () => h('span', {}, action.text),
+      }
+      if (action.icon) {
+        slots.img = () => h('img', {src: action.icon})
+      }
       return h(ActionButton, {
         action,
         'onOn:action': () => handleAction(action)
-      }, {
-        label: () => h('span', {}, action.text),
-        img: () => action.icon ? h('img', {src: action.icon}) : false
-      })
+      }, slots)
     })
   })
 }
@@ -294,6 +297,7 @@ const orderViewMessageRenderer = (message: OrderViewMessage) => {
 const orderDetailMessageRenderer = (message: OrderDetailsMessage) => {
   return h(OrderDetails, {message: createOrderDetailsMessageDTO(message)})
 }
+
 const sendMessage = (params) => {
   const id = uuidv4()
   const newMessage = createSampleMessage({
@@ -448,7 +452,7 @@ onMounted(() => {
             <InfiniteScrollObserver
                 :loader-disable="pagination.last_page === pagination.current_page && !paginationLoading.idle"
                 :loader-method="paginateMessages">
-              <Loader />
+              <Loader/>
             </InfiniteScrollObserver>
           </template>
         </template>
@@ -457,7 +461,7 @@ onMounted(() => {
       <ChatBotFooter @send:message="sendMessage"></ChatBotFooter>
     </template>
     <template v-else>
-      <LoginView />
+      <LoginView/>
     </template>
   </div>
 </template>

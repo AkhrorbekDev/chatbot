@@ -17,6 +17,7 @@ export type Strategy = {
             type: string
             property: string,
             key: string,
+            prefix: string,
             expirationPrefix: string,
             maxAge: number | Date
         },
@@ -24,6 +25,7 @@ export type Strategy = {
             type: string | false
             property: string,
             key: string,
+            prefix: string,
             expirationPrefix: string,
             maxAge: number | Date
         },
@@ -108,6 +110,7 @@ export const moduleDefaults: ModuleOptions = {
                 type: 'Bearer',
                 property: 'data',
                 key: 'access_token',
+                prefix: 'access_token',
                 expirationPrefix: 'access_token_expiration'
 
             },
@@ -116,6 +119,7 @@ export const moduleDefaults: ModuleOptions = {
                 maxAge: 60 * 60 * 24 * 30,
                 property: 'data',
                 key: 'refresh_token',
+                prefix: 'refresh_token',
                 expirationPrefix: 'refresh_token_expiration'
 
             },

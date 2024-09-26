@@ -100,7 +100,7 @@ export class Token {
     }
 
     private _getTokenKey() {
-        return this.strategy.properties.token.key + '.' + this.strategy.name
+        return this.strategy.properties.token.prefix + '.' + this.strategy.name
     }
 
     private _getExpirationKey() {

@@ -81,15 +81,17 @@ const auth = createAuth(app, {
                 type: 'Bearer',
                 key: 'access_token',
                 property: '',
-          expirationPrefix: 'access_token_expiration'
+                prefix: 'access_token',
+                expirationPrefix: 'access_token_expiration'
 
             },
             refreshToken: {
                 type: false,
                 maxAge: 60 * 60 * 24 * 30,
-                property: '',
                 key: 'refresh_token',
-          expirationPrefix: 'refresh_token_v2_expiration'
+                property: '',
+                prefix: 'refresh_token_v2',
+                expirationPrefix: 'refresh_token_v2_expiration'
 
             },
             user: {

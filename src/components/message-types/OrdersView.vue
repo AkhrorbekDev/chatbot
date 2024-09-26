@@ -20,7 +20,7 @@ defineProps({
   <EmptyMessageTemplate :message="message" class="orders-view">
     <MessageTemplate v-for="order in message.orders" :key="order.id">
       <template #default>
-        <OrderTemplate :order="createOrderDTO(order)" />
+        <OrderTemplate :order="createOrderDTO(order)"/>
       </template>
 
       <template #actions>
@@ -30,7 +30,7 @@ defineProps({
           </template>
           <template #img>
             <template v-if="action.icon">
-              <img :src="action.icon" />
+              <img :src="action.icon"/>
             </template>
           </template>
         </ActionButton>
