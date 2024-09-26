@@ -56,7 +56,7 @@ const changeTheme = () => {
 const close = () => {
   _show.value = false
   const root = document.getElementById(options.rootId)
-  root.classList.add('_app-hide');
+  root.classList.remove('_app-show');
   delete document.body.style.overflow;
 
 }
@@ -64,7 +64,7 @@ const _show = ref(false)
 const showChat = () => {
   _show.value = true
   const root = document.getElementById(options.rootId)
-  root.classList.remove('_app-hide');
+  root.classList.addClass('_app-show');
   if (window.innerWidth < 577) {
     document.body.style.overflow = 'hidden';
   }
