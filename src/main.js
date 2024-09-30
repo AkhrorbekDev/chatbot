@@ -44,8 +44,7 @@ const alertOptions = ref({
     },
 })
 app.provide('alertOptions', alertOptions)
-app
-    .provide('widget-options', ChatConnectionWidget.options)
+app.provide('widget-options', ChatConnectionWidget.options)
     .use(Storage)
 
 
