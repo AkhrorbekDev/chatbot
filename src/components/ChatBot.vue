@@ -5,7 +5,6 @@ import ActionButton from "@/components/ActionButton.vue";
 import LoginView from "@/components/LoginView.vue";
 import Loader from "@/components/Loader.vue";
 import {v4 as uuidv4} from 'uuid';
-import AddToCartActions from "@/components/AddToCartActions.vue";
 import MessageTemplate from "@/components/templates/MessageTemplate.vue";
 import MessageProduct from "@/components/message-types/MessageProduct.vue";
 import OrdersView from "@/components/message-types/OrdersView.vue";
