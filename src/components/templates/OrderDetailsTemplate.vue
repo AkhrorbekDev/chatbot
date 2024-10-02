@@ -70,54 +70,5 @@ defineProps({
 </template>
 
 <style scoped lang="scss">
-.order-detail {
-  &__items {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-  }
 
-  &__item {
-    display: flex;
-    justify-content: space-between;
-    padding: 8px 0;
-
-    p.order-detail__item-value {
-      text-align: right;
-    }
-
-    &:first-child {
-      border-bottom: 1px solid var(--border-darker-color);
-    }
-
-    &.__products {
-      display: block;
-
-      ol {
-        margin-top: 16px;
-        margin-bottom: 16px;
-
-        li {
-          padding: 4px 0;
-          list-style: circle;
-          color: white;
-          display: flex;
-          gap: 12px;
-          align-items: flex-start;
-          justify-content: space-between;
-        }
-      }
-    }
-  }
-
-  &__item-header {
-    font-size: 14px;
-    color: #9e9e9e;
-  }
-
-  &__item-value {
-    font-size: 14px;
-    color: #000;
-  }
-}
 </style>

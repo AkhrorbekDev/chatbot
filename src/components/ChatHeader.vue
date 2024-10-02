@@ -9,7 +9,9 @@ import {inject, onMounted} from "vue";
   <div class="chat-bot-header">
     <div class="logo">
       <img src="@/assets/favicon.png" alt="l">
-
+      <p class="chat-bot-header__title">
+        Olcha Asistent
+      </p>
     </div>
     <div class="user-settings">
       <div class="dark-light" @click="$emit('change:theme')">

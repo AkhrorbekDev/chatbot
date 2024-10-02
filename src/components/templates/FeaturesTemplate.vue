@@ -36,9 +36,9 @@ defineProps({
 
   &__row {
     display: flex;
-    //margin-bottom: 12px;
+    margin-bottom: 12px;
     width: 100%;
-    //justify-content: space-between;
+    justify-content: space-between;
   }
 
   &__col {

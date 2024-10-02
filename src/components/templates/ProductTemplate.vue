@@ -29,7 +29,8 @@ defineProps({
       </p>
       <FeaturesTemplate v-if="product.features" :features="product.features"></FeaturesTemplate>
       <p v-if="product.price" class="product-template-price">
-        <span class="product-template-price__label">Цена:</span> {{ product.price?.toLocaleString('en-US').replace(/,/g, ' ')}} сум
+        <span class="product-template-price__label">Цена:</span>
+        {{ product.price?.toLocaleString('en-US').replace(/,/g, ' ') }} сум
       </p>
     </div>
 
@@ -41,11 +42,11 @@ defineProps({
   display: flex;
   flex-direction: column;
   gap: 20px;
-  //border-radius: 12px 12px 12px 0;
+  border-radius: 12px 12px 12px 12px;
   //box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   transition: all 0.3s ease;
-  //padding: 6px;
-  //background: var(--chat-text-bg);
+  padding: 10px;
+  background: var(--chat-text-bg);
 
   &:hover {
     //box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);

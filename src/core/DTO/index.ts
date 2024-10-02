@@ -26,7 +26,6 @@ interface OrderDetailsMessageParams {
 interface OrderViewMessageParams {
     user: User;
     id: number;
-    created_at: string;
     content?: string | [];
     content_type: ContentTypes.OrdersView;
     orders: Order[];
@@ -69,7 +68,6 @@ export const createOrderViewMessageDTO = (
 ): OrderViewMessage => ({
     user: params.user,
     id: params.id,
-    created_at: params.created_at,
     content: params.content,
     content_type: params.content_type,
     orders: params.orders,

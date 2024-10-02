@@ -9,4 +9,7 @@ export class Botman extends ApiCore {
     sendMessage(data: Object) {
         return this.post(`/api/v1/send-sms`, {data})
     }
+    mergeHistory(data: Object) {
+        return this.post(`/api/v1/merge-history`, {data})
+    }
 }

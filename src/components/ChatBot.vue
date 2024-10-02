@@ -44,9 +44,11 @@ const messages = ref<AnyMessage[]>([])
 const pagination = ref({})
 const chatContainer = ref(null)
 const isUserNearTop = ref(false)
+const showLogin = ref(false)
 const firstLoading = useLoading()
 const paginationLoading = useLoading()
 const alertOptions = inject('alertOptions')
+const lastErroredMessage = ref(null)
 
 const paginateMessages = () => {
   if (pagination.value.current_page < pagination.value.last_page && !paginationLoading.value.idle.value) {
@@ -60,189 +62,11 @@ const paginateMessages = () => {
     })
   }
 }
-
 const getMessages = (params = {}) => {
   return botman.getMessages({params}).catch(() => {
     alertOptions.value.events.openModal('error', 'Произошла ошибка')
-  })/*.finally(() => {
-    const data = [
-      {
-        content_type: ContentTypes.Text,
-        content: 'Hi there! How can I help you today?',
-        actions: [
-          {
-            text: 'Add to cart',
-            // icon: 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/3364143/download+%283%29+%281%29.png',
-            type: 'add_to_cart',
-            alias: 'product_id123333'
-          }
-        ],
-        created_at: new Date().toISOString(),
-        user: {
-          id: '1',
-          name: 'Botman',
-          avatar: 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/3364143/download+%283%29+%281%29.png',
-          last_sean: new Date().toISOString()
-        },
-      },
-      {
-        user: {
-          id: '3', name: 'Botman',
-          avatar: 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/3364143/download+%283%29+%281%29.png',
-          last_sean: new Date().toISOString()
-        },
-        created_at: new Date().toISOString(),
-        content_type: ContentTypes.Product,
-        content: [],
-        product: {
-          id: 'prod1',
-          name: 'Redmi 13C (Бывший в употреблении) Midnight Black 8/256 GB',
-          description: 'Product 1 description',
-          discount: 10,
-          price: 1000000,
-          features: [
-            {
-              name: 'Контроллер в комплекте\n',
-              value: 'Value 1'
-            },
-            {
-              name: 'Контроллер в комплекте\n',
-              value: 'Value 2'
-            }
-          ],
-          image: 'https://olcha.uz/image/300x300/products/PaM0CUVGoX5QsvtKi6TiICrUtZW0lmfgz9q07KKoHKnyHbDP33p0egVhTFIf.jpg',
-        },
-        actions: [
-          {
-            type: 'add_to_cart',
-            text: 'Buy Now',
-            icon: 'https://example.com/buy.png',
-            alias: 'product_id123333'
-          },
-          {
-            type: 'add_to_cart',
-            text: 'Buy Now',
-            icon: 'https://example.com/buy.png',
-            alias: 'product_id123333'
-          },
-          {
-            type: 'add_to_cart',
-            text: 'Buy Now',
-            icon: 'https://example.com/buy.png',
-            alias: 'product_id123333'
-          }
-        ]
-      },
-      {
-        content_type: ContentTypes.OrdersView,
-        created_at: new Date().toISOString(),
-        content: [],
-        user: {
-          id: '1',
-          name: 'Botman',
-          avatar: 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/3364143/download+%283%29+%281%29.png',
-          last_sean: new Date().toISOString()
-        },
-        orders: [
-          {
-            id: '1',
-            total_price: 1000000,
-            debt_price: 1000000,
-            payed: 0,
-            next_payment: '2022-12-12',
-            address: 'Tashkent, Mirzo Ulugbek district, 12-23',
-            created_at: new Date().toISOString()
-          },
-          {
-            id: '1',
-            total_price: 1000000,
-            debt_price: 1000000,
-            payed: 0,
-            next_payment: '2022-12-12',
-            address: 'Tashkent, Mirzo Ulugbek district, 12-23',
-            created_at: new Date().toISOString()
-          }
-        ],
-        actions: [
-          {
-            text: 'Pay now',
-            icon: 'https://example.com/pay.png',
-            alias: 'order_id123333',
-            type: 'pay_now'
-          }
-        ]
-      },
-      {
-        content_type: ContentTypes.OrderDetails,
-        created_at: new Date().toISOString(),
-        content: [],
-        user: {
-          id: '1',
-          name: 'Botman',
-          avatar: 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/3364143/download+%283%29+%281%29.png',
-          last_sean: new Date().toISOString()
-        },
-        order: {
-          id: '1',
-          total_price: 1000000,
-          debt_price: 1000000,
-          payed: 0,
-          products: [
-            {
-              id: 'prod1',
-              name: 'Redmi 13C (Бывший в употреблении) Midnight Black 8/256 GB',
-              description: 'Product 1 description',
-              discount: 10,
-              price: 1000000,
-              features: [
-                {
-                  name: 'Контроллер в комплекте\n',
-                  value: 'Value 1'
-                }, {
-                  name: 'Контроллер в комплекте\n',
-                  value: 'Value 2'
-                }
-              ],
-              quantity: 2,
-              image: 'https://olcha.uz/image/300x300/products/PaM0CUVGoX5QsvtKi6TiICrUtZW0lmfgz9q07KKoHKnyHbDP33p0egVhTFIf.jpg',
-            },
-            {
-              id: 'prod1',
-              name: 'Redmi 13C (Бывший в употреблении) Midnight Black 8/256 GB',
-              description: 'Product 1 description',
-              discount: 10,
-              price: 1000000,
-              features: [
-                {
-                  name: 'Контроллер в комплекте\n',
-                  value: 'Value 1'
-                },
-                {
-                  name: 'Контроллер в комплекте\n',
-                  value: 'Value 2'
-                }],
-              quantity: 3,
-              image: 'https://olcha.uz/image/300x300/products/PaM0CUVGoX5QsvtKi6TiICrUtZW0lmfgz9q07KKoHKnyHbDP33p0egVhTFIf.jpg',
-            }
-          ],
-          created_at: new Date().toISOString(),
-          next_payment: '2022-12-12',
-          address: 'Tashkent, Mirzo Ulugbek district, 12-23',
-        },
-        actions: [
-          {
-            text: 'Pay now',
-            icon: 'https://example.com/pay.png',
-            alias: 'order_id123333',
-            type: 'pay_now'
-          }
-        ]
-      }
-    ]
-    messages.value = [...data, ...messages.value]
-  })*/
+  })
 }
-
 const handleAction = (action) => {
   const payload = action.payload ?? {}
   sendMessage({
@@ -255,12 +79,9 @@ const handleAction = (action) => {
     },
   })
 }
-
 const createSampleMessage = (content) => {
   return createSampleMessageDTO(content)
 }
-
-
 const sampleMessageRenderer = (message: SampleMessage) => {
   return h(MessageTemplate, {message}, {
     default: message.content ? () => h('p', {}, message.content) : null,
@@ -318,10 +139,37 @@ const sendMessage = (params) => {
     payload: params.payload,
   }).then((res) => {
     messages.value.unshift(...res.data.reverse())
-  }).catch(() => {
+  }).catch((err) => {
+    if (err.status === 401) {
+      showLogin.value = true
+      lastErroredMessage.value = {
+        message: {
+          ...newMessage,
+          content_type: params.content_type ? params.content_type : newMessage.content_type,
+        },
+        payload: params.payload,
+      }
+      return
+    }
     alertOptions.value.events.openModal('error', 'Произошла ошибка')
   }).finally(() => {
 
+  })
+}
+
+function cancelLogin() {
+  showLogin.value = false
+  lastErroredMessage.value = null
+}
+
+function onLogin() {
+  showLogin.value = false
+  return botman.sendMessage(lastErroredMessage.value).then((res) => {
+    messages.value.unshift(...res.data.reverse())
+    lastErroredMessage.value = null
+    botman.mergeHistory({'chat-token': $auth.$storage.get({key: 'chat-access'})})
+  }).catch((err) => {
+    alertOptions.value.events.openModal('error', `Произошла ошибка ${err.status}`)
   })
 }
 
@@ -371,7 +219,8 @@ const reMount = () => {
           auth: {
             headers: {
               Authorization: $auth.$token.get(),
-              Accept: 'application/json'
+              Accept: 'application/json',
+              'Chat-Token': $auth.$storage.get({key: 'chat-access-token'}) || ''
             },
           },
         });
@@ -383,6 +232,12 @@ const reMount = () => {
     messages.value = res.data.messages
     pagination.value = res.data.paginator
     lastItemId.value = messages.value[0]?.id
+    if (res.data.token) {
+      $auth.$storage.set({
+        key: 'chat-access-token',
+        value: res.data.token
+      })
+    }
   }).finally(() => {
     firstLoading.value.stop()
   })
@@ -417,7 +272,6 @@ const handleScroll = (e) => {
   isUserNearTop.value = chat.scrollTop < 100; // Adjust the threshold as needed
 }
 
-
 onMounted(() => {
   if (loggedIn.value) {
     firstLoading.value.start()
@@ -426,41 +280,51 @@ onMounted(() => {
           messages.value = res.data.messages
           pagination.value = res.data.paginator
           lastItemId.value = messages.value[0]?.id
+          if (res.data.token) {
+            $auth.$storage.set({
+              key: 'chat-access-token',
+              value: res.data.token
+            })
+          }
         }).finally(() => {
       firstLoading.value.stop()
     })
+  }
+})
+
+defineExpose({
+  sendMessage: () => {
+    sendMessage(lastErroredMessage.value)
   }
 })
 </script>
 
 <template>
   <div class="chat-area">
-    <template v-if="loggedIn">
 
-      <div ref="chatContainer" class="chat-area-main" @scroll="handleScroll">
-        <template v-if="firstLoading.idle">
-          <Loader class="firstTimeLoader"></Loader>
+    <div ref="chatContainer" class="chat-area-main" @scroll="handleScroll">
+      <template v-if="firstLoading.idle">
+        <Loader class="firstTimeLoader"></Loader>
+      </template>
+
+      <template v-else>
+        <component v-for="(message, ind) in messages" :key="message.id || ind" :is="renderer(message)"
+                   :message="message" @on:action="handleAction"></component>
+        <template
+            v-if="pagination.current_page < pagination.last_page"
+        >
+          <InfiniteScrollObserver
+              :loader-disable="pagination.last_page === pagination.current_page && !paginationLoading.idle"
+              :loader-method="paginateMessages">
+            <Loader/>
+          </InfiniteScrollObserver>
         </template>
+      </template>
 
-        <template v-else>
-          <component v-for="(message, ind) in messages" :key="message.id || ind" :is="renderer(message)"
-                     :message="message" @on:action="handleAction"></component>
-          <template
-              v-if="pagination.current_page < pagination.last_page"
-          >
-            <InfiniteScrollObserver
-                :loader-disable="pagination.last_page === pagination.current_page && !paginationLoading.idle"
-                :loader-method="paginateMessages">
-              <Loader/>
-            </InfiniteScrollObserver>
-          </template>
-        </template>
-
-      </div>
-      <ChatBotFooter @send:message="sendMessage"></ChatBotFooter>
-    </template>
-    <template v-else>
-      <LoginView/>
+    </div>
+    <ChatBotFooter @send:message="sendMessage"></ChatBotFooter>
+    <template v-if="showLogin">
+      <LoginView @cancel:login="cancelLogin" @on:login="onLogin"/>
     </template>
   </div>
 </template>

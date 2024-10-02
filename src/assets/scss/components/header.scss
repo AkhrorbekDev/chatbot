@@ -23,12 +23,24 @@
     }
   }
 
+  &__title {
+    color: var(--chat-text-color);
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 20px;
+  }
+
   .logo {
     color: var(--theme-color);
-    width: 38px;
     flex-shrink: 0;
-    border-radius: 50%;
-    overflow: hidden;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    img {
+      width: 38px;
+      border-radius: 50%;
+    }
   }
 
   .logo svg {

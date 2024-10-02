@@ -86,13 +86,16 @@ const submitHandlers = {
 }
 
 const alertOptions = inject('alertOptions')
-
+const emit = defineEmits(['on:login', 'cancel:login'])
 function submit() {
   return vee_form.value.validate()
       .then(async res => {
         if (res.valid && !submiting.value.idle.value) {
           submiting.value.start()
           await submitHandlers[loginType.value]()
+              .then(() => {
+                emit('on:login')
+              })
               .catch((error) => {
                 if (error.response?.status === 401) {
                   alertOptions.value.events.openModal('error', 'Неверный номер телефона или пароль')
@@ -100,8 +103,8 @@ function submit() {
                   alertOptions.value.events.openModal('error', 'Произошла ошибка')
                 }
               }).finally(() => {
-            submiting.value.stop()
-          })
+                submiting.value.stop()
+              })
 
         } else {
           console.log(res)
@@ -148,7 +151,9 @@ function setLoggedIn(data) {
 <template>
   <div class="login-view">
     <div class="login-view__form">
-      <div class="login-view__form-bg"></div>
+      <div class="login-view__form-close" @click="$emit('cancel:login')">
+        Отменить
+      </div>
       <div class="login-view__form-form">
         <h1 class="login-view__form-title">Войти</h1>
 
@@ -208,26 +213,38 @@ function setLoggedIn(data) {
 <style scoped lang="scss">
 .login-view {
   position: absolute;
-  z-index: 2;
+  z-index: 2000;
   width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
   top: 0;
   bottom: 0;
+  background: var(--theme-bg-color);
 
 
   &__form {
     position: relative;
-    padding: 18px 10px;
-    margin: auto auto;
-    max-width: 80%;
+
     display: flex;
     flex-direction: column;
     gap: 20px;
-    top: -10%;
+    top: 0;
+    bottom: 0;
     align-items: center;
     justify-content: center;
+    left: 0;
+    right: 0;
+    height: 100%;
+    width: 100%;
+
+    &-close {
+      position: absolute;
+      top: 25px;
+      right: 25px;
+      color: var(--chat-text-color);
+      cursor: pointer;
+    }
 
     &-label {
       span {
@@ -313,17 +330,24 @@ function setLoggedIn(data) {
       }
     }
 
+    &-form {
+      padding: 18px 10px;
+      margin: -20% auto 0;
+    }
+
     &-form, form {
       display: flex;
       flex-direction: column;
       gap: 20px;
-    }
-
-    &-form, form {
       position: relative;
       z-index: 3;
     }
 
+    @media (max-width: 576px) {
+      &-form {
+        max-width: 80%;
+      }
+    }
   }
 }
 </style>

@@ -13,34 +13,44 @@ defineProps({
 <template>
   <div class="orders-view">
     <ul class="orders-view__items">
-      <li class="orders-view__item">
-        <p class="orders-view__id">
-          Заказ: <b>{{ order.id }}</b>
+      <li class="order-detail__item">
+        <p class="order-detail__item-header">
+          Заказ:
+        </p>
+        <p class="order-detail__item-value">
+          <b>{{ order.id }}</b>
         </p>
       </li>
-      <li class="orders-view__item">
-        <p class="orders-view__price">
-          Статус: <b>{{ order.status }}</b>
+      <li class="order-detail__item">
+        <p class="order-detail__item-header">
+          Сумма:
+        </p>
+        <p class="order-detail__item-value">
+          <b>{{ order.total_price }} сум</b>
         </p>
       </li>
-      <li class="orders-view__item">
-        <p class="orders-view__price">
-          Сумма: <b>{{ order.total_price }} сум</b>
+      <li class="order-detail__item">
+        <p class="order-detail__item-header">
+          Долг:
+        </p>
+        <p class="order-detail__item-value">
+          <b>{{ order.debt_price }} сум</b>
         </p>
       </li>
-      <li class="orders-view__item">
-        <p class="orders-view__debt">
-          Долг: <b>{{ order.debt_price }} сум</b>
+      <li class="order-detail__item">
+        <p class="order-detail__item-header">
+          Оплачено:
+        </p>
+        <p class="order-detail__item-value">
+          <b>{{ order.payed }} сум</b>
         </p>
       </li>
-      <li class="orders-view__item">
-        <p class="orders-view__payed">
-          Оплачено: <b>{{ order.payed }} сум</b>
+      <li v-if="order.next_payment" class="order-detail__item">
+        <p class="order-detail__item-header">
+          Следующий платеж:
         </p>
-      </li>
-      <li v-if="order.next_payment" class="orders-view__item">
-        <p class="orders-view__next-payment">
-          Следующий платеж: <b>{{ order.next_payment }}</b>
+        <p class="order-detail__item-value">
+          <b>{{ order.next_payment }} сум</b>
         </p>
       </li>
     </ul>

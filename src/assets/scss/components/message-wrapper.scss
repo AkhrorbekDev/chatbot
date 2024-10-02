@@ -1,6 +1,6 @@
 .chat-msg {
   display: flex;
-  padding: 0 20px 45px;
+  padding: 0 20px 30px;
 
   &-wrapper {
     display: flex;
@@ -9,8 +9,8 @@
 
   &-content {
     //max-width: 70%;
-    display: flex;
-    align-items: flex-end;
+    //display: flex;
+    //align-items: flex-end;
     //background-color: var(--chat-text-bg);
     //border: 1px solid #E8E8F0;
     border: 1px solid var(--border-darker-color);
@@ -19,7 +19,6 @@
     border-radius: 12px 12px 12px 0;
     width: 100%;
     padding: 10px;
-    max-width: fit-content;
   }
 
   &-text {
@@ -63,6 +62,8 @@
     font-size: 12px;
     font-weight: 600;
     color: var(--msg-date);
+    text-align: right;
+    margin-top: 10px;
     white-space: nowrap;
   }
 
@@ -96,7 +97,7 @@
     }
 
     &-content {
-    background-color: var(--chat-text-bg);
+      background-color: var(--chat-text-bg);
       margin-left: 0;
       margin-right: 0;
       align-items: flex-end;
@@ -153,7 +154,7 @@
     }
 
     .product-template-title {
-      font-size: 22px;
+      font-size: 20px;
       font-weight: 600;
     }
 
@@ -167,7 +168,7 @@
       margin-top: 14px;
       font-size: 18px;
       line-height: 22px;
-      font-weight: 600;
+      font-weight: 500;
 
       &__label {
         //font-weight: 600;
@@ -180,17 +181,24 @@
   width: 100%;
   flex: 1;
 
+  .order-detail__item {
+    padding-top: 0;
+  }
+
+  .chat-msg {
+    &:last-child {
+      padding-bottom: 0;
+    }
+  }
+
   &:deep {
     .chat-msg-content {
       max-width: 100%;
       flex: 1;
+      display: unset;
 
       .chat-msg-profile {
         display: none;
-      }
-
-      .chat-msg-content {
-        margin-left: 0;
       }
 
       .chat-msg {
@@ -198,10 +206,24 @@
         padding-right: 0;
         padding-bottom: 35px;
         width: 100%;
+      }
 
-        &:last-child {
-          padding-bottom: 0;
-        }
+      .chat-msg:nth-last-child(-n + 2) {
+        padding-bottom: 0;
+      }
+
+      .chat-msg-content {
+        margin-left: 0;
+        border: 1px solid var(--border-darker-color);
+      }
+
+      .chat-msg-wrapper {
+        width: 100%;
+      }
+
+      .chat-msg:deep:last-child {
+        padding-bottom: 0;
+        background-color: red;
       }
     }
 
@@ -212,6 +234,7 @@
         font-weight: normal;
       }
     }
+
 
     .orders-view-description {
       font-weight: 400;
@@ -277,6 +300,65 @@
         font-weight: 600;
       }
     }
+
+
+  }
+
+
+}
+
+.chat-msg {
+  :deep {
+    .order-detail {
+      &__items {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+
+      &__item {
+        display: flex;
+        justify-content: space-between;
+        padding-bottom: 8px;
+
+        p.order-detail__item-value {
+          text-align: right;
+        }
+
+        &:first-child {
+          border-bottom: 1px solid var(--border-darker-color);
+        }
+
+        &.__products {
+          display: block;
+
+          ol {
+            margin-top: 16px;
+            margin-bottom: 16px;
+
+            li {
+              padding: 4px 0;
+              list-style: circle;
+              color: white;
+              display: flex;
+              gap: 12px;
+              align-items: flex-start;
+              justify-content: space-between;
+            }
+          }
+        }
+      }
+
+      &__item-header {
+        font-size: 14px;
+        color: #9e9e9e;
+      }
+
+      &__item-value {
+        font-size: 14px;
+        color: #000;
+      }
+    }
   }
 }
 
@@ -288,15 +370,20 @@
     display: none;
   }
 
+  .chat-msg-content {
+    padding: 0;
+  }
+
+
   &:deep {
     .chat-msg-content {
-      max-width: 100%;
       flex: 1;
 
       display: flex;
       flex-direction: column;
       max-width: fit-content;
       gap: 16px;
+      border: none;
 
       .chat-msg-profile {
         display: none;
@@ -318,25 +405,16 @@
       }
     }
 
-    .chat-msg-text {
-      p {
-        color: var(--chat-text-color);
-        line-height: 1.2;
-        font-weight: normal;
-      }
+    .product-template:nth-last-child(-n + 2) {
+      padding-bottom: 0;
     }
 
-    .orders-view-description {
-      font-weight: 400;
-    }
-
-    .orders-view-price {
-      font-weight: normal;
-      margin-top: 16px;
-
-      &__label {
-        font-weight: 600;
-      }
-    }
+    /* .chat-msg-text {
+       p {
+         color: var(--chat-text-color);
+         line-height: 1.2;
+         font-weight: normal;
+       }
+     }*/
   }
 }

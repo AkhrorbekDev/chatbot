@@ -39,8 +39,12 @@ class ApiCore {
                         ctx.options[key] = ctx.options.config[key]
                     })
                 }
+                console.log(context)
                 ctx.options.headers = {
                     ...ctx.options.headers,
+                    'Chat-Token': context.$auth.$storage.get({
+                        key: 'chat-access-token'
+                    }) || '',
                     ClientModel: 'Chat'
                 }
                 ctx.request = buildURL(ctx.request, ctx.options.params, ctx.options.paramsSerializer).replace(/^\?/, '')
