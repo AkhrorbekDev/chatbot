@@ -288,11 +288,12 @@ onMounted(() => {
             key: 'chat-access-token',
             value: res.data.token
           })
+          connectWS()
+
         }
       }).finally(() => {
     firstLoading.value.stop()
   })
-  connectWS()
 })
 
 defineExpose({
