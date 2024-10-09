@@ -273,23 +273,21 @@ const handleScroll = (e) => {
 }
 
 onMounted(() => {
-  if (loggedIn.value) {
-    firstLoading.value.start()
-    getMessages()
-        .then((res) => {
-          messages.value = res.data.messages
-          pagination.value = res.data.paginator
-          lastItemId.value = messages.value[0]?.id
-          if (res.data.token) {
-            $auth.$storage.set({
-              key: 'chat-access-token',
-              value: res.data.token
-            })
-          }
-        }).finally(() => {
-      firstLoading.value.stop()
-    })
-  }
+  firstLoading.value.start()
+  getMessages()
+      .then((res) => {
+        messages.value = res.data.messages
+        pagination.value = res.data.paginator
+        lastItemId.value = messages.value[0]?.id
+        if (res.data.token) {
+          $auth.$storage.set({
+            key: 'chat-access-token',
+            value: res.data.token
+          })
+        }
+      }).finally(() => {
+    firstLoading.value.stop()
+  })
 })
 
 defineExpose({
