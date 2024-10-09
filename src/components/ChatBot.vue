@@ -215,7 +215,7 @@ const connectWS = (user?) => {
     forceTLS: true,
     auth: {
       headers: {
-        Authorization: $auth.$token.get(),
+        Authorization: $auth.$token.get() || '',
         Accept: 'application/json',
         'Chat-Token': $auth.$storage.get({key: 'chat-access-token'}) || ''
       },
