@@ -224,7 +224,7 @@ const reMount = () => {
             },
           },
         });
-        window.Echo.private(`App.Models.User.${res.data.user.id}`).listen(".NewChatMessage", res => {
+        window.Echo.private(`App.Models.User.${res.data.user.id || $auth.$storage.get({key: 'chat-access-token'}) || ''}`).listen(".NewChatMessage", res => {
           messages.value.unshift(...res.reverse())
         });
       })
