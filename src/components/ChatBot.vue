@@ -263,7 +263,7 @@ watch(messages, () => {
 })
 
 watch(loggedIn, (value) => {
-  window.Echo?.leaveAllChannels()
+  // window.Echo?.leaveAllChannels()
   if (value) {
     reMount()
   }
