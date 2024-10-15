@@ -205,28 +205,33 @@ const inComeMessage = (message: Message) => {
   }
 }
 
+const connectWS = (user?) => {
+  window.Pusher = Pusher;
+  window.Echo = new Echo({
+    broadcaster: 'pusher',
+    key: '21f054cecc8f4861fa4b',
+    cluster: 'ap2',
+    authEndpoint: 'http://92.204.254.100:5050/broadcasting/auth', // Add this line
+    forceTLS: true,
+    auth: {
+      headers: {
+        Authorization: $auth.$token.get() || '',
+        Accept: 'application/json',
+        'Chat-Token': $auth.$storage.get({key: 'chat-access-token'}) || ''
+      },
+    },
+  });
+  const chatModel = $auth.$storage.get({key: 'chat-access-token'}) && !user ? `App.Models.Token.${$auth.$storage.get({key: 'chat-access-token'}) || ''}` : `App.Models.User.${user?.id}`
+  window.Echo.private(chatModel).listen(".NewChatMessage", res => {
+    messages.value.unshift(...res.reverse())
+  });
+}
+
 const reMount = () => {
   firstLoading.value.start()
   $auth.fetchUser()
       .then((res) => {
-        window.Pusher = Pusher;
-        window.Echo = new Echo({
-          broadcaster: 'pusher',
-          key: '21f054cecc8f4861fa4b',
-          cluster: 'ap2',
-          authEndpoint: 'http://92.204.254.100:5050/broadcasting/auth', // Add this line
-          forceTLS: true,
-          auth: {
-            headers: {
-              Authorization: $auth.$token.get(),
-              Accept: 'application/json',
-              'Chat-Token': $auth.$storage.get({key: 'chat-access-token'}) || ''
-            },
-          },
-        });
-        window.Echo.private(`App.Models.User.${res.data.user.id}`).listen(".NewChatMessage", res => {
-          messages.value.unshift(...res.reverse())
-        });
+        connectWS(res.data.user)
       })
   getMessages().then((res) => {
     messages.value = res.data.messages
@@ -258,10 +263,9 @@ watch(messages, () => {
 })
 
 watch(loggedIn, (value) => {
+  // window.Echo?.leaveAllChannels()
   if (value) {
     reMount()
-  } else {
-    window.Echo?.leaveAllChannels()
   }
 }, {
   immediate: true
@@ -284,6 +288,8 @@ onMounted(() => {
             key: 'chat-access-token',
             value: res.data.token
           })
+          connectWS()
+
         }
       }).finally(() => {
     firstLoading.value.stop()
