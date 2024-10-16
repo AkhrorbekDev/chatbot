@@ -45,6 +45,9 @@ class ApiCore {
                     'Chat-Token': context.$auth.$storage.get({
                         key: 'chat-access-token'
                     }) || '',
+                    'Cart-Key': context.$auth.$storage.get({
+                        key: 'cart-key-v3'
+                    }) || '',
                     ClientModel: 'Chat'
                 }
                 ctx.request = buildURL(ctx.request, ctx.options.params, ctx.options.paramsSerializer).replace(/^\?/, '')

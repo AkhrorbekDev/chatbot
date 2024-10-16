@@ -164,10 +164,11 @@ function cancelLogin() {
 
 function onLogin() {
   showLogin.value = false
+  botman.mergeHistory({'chat-token': $auth.$storage.get({key: 'chat-access'})})
+
   return botman.sendMessage(lastErroredMessage.value).then((res) => {
     messages.value.unshift(...res.data.reverse())
     lastErroredMessage.value = null
-    botman.mergeHistory({'chat-token': $auth.$storage.get({key: 'chat-access'})})
   }).catch((err) => {
     alertOptions.value.events.openModal('error', `Произошла ошибка ${err.status}`)
   })
