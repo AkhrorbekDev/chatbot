@@ -24,7 +24,12 @@ defineProps({
           <slot/>
         </div>
         <div v-if="message.created_at?.slice(11, 16) || message.created_at" class="chat-msg-date">
-          {{ message.created_at?.slice(11, 16) || message.created_at }}
+          <span>
+            {{message.user?.name || ''}}
+          </span>
+          <span>
+            {{ message.created_at?.slice(11, 16) || message.created_at }}
+          </span>
         </div>
       </div>
       <div v-if="$slots.actions" class="chat-msg-actions">

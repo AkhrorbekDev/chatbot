@@ -316,10 +316,10 @@ defineExpose({
         <component v-for="(message, ind) in messages" :key="message.id || ind" :is="renderer(message)"
                    :message="message" @on:action="handleAction"></component>
         <template
-            v-if="pagination.current_page < pagination.last_page"
+            v-if="pagination && pagination.current_page < pagination.last_page"
         >
           <InfiniteScrollObserver
-              :loader-disable="pagination.last_page === pagination.current_page && !paginationLoading.idle"
+              :loader-disable="pagination && pagination.last_page === pagination.current_page && !paginationLoading.idle"
               :loader-method="paginateMessages">
             <Loader/>
           </InfiniteScrollObserver>

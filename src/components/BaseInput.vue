@@ -16,10 +16,15 @@ const model_value = computed({
   set: (value) => emit('update:modelValue', value)
 })
 
-// function onInput(e) {
-//   console.log('onInput', e.target.innerText);
-//   model_value.value = e.target.innerText
-// }
+function resizeInput(e) {
+  const targetHeight = e.target.getClientRects()[0]?.height
+  console.log(e.target.getClientRects())
+  if (!e.target.value) {
+    e.target.style.height = 'auto';
+  } else if (targetHeight < 164) {
+    e.target.style.height = (e.target.scrollHeight) + 'px';
+  }
+}
 
 defineExpose({
   clear() {
@@ -29,7 +34,7 @@ defineExpose({
 </script>
 
 <template>
-  <input ref="input" v-model="model_value" class="base-input chat-bot-input" type="text"/>
+  <textarea ref="input" v-model="model_value" @input="resizeInput" class="base-input chat-bot-input" />
 <!--  <textarea ref="input" v-model="model_value" class="base-input chat-bot-input" wrap="soft" rows="4" />-->
 <!--  <div ref="input" class="base-input chat-bot-input" contenteditable="true" @input="onInput" />-->
 </template>
