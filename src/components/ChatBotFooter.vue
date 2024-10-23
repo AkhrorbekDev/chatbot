@@ -6,6 +6,7 @@ import {ref} from "vue";
 const message = ref('');
 const emit = defineEmits(['send:message'])
 const returnMessage = (e) => {
+  console.log(e);
   if (message.value && message.value.length > 0) {
     emit('send:message', {message: message.value})
     e.target.value = ''
@@ -38,7 +39,8 @@ const returnMessage = (e) => {
           <path
               d="M21.44 11.05l-9.19 9.19a6 6 0 01-8.49-8.49l9.19-9.19a4 4 0 015.66 5.66l-9.2 9.19a2 2 0 01-2.83-2.83l8.49-8.48"/>
         </svg>-->
-    <BaseInput v-model="message" @keydown.enter="returnMessage" type="textarea" rows="1" placeholder="Написать сообщение..."/>
+    <BaseInput v-model="message" @keydown.enter="returnMessage" type="textarea" rows="1"
+               placeholder="Написать сообщение..."/>
     <!--    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
              stroke-linecap="round" stroke-linejoin="round" class="feather feather-smile">
           <circle cx="12" cy="12" r="10"/>
@@ -49,14 +51,15 @@ const returnMessage = (e) => {
           <path
               d="M14 9V5a3 3 0 00-3-3l-4 9v11h11.28a2 2 0 002-1.7l1.38-9a2 2 0 00-2-2.3zM7 22H4a2 2 0 01-2-2v-7a2 2 0 012-2h3"/>
         </svg>-->
-        <button class="send-text" :class="{'send-text-active': message.length}" @click="returnMessage">
-          <svg width="17" height="18" viewBox="0 0 17 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M2.35853 9.01594L1.14654 13.046C0.380553 15.593 2.86709 17.8673 5.112 16.6729L14.431 11.715C16.5212 10.6029 16.5235 7.4241 14.4348 6.30862L5.11093 1.32915C2.86721 0.13088 0.377132 2.40233 1.14065 4.95083L2.35853 9.01594ZM2.35853 9.01594H5.32953"
-              stroke="#999999"
-              stroke-width="1.5"
-              stroke-linecap="round"/>
-            </svg>
-        </button>
+    <button class="send-text" :class="{'send-text-active': message.length}" @click="returnMessage">
+      <svg width="17" height="18" viewBox="0 0 17 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path
+            d="M2.35853 9.01594L1.14654 13.046C0.380553 15.593 2.86709 17.8673 5.112 16.6729L14.431 11.715C16.5212 10.6029 16.5235 7.4241 14.4348 6.30862L5.11093 1.32915C2.86721 0.13088 0.377132 2.40233 1.14065 4.95083L2.35853 9.01594ZM2.35853 9.01594H5.32953"
+            stroke="#999999"
+            stroke-width="1.5"
+            stroke-linecap="round"/>
+      </svg>
+    </button>
   </div>
 </template>
 

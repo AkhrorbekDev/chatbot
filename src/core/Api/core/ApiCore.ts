@@ -39,7 +39,6 @@ class ApiCore {
                         ctx.options[key] = ctx.options.config[key]
                     })
                 }
-                console.log(context)
                 ctx.options.headers = {
                     ...ctx.options.headers,
                     'Chat-Token': context.$auth.$storage.get({

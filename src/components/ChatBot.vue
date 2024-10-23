@@ -118,7 +118,22 @@ const orderDetailMessageRenderer = (message: OrderDetailsMessage) => {
   return h(OrderDetails, {message: createOrderDetailsMessageDTO(message)})
 }
 
+function escapeHTML(str) {
+  return str.replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#039;');
+}
+
 const sendMessage = (params) => {
+  const message = escapeHTML(params.message).replace(/[\n\t]/g, ' ')
+  const regexp = new RegExp(/[\n\t]/g)
+  console.log(regexp.test(message))
+  console.log(message, params, 'message test')
+  if (!message) {
+    return
+  }
   const id = uuidv4()
   const newMessage = createSampleMessage({
     content_type: ContentTypes.Text,
