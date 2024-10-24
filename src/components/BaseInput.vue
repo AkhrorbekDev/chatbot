@@ -18,30 +18,8 @@ const emit = defineEmits(['update:modelValue', 'on:submit'])
 const model_value = computed({
   get: () => props.modelValue,
   set: (val) => {
-    let value = val
-    value = value.replace(/[\n\t&<>"']/g, function (match) {
-      switch (match) {
-        case '\n':
-        case '\t':
-          return ' '; // Replace newline and tab with a space
-        case '&':
-          return '&amp;';
-        case '<':
-          return '&lt;';
-        case '>':
-          return '&gt;';
-        case '"':
-          return '&quot;';
-        case "'":
-          return '&#039;';
-        default:
-          return match;
-      }
-    });
-    if (!value) {
-      return
-    }
-    emit('update:modelValue', value)
+
+    emit('update:modelValue', val)
   }
 })
 const holdEnter = ref(false)
@@ -52,23 +30,13 @@ function resizeInput(e) {
     switch (match) {
       case '\n':
       case '\t':
-        return ' '; // Replace newline and tab with a space
-      case '&':
-        return '&amp;';
-      case '<':
-        return '&lt;';
-      case '>':
-        return '&gt;';
-      case '"':
-        return '&quot;';
-      case "'":
-        return '&#039;';
+        return ''; // Replace newline and tab with a space
       default:
         return match;
     }
   });
+  e.target.value = value
   const targetHeight = input.value.getClientRects()[0]?.height
-  console.log(e.target.value.length, 'input.value.value')
   if (!value) {
     input.value.style.height = 'auto';
   } else if (targetHeight < 164) {
@@ -94,7 +62,6 @@ function updateModelValue(e) {
   model_value.value = e.target.value
   if (e.code === 'Enter' || e.code === 'Backspace' || e.code === 'Delete') {
     e.preventDefault()
-    console.log(holdEnter.value, 'holdEnter')
     if (e.code === 'Enter' && !holdEnter.value) {
       emit('on:submit', e)
       e.target.value = ''
@@ -123,7 +90,7 @@ defineExpose({
         class="base-input chat-bot-input"/>
   </template>
   <template v-else>
-    <input ref="input" v-model="model_value" type="text" class="base-input chat-bot-input"/>
+    <input ref="input" v-model="model_value" :type="type" class="base-input chat-bot-input"/>
   </template>
   <!--  <textarea ref="input" v-model="model_value" class="base-input chat-bot-input" wrap="soft" rows="4" />-->
   <!--  <div ref="input" class="base-input chat-bot-input" contenteditable="true" @input="onInput" />-->

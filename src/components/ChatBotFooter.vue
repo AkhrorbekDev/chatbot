@@ -7,8 +7,31 @@ const message = ref('');
 const emit = defineEmits(['send:message'])
 const returnMessage = (e) => {
   console.log(e);
-  if (message.value && message.value.length > 0) {
-    emit('send:message', {message: message.value})
+  let value = message.value
+  value = value.replace(/[\n\t&<>"']/g, function (match) {
+    switch (match) {
+      case '\n':
+      case '\t':
+        return ''; // Replace newline and tab with a space
+      case '&':
+        return '&amp;';
+      case '<':
+        return '&lt;';
+      case '>':
+        return '&gt;';
+      case '"':
+        return '&quot;';
+      case "'":
+        return '&#039;';
+      default:
+        return match;
+    }
+  });
+  if (!value) {
+    return
+  }
+  if (value && value.length > 0) {
+    emit('send:message', {message: value})
     e.target.value = ''
     message.value = ''
   }

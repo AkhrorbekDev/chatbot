@@ -127,10 +127,7 @@ function escapeHTML(str) {
 }
 
 const sendMessage = (params) => {
-  const message = escapeHTML(params.message).replace(/[\n\t]/g, ' ')
-  const regexp = new RegExp(/[\n\t]/g)
-  console.log(regexp.test(message))
-  console.log(message, params, 'message test')
+  const message = params.message
   if (!message) {
     return
   }
@@ -155,7 +152,7 @@ const sendMessage = (params) => {
   }).then((res) => {
     messages.value.unshift(...res.data.reverse())
   }).catch((err) => {
-    if (err.status === 401) {
+    if (err) {
       showLogin.value = true
       lastErroredMessage.value = {
         message: {

@@ -14,7 +14,7 @@ const alertOptions = inject('alertOptions');
 <style scoped lang="scss">
 .base-alert {
   position: absolute;
-  bottom: -60px;
+  bottom: 0;
   left: 0;
   right: 0;
   background-color: var(--chat-text-bg);
@@ -33,8 +33,9 @@ const alertOptions = inject('alertOptions');
   &.__active {
     transform: translateY(0);
     opacity: 1;
-    z-index: 1000;
-    
+    z-index: 20;
+    bottom: -60px;
+
   }
 }
 </style>

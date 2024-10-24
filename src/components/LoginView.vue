@@ -87,6 +87,7 @@ const submitHandlers = {
 
 const alertOptions = inject('alertOptions')
 const emit = defineEmits(['on:login', 'cancel:login'])
+
 function submit() {
   return vee_form.value.validate()
       .then(async res => {
@@ -97,7 +98,7 @@ function submit() {
                 emit('on:login')
               })
               .catch((error) => {
-                if (error.response?.status === 401) {
+                if (error?.status === 401) {
                   alertOptions.value.events.openModal('error', 'Неверный номер телефона или пароль')
                 } else {
                   alertOptions.value.events.openModal('error', 'Произошла ошибка')
@@ -213,7 +214,7 @@ function setLoggedIn(data) {
 <style scoped lang="scss">
 .login-view {
   position: absolute;
-  z-index: 2000;
+  z-index: 10;
   width: 100%;
   display: flex;
   justify-content: center;
@@ -244,6 +245,7 @@ function setLoggedIn(data) {
       right: 25px;
       color: var(--chat-text-color);
       cursor: pointer;
+      z-index: 31;
     }
 
     &-label {

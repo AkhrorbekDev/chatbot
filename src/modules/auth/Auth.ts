@@ -6,6 +6,14 @@ import {RefreshToken} from '@/modules/auth/RefreshToken';
 import {HTTPRequest} from '@/modules/auth/types/request';
 import {$fetch, createFetch, Fetch} from "ofetch";
 
+const getPropertyValue = (parent, child) => {
+    const isInvalid = (parent !== undefined) && (parent[child] !== undefined) && (parent !== '')
+    if (isInvalid) {
+        return parent[child]
+    }
+    return ''
+}
+
 export class Auth {
     public options: ModuleOptions
     public $storage: Storage
@@ -33,6 +41,8 @@ export class Auth {
         }
 
         this._fetch = $fetch.create({
+            retry: 0,
+            timeout: 15000,
             baseURL: options.baseURL,
             async onRequest(ctx) {
                 if (ctx.options.config) {
@@ -45,6 +55,36 @@ export class Auth {
                     ClientModel: 'Chat'
                 }
                 delete ctx.options.params
+            },
+            onResponseError({
+                                response,
+                                options
+                            }) {
+                const message = getPropertyValue(response._data, 'message')
+                const statusText = getPropertyValue(response, 'statusText')
+                const statusCode = getPropertyValue(response, 'status')
+                const sendingMessage = message !== '' ? message : statusText
+                return Promise.reject({
+                    data: response._data,
+                    message: sendingMessage,
+                    statusText: sendingMessage,
+                    statusCode,
+                    status: statusCode,
+                    is: 'plugins',
+                    fatal: true
+                })
+            },
+            onRequestError(ctx) {
+                const message = ctx.error?.message || 'Что то не так пожалуйста позвоните call-center или перезагрузите страницу'
+                return Promise.reject({
+                    statusCode: 511,
+                    data: ctx.error,
+                    message,
+                    status: 511,
+                    ctx,
+                    is: 'plugins request error',
+                    fatal: true
+                })
             }
         })
     }
