@@ -27,6 +27,7 @@ export class Auth {
     public _loggedIn: boolean | string
 
     constructor(app: App, options: ModuleOptions) {
+        console.log(options)
         this.app = app
         this.options = options
         this.interceptor = null

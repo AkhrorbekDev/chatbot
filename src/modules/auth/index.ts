@@ -65,6 +65,7 @@ export default function createAuth(app: App, options: ModuleOptions | object) {
         store: false,
         clientSecret: ''
     })
+    console.log(options)
     const option: ModuleOptions = defu(
         options,
         defaults,

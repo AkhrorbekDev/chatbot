@@ -41,6 +41,9 @@ class ApiCore {
                 }
                 ctx.options.headers = {
                     ...ctx.options.headers,
+                    'Accept-Language': context.$auth.$storage.get({
+                        key: 'locale'
+                    }) || '',
                     'Chat-Token': context.$auth.$storage.get({
                         key: 'chat-access-token'
                     }) || '',

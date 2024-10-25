@@ -31,6 +31,7 @@ import EmptyMessageTemplate from "@/components/templates/EmptyMessageTemplate.vu
 import Echo from 'laravel-echo';
 import Pusher from 'pusher-js';
 import useLoading from "@/composables/useLoading";
+import CloseOperatorChat from "@/components/CloseOperatorChat.vue";
 
 
 const $auth = inject('$chatbot-auth')
@@ -126,6 +127,8 @@ function escapeHTML(str) {
       .replace(/'/g, '&#039;');
 }
 
+const showCloseChatOperator = ref(false)
+
 const sendMessage = (params) => {
   const message = params.message
   if (!message) {
@@ -150,9 +153,14 @@ const sendMessage = (params) => {
     },
     payload: params.payload,
   }).then((res) => {
+    if (res.data[0] && !res.data[0].success) {
+      showCloseChatOperator.value = true
+    } else {
+      showCloseChatOperator.value = false
+    }
     messages.value.unshift(...res.data.reverse())
   }).catch((err) => {
-    if (err) {
+    if (err.status === 401) {
       showLogin.value = true
       lastErroredMessage.value = {
         message: {
@@ -172,6 +180,26 @@ const sendMessage = (params) => {
 function cancelLogin() {
   showLogin.value = false
   lastErroredMessage.value = null
+}
+
+function closeOperatorChat () {
+  const message = createSampleMessage({
+    content_type: ContentTypes.Text,
+    content: 'Close chat with operator',
+    user: {
+      owner: true,
+      last_sean: new Date().toISOString()
+    }
+  })
+
+  return botman.sendMessage({message}).then((res) => {
+    if (res.data) {
+      messages.value.unshift(...res.data.reverse())
+    }
+    showCloseChatOperator.value = false
+  }).catch(() => {
+    alertOptions.value.events.openModal('error', 'Произошла ошибка')
+  })
 }
 
 function onLogin() {
@@ -339,6 +367,7 @@ defineExpose({
       </template>
 
     </div>
+    <CloseOperatorChat :show="showCloseChatOperator" @click="closeOperatorChat"/>
     <ChatBotFooter @send:message="sendMessage"></ChatBotFooter>
     <template v-if="showLogin">
       <LoginView @cancel:login="cancelLogin" @on:login="onLogin"/>

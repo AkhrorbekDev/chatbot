@@ -6,7 +6,6 @@ import {ref} from "vue";
 const message = ref('');
 const emit = defineEmits(['send:message'])
 const returnMessage = (e) => {
-  console.log(e);
   let value = message.value
   value = value.replace(/[\n\t&<>"']/g, function (match) {
     switch (match) {
