@@ -153,7 +153,7 @@ const sendMessage = (params) => {
     },
     payload: params.payload,
   }).then((res) => {
-    showCloseChatOperator.value = res.data[0] && !res.data[0].success;
+    showCloseChatOperator.value = res.data[0] && res.data[0].success === false;
     messages.value.unshift(...res.data.reverse())
   }).catch((err) => {
     if (err.status === 401) {
