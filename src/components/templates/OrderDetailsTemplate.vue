@@ -41,14 +41,14 @@ defineProps({
           <b>{{ order.total_price }} сум</b>
         </p>
       </li>
-      <li class="order-detail__item">
-        <p class="order-detail__item-header">
-          Долг:
-        </p>
-        <p class="order-detail__item-value">
-          <b>{{ order.debt_price }} сум</b>
-        </p>
-      </li>
+<!--      <li class="order-detail__item">-->
+<!--        <p class="order-detail__item-header">-->
+<!--          Долг:-->
+<!--        </p>-->
+<!--        <p class="order-detail__item-value">-->
+<!--          <b>{{ order.debt_price }} сум</b>-->
+<!--        </p>-->
+<!--      </li>-->
       <li class="order-detail__item">
         <p class="order-detail__item-header">
           Адрес:
